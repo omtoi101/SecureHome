@@ -17,7 +17,10 @@ class Facerec:
 			:return:
 			"""
 			# Load Images
-			images_path = glob.glob(os.path.join(images_path, "*.*"))
+			f_types = (os.path.join(images_path,"*.jpg"), os.path.join(images_path,'*.png'))
+			images_path = []
+			for files in f_types:
+				images_path.extend(glob.glob(files))
 
 			print("{} encoding images found.".format(len(images_path)))
 
