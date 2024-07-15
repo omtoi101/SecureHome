@@ -1,4 +1,4 @@
-import discord, os, asyncio, logging, sys, traceback, requests, random, colorama
+import discord, os, asyncio, logging, sys, traceback, requests, random, colorama, glob
 from discord.ext import commands
 from os import environ
 from dotenv import load_dotenv
@@ -19,6 +19,7 @@ load_dotenv()
 
 TOKEN = environ["TOKEN"]
 facedet = FaceDet(os.path.dirname(__file__))
+images_path = os.path.join(os.path.dirname(__file__), "images\\")
 bot = commands.Bot(command_prefix='.', intents=discord.Intents.all())
 bot.remove_command('help')
 @bot.event
@@ -39,7 +40,13 @@ async def on_message(message):
 
 @bot.command()
 async def addface(ctx, name):
-    faces = os.listdir(os.path.join(os.path.dirname(__file__), "images\\"))
+    f_types = (os.path.join(images_path,"*.jpg"), os.path.join(images_path,'*.png'))
+    faces = []
+    for files in f_types:
+        faces.extend(glob.glob(files))
+    for i, face in enumerate(faces):
+        _, face = os.path.split(face)
+        faces[i] = face
     for i, face in enumerate(faces):
         face = face.split(".")[0]
         faces[i] = face
@@ -64,7 +71,13 @@ async def addface(ctx, name):
 
 @bot.command()
 async def delface(ctx, name):
-    faces = os.listdir(os.path.join(os.path.dirname(__file__), "images\\"))
+    f_types = (os.path.join(images_path,"*.jpg"), os.path.join(images_path,'*.png'))
+    faces = []
+    for files in f_types:
+        faces.extend(glob.glob(files))
+    for i, face in enumerate(faces):
+        _, face = os.path.split(face)
+        faces[i] = face
     for i, face in enumerate(faces):
         face = face.split(".")[0]
         faces[i] = face
@@ -76,7 +89,13 @@ async def delface(ctx, name):
 
 @bot.command()
 async def listfaces(ctx):
-    faces = os.listdir(os.path.join(os.path.dirname(__file__), "images\\"))
+    f_types = (os.path.join(images_path,"*.jpg"), os.path.join(images_path,'*.png'))
+    faces = []
+    for files in f_types:
+        faces.extend(glob.glob(files))
+    for i, face in enumerate(faces):
+        _, face = os.path.split(face)
+        faces[i] = face
     message = ""
     for face in faces:
         face = face.split(".")[0]
@@ -88,7 +107,10 @@ async def listfaces(ctx):
         image = discord.File(image)
         images.append(image)
     try:
-        await ctx.send(message + " (in order)", files=images)
+        if len(faces) > 1:
+            await ctx.send(message + " (in order)", files=images)
+        else:
+            await ctx.send(message, files=images)
     except discord.HTTPException:
         await ctx.send(message)
 
