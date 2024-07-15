@@ -4,6 +4,7 @@ from datetime import datetime
 class Runner:
     def __init__(self, cd, debug) -> None:
         self.logfile = os.path.join(cd, r"logs\stream.log")
+        open(self.logfile, "x+")
         self.debug = debug
         self.types = ["   DISCORD BOT   ", "    WEBSERVER    ", " SECURITY SYSTEM "]
         colorama.init()
