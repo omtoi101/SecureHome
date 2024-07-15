@@ -13,13 +13,11 @@ debug = config["settings"]["debug"]
 runner = Runner(cd, debug)
 
 if webserver:
-    threading.Thread(target=runner.exec, args=[fr'python {cd}\server.py', "web"]).start()
+    threading.Thread(target=runner.exec, args=[fr'python "{cd}\server.py"', "web"]).start()
 
 if bot:
-    threading.Thread(target=runner.exec, args=[fr'python {cd}\bot.py', "bot"]).start()
+    threading.Thread(target=runner.exec, args=[fr'python "{cd}\bot.py"', "bot"]).start()
 
-threading.Thread(target=runner.exec, args=[fr'python {cd}\main.py', "sec"]).start()
-
-
+threading.Thread(target=runner.exec, args=[fr'python "{cd}\main.py"', "sec"]).start()
 
 
