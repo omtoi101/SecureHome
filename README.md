@@ -90,6 +90,7 @@ Or similar then either that camera source doesn't exist or you have the wrong so
 
 ### Customization
 ![config photo](https://github.com/omtoi101/SecureHome/blob/main/imgs_for_git/config.png)
+
 The config.json file allows you to customize the functionality of the security system in many ways.
 #### Settings
 * motion_detection: Enable/disable if the camera picks up on motion
