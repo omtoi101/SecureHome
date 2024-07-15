@@ -60,6 +60,8 @@ Now to run the program all you have to do is execute the runner script as such:
 ```bash
 python run.py
 ```
+### Customization
+
 
 
 
