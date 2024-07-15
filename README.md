@@ -61,7 +61,7 @@ Now to run the program all you have to do is execute the runner script as such:
 python run.py
 ```
 ### Customization
-
+![config photo](https://github.com/omtoi101/SecureHome/blob/main/imgs_for_git/config.png)
 
 
 
