@@ -1,6 +1,7 @@
 # SecureHome
-### AI powered home security camera, with facial recognition, text to speach and push notifications through discord!
 ![terminal photo](https://github.com/omtoi101/SecureHome/blob/main/imgs_for_git/terminal.png)
+### AI powered home security camera, with facial recognition, text to speach and push notifications through discord!
+
 
 
 ## Features
@@ -24,5 +25,6 @@
 * Pip packages (requirements.txt)
 ### Other
 * Discord server
+
 
 
