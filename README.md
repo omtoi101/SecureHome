@@ -2,7 +2,7 @@
 ![terminal photo](https://github.com/omtoi101/SecureHome/blob/main/imgs_for_git/terminal.png)
 ### AI powered home security camera, with facial recognition, text to speech and push notifications through Discord!
 
-
+#### !! working on Windows, Linux testing coming soon, Apple currently not working (maybe in the future) !!
 
 ## Features
 * Motion detection
