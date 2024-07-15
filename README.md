@@ -105,8 +105,8 @@ The config.json file allows you to customize the functionality of the security s
 * body_inc: How many frames of a body being on screen it takes to recognize it
 * face_inc: How many frames of a face being on screen it takes to recognize it
 * motion_inc: How many frames of motion being on screen it takes to recognize it
-* undetected_time: how many frames it of no detection being on screen takes for the camera to reset
-* fallback_fps: the fps of the camera if it cant automatically detect the real fps
+* undetected_time: How many frames it of no detection being on screen takes for the camera to reset
+* fallback_fps: The fps of the camera if it cant automatically detect the real fps
 
 
 
