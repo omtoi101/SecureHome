@@ -1,9 +1,9 @@
 # SecureHome
-![terminal photo](https://github.com/omtoi101/SecureHome/blob/main/imgs_for_git/terminal.png)
+![terminal photo](https://github.com/omtoi101/SecureHome/blob/main/media_for_git/terminal.png)
 ### AI powered home security camera, with facial recognition, text to speech and push notifications through Discord!
 
 #### !! working on Windows, Linux testing coming soon, Apple currently not working (maybe in the future) !!
-
+![example gif](https://github.com/omtoi101/SecureHome/blob/main/media_for_git/example.gif)
 ## Features
 * Motion detection
 * Body/human detection
@@ -89,7 +89,7 @@ Or similar then either that camera source doesn't exist or you have the wrong so
 
 
 ### Customization
-![config photo](https://github.com/omtoi101/SecureHome/blob/main/imgs_for_git/config.png)
+![config photo](https://github.com/omtoi101/SecureHome/blob/main/media_for_git/config.png)
 
 The config.json file allows you to customize the functionality of the security system in many ways.
 #### Settings
