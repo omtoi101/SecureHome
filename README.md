@@ -26,5 +26,15 @@
 ### Other
 * Discord server
 
+## Installation
+### Step 1 Prerequisites
+* Download OBS from [here](https://obsproject.com/)
+* Download FFMPEG from [here](https://www.ffmpeg.org/download.html) (or use choco, apt, pip, etc)
+### Step 2 python requirements
+* Install the required library's using:
+```bash
+pip install -r requirements.txt
+```
+
 
 
