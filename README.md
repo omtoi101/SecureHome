@@ -84,7 +84,7 @@ Or similar then either that camera source doesn't exist or you have the wrong so
 7. Enter the new camera source in the v_cam option under camera in the config.json file
 8. Now if you navigate to the web server IP while the script is runnning you should see your camera feed with the AI detections
 
-!! If the camera feed that appears on the webserver keep trying different sources for step 2 and 3 and re running the script until the right source is found !!
+!! If the camera feed that appears on the webserver isnt the correct one keep trying different sources for step 2 and 3 and re running the script until the right source is found !!
 ### DONE!!!
 
 
