@@ -4,6 +4,12 @@
 
 #### !! Working on Windows, Linux testing coming soon, Apple currently not working (maybe in the future) !!
 ![example gif](https://github.com/omtoi101/SecureHome/blob/main/media_for_git/example.gif)
+### -----------------------------------------
+### Next Update
+* Allow IP cams as a source instead of just hard wired webcams
+* Crash notifications through push notifications
+### -----------------------------------------
+
 ## Features
 * Motion detection
 * Body/human detection
