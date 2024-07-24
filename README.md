@@ -15,6 +15,7 @@
 * Web server with live video feed (LAN only unless forwarded)
 * Logging of everything that takes place
 ### Other
+* No port forwarding
 * Easy customization
 * Simple to use and understand terminal UI
 * Error logging for all segments of the script (logs folder)
