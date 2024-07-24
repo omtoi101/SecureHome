@@ -94,8 +94,7 @@ Or similar then either that camera source doesn't exist or you have the wrong so
 !! If the camera feed that appears on the webserver isnt the correct one keep trying different sources for step 2 and 3 and re running the script until the right source is found !!
 ### DONE!!!
 
-
-### Customization
+## Customization
 ![config photo](https://github.com/omtoi101/SecureHome/blob/main/media_for_git/config.png)
 
 The config.json file allows you to customize the functionality of the security system in many ways.
@@ -114,7 +113,7 @@ The config.json file allows you to customize the functionality of the security s
 * motion_inc: How many frames of motion being on screen it takes to recognize it
 * undetected_time: How many frames it of no detection being on screen takes for the camera to reset
 * fallback_fps: The fps of the camera if it cant automatically detect the real fps
-
+### -----------------------------------------
 
 
 
