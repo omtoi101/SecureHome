@@ -8,6 +8,9 @@
 ### Next Update
 * Allow IP cams as a source instead of just hard wired webcams
 * Crash notifications through push notifications
+* Thread the face detection to make it faster
+#### Possible Additon In The Future
+I am planning, once I get this installed, to write a script to interact with the DJI Tello drone to follow/chase intruders off the property and record them 
 ### -----------------------------------------
 
 ## Features
