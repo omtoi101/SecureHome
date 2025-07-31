@@ -1,0 +1,64 @@
+Traceback (most recent call last):
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 992, in _wrap_create_connection
+    return await self._loop.create_connection(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 1146, in create_connection
+    transport, protocol = await self._create_connection_transport(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 1179, in _create_connection_transport
+    await waiter
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 575, in _on_handshake_complete
+    raise handshake_exc
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\asyncio\sslproto.py", line 557, in _do_handshake
+    self._sslobj.do_handshake()
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\ssl.py", line 917, in do_handshake
+    self._sslobj.do_handshake()
+ssl.SSLCertVerificationError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\bot.py", line 127, in <module>
+    asyncio.run(main())
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 684, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\bot.py", line 125, in main
+    await bot.start(TOKEN)
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\client.py", line 777, in start
+    await self.login(token)
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\client.py", line 612, in login
+    data = await self.http.static_login(token)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\http.py", line 801, in static_login
+    data = await self.request(Route('GET', '/users/@me'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord\http.py", line 624, in request
+    async with self.__session.request(method, url, **kwargs) as response:
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 1194, in __aenter__
+    self._resp = await self._coro
+                 ^^^^^^^^^^^^^^^^
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 578, in _request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 544, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 911, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1235, in _create_direct_connection
+    raise last_exc
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1204, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 994, in _wrap_create_connection
+    raise ClientConnectorCertificateError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorCertificateError: Cannot connect to host discord.com:443 ssl:True [SSLCertVerificationError: (1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1000)')]
+NoneType: None

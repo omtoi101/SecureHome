@@ -4,8 +4,8 @@
         "motion_detection" : true,
         "speech" : true,
         "webserver" : true,
-        "discord_notifications" : true,
-        "discord_bot" : true,
+        "discord_notifications" : false,
+        "discord_bot" : false,
         "debug" : true
     },
 

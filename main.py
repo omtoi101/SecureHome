@@ -12,7 +12,7 @@ colorama.init()
 
 os.makedirs(os.path.join(os.path.dirname(__file__), "logs\\"), exist_ok=True)
 logger = logging.getLogger('logger')
-fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), r"logs\s_cam.log"))
 logger.addHandler(fh)
 def exc_handler(exctype, value, tb):
     logger.exception(''.join(traceback.format_exception(exctype, value, tb)))
@@ -107,6 +107,7 @@ if __name__ == '__main__':
 
 
 
+
 	with pyvirtualcam.Camera(frame_width, frame_height, fps, fmt=PixelFormat.BGR) as cam:
 		while True:
 			check_frame_index+=1
@@ -118,14 +119,13 @@ if __name__ == '__main__':
 					fr.load_encoding_images(os.path.join(os.path.dirname(__file__), r".\images"))
 					print("Reloaded faces")
 
-			_, frame = cap.read()
-
-
-
-			## motion
-			_, frame2 = cap.read()
-			diff = cv2.absdiff(frame, frame2)
-			gray = cv2.cvtColor(diff, cv2.COLOR_BGR2GRAY)
+			ret1, frame = cap.read()
+			ret2, frame2 = cap.read()
+			if not ret1 or not ret2:
+				print("Error: Could not read frames from camera.")
+			else:
+				diff = cv2.absdiff(frame, frame2)
+				gray = cv2.cvtColor(diff, cv2.COLOR_BGR2GRAY)
 			blur = cv2.GaussianBlur(gray, (5,5), 0)
 			_, thresh = cv2.threshold(blur, 20, 255, cv2.THRESH_BINARY)
 			dilated = cv2.dilate(thresh, None, iterations=3)

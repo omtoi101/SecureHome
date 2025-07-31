@@ -1,0 +1,81 @@
+Traceback (most recent call last):
+  File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py", line 23, in <module>
+    time.sleep(2.0)
+KeyboardInterrupt
+NoneType: None
+Traceback (most recent call last):
+  File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py", line 23, in <module>
+    time.sleep(2.0)
+KeyboardInterrupt
+NoneType: None
+Traceback (most recent call last):
+  File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py", line 23, in <module>
+    time.sleep(2.0)
+KeyboardInterrupt
+NoneType: None
+Traceback (most recent call last):
+  File "c:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py", line 37, in <module>
+    time.sleep(2.0)
+KeyboardInterrupt
+NoneType: None
+Traceback (most recent call last):
+  File "c:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py", line 37, in <module>
+    time.sleep(2.0)
+KeyboardInterrupt
+NoneType: None
+Traceback (most recent call last):
+  File "c:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py", line 37, in <module>
+    time.sleep(2.0)
+KeyboardInterrupt
+NoneType: None
+Traceback (most recent call last):
+  File "c:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py", line 37, in <module>
+    time.sleep(2.0)
+KeyboardInterrupt
+NoneType: None
+Traceback (most recent call last):
+  File "C:\Users\omtoi101\Downloads\SecureHome-main\server.py", line 186, in <module>
+    socketio.run(app, host="0.0.0.0", port=8040, debug=False)
+  File "C:\Users\omtoi101\AppData\Roaming\Python\Python312\site-packages\flask_socketio\__init__.py", line 660, in run
+    app.run(host=host, port=port, threaded=True,
+  File "C:\Users\omtoi101\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 625, in run
+    run_simple(t.cast(str, host), port, self, **options)
+  File "C:\Users\omtoi101\AppData\Roaming\Python\Python312\site-packages\werkzeug\serving.py", line 1093, in run_simple
+    srv = make_server(
+          ^^^^^^^^^^^^
+  File "C:\Users\omtoi101\AppData\Roaming\Python\Python312\site-packages\werkzeug\serving.py", line 930, in make_server
+    return ThreadedWSGIServer(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\omtoi101\AppData\Roaming\Python\Python312\site-packages\werkzeug\serving.py", line 759, in __init__
+    self.server_bind()
+  File "C:\Python312\Lib\http\server.py", line 138, in server_bind
+    self.server_name = socket.getfqdn(host)
+                       ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\socket.py", line 808, in getfqdn
+    hostname, aliases, ipaddrs = gethostbyaddr(name)
+                                 ^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+NoneType: None
+Traceback (most recent call last):
+  File "C:\Users\omtoi101\Downloads\SecureHome-main\server.py", line 226, in <module>
+    socketio.run(app, host="0.0.0.0", port=8040, debug=False)
+  File "C:\Users\omtoi101\AppData\Roaming\Python\Python312\site-packages\flask_socketio\__init__.py", line 660, in run
+    app.run(host=host, port=port, threaded=True,
+  File "C:\Users\omtoi101\AppData\Roaming\Python\Python312\site-packages\flask\app.py", line 625, in run
+    run_simple(t.cast(str, host), port, self, **options)
+  File "C:\Users\omtoi101\AppData\Roaming\Python\Python312\site-packages\werkzeug\serving.py", line 1093, in run_simple
+    srv = make_server(
+          ^^^^^^^^^^^^
+  File "C:\Users\omtoi101\AppData\Roaming\Python\Python312\site-packages\werkzeug\serving.py", line 930, in make_server
+    return ThreadedWSGIServer(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\omtoi101\AppData\Roaming\Python\Python312\site-packages\werkzeug\serving.py", line 759, in __init__
+    self.server_bind()
+  File "C:\Python312\Lib\http\server.py", line 138, in server_bind
+    self.server_name = socket.getfqdn(host)
+                       ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\socket.py", line 808, in getfqdn
+    hostname, aliases, ipaddrs = gethostbyaddr(name)
+                                 ^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+NoneType: None

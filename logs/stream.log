@@ -1,0 +1,860 @@
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-13-38] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'[31-07-2025_12-13-38] |    WEBSERVER    |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py:7: SyntaxWarning: invalid escape sequence '\w'
+[31-07-2025_12-13-38] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-13-38] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-13-38] |   DISCORD BOT   |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\d_bot.log"))
+[31-07-2025_12-13-38] |   DISCORD BOT   |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\bot.py:85: SyntaxWarning: invalid escape sequence '\{'
+[31-07-2025_12-13-38] |   DISCORD BOT   |  ->    os.remove(os.path.join(os.path.dirname(__file__), f"images\{name}.jpg"))
+[31-07-2025_12-13-38] |   DISCORD BOT   |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\bot.py:106: SyntaxWarning: invalid escape sequence '\{'
+[31-07-2025_12-13-38] |   DISCORD BOT   |  ->    image = os.path.join(os.path.dirname(__file__), f"images\{image}")
+[31-07-2025_12-13-39] |    WEBSERVER    |  ->  Traceback (most recent call last):
+[31-07-2025_12-13-39] |    WEBSERVER    |  ->    File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py", line 2, in <module>
+[31-07-2025_12-13-39] |    WEBSERVER    |  ->      from flask import Response, Flask, render_template
+[31-07-2025_12-13-39] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\__init__.py", line 7, in <module>
+[31-07-2025_12-13-39] |    WEBSERVER    |  ->      from .app import Flask as Flask
+[31-07-2025_12-13-39] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 27, in <module>
+[31-07-2025_12-13-39] |    WEBSERVER    |  ->      from . import cli
+[31-07-2025_12-13-39] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 17, in <module>
+[31-07-2025_12-13-39] |    WEBSERVER    |  ->      from .helpers import get_debug_flag
+[31-07-2025_12-13-39] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\helpers.py", line 14, in <module>
+[31-07-2025_12-13-39] |    WEBSERVER    |  ->      from werkzeug.urls import url_quote
+[31-07-2025_12-13-39] |    WEBSERVER    |  ->  ImportError: cannot import name 'url_quote' from 'werkzeug.urls' (C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\urls.py). Did you mean: 'unquote'?
+[31-07-2025_12-13-39] |    WEBSERVER    |  ->  ERROR: 1 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py" (check logs)
+[31-07-2025_12-13-42] | SECURITY SYSTEM |  ->  2025-07-31 12:13:42.815521: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-13-44] |   DISCORD BOT   |  ->  ERROR: 1 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\bot.py" (check logs)
+[31-07-2025_12-13-44] | SECURITY SYSTEM |  ->  2025-07-31 12:13:44.770919: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-14-00] | SECURITY SYSTEM |  ->  1 encoding images found.
+[31-07-2025_12-14-00] | SECURITY SYSTEM |  ->  INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[31-07-2025_12-14-00] | SECURITY SYSTEM |  ->  WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+[31-07-2025_12-14-00] | SECURITY SYSTEM |  ->  W0000 00:00:1753928040.784138   22396 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-14-00] | SECURITY SYSTEM |  ->  W0000 00:00:1753928040.824993   22428 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-14-04] | SECURITY SYSTEM |  ->  Encoding images loaded
+[31-07-2025_12-14-05] | SECURITY SYSTEM |  ->  C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\protobuf\symbol_database.py:55: UserWarning: SymbolDatabase.GetPrototype() is deprecated. Please use message_factory.GetMessageClass() instead. SymbolDatabase.GetPrototype() will be removed soon.
+[31-07-2025_12-14-05] | SECURITY SYSTEM |  ->    warnings.warn('SymbolDatabase.GetPrototype() is deprecated. Please '
+[31-07-2025_12-14-07] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-14-07] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->  Exception in thread Thread-1 (u_face):
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->  Traceback (most recent call last):
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1073, in _bootstrap_inner
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->      self.run()
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1010, in run
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->      self._target(*self._args, **self._kwargs)
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\dependencies\Webhook.py", line 44, in u_face
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->      self.response = self.webhook.execute()
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->                      ^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord_webhook\webhook.py", line 157, in execute
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->      response = self.api_post_request(url)
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\discord_webhook\webhook.py", line 135, in api_post_request
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->      response = requests.post(url, json=self.json, proxies=self.proxies,
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\api.py", line 115, in post
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->      return request("post", url, data=data, json=json, **kwargs)
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-14-10] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\api.py", line 59, in request
+[31-07-2025_12-14-11] | SECURITY SYSTEM |  ->      return session.request(method=method, url=url, **kwargs)
+[31-07-2025_12-14-11] | SECURITY SYSTEM |  ->             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-14-11] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\sessions.py", line 575, in request
+[31-07-2025_12-14-11] | SECURITY SYSTEM |  ->      prep = self.prepare_request(req)
+[31-07-2025_12-14-11] | SECURITY SYSTEM |  ->             ^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-14-11] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\sessions.py", line 484, in prepare_request
+[31-07-2025_12-14-11] | SECURITY SYSTEM |  ->      p.prepare(
+[31-07-2025_12-14-11] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\models.py", line 367, in prepare
+[31-07-2025_12-14-11] | SECURITY SYSTEM |  ->      self.prepare_url(url, params)
+[31-07-2025_12-14-11] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\requests\models.py", line 438, in prepare_url
+[31-07-2025_12-14-11] | SECURITY SYSTEM |  ->      raise MissingSchema(
+[31-07-2025_12-14-11] | SECURITY SYSTEM |  ->  requests.exceptions.MissingSchema: Invalid URL 'WEBHOOK_URL': No scheme supplied. Perhaps you meant https://WEBHOOK_URL?
+[31-07-2025_12-14-11] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-14-11] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-14-34] | SECURITY SYSTEM |  ->  Face detected look into the camera for reconition
+[31-07-2025_12-14-34] | SECURITY SYSTEM |  ->  Unknown face detected
+[31-07-2025_12-14-45] | SECURITY SYSTEM |  ->  ERROR: 3221225786 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-15-13] |    WEBSERVER    |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py:7: SyntaxWarning: invalid escape sequence '\w'
+[31-07-2025_12-15-13] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-15-13] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-15-13] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-15-14] |    WEBSERVER    |  ->  Traceback (most recent call last):
+[31-07-2025_12-15-14] |    WEBSERVER    |  ->    File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py", line 2, in <module>
+[31-07-2025_12-15-14] |    WEBSERVER    |  ->      from flask import Response, Flask, render_template
+[31-07-2025_12-15-14] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\__init__.py", line 7, in <module>
+[31-07-2025_12-15-14] |    WEBSERVER    |  ->      from .app import Flask as Flask
+[31-07-2025_12-15-14] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 27, in <module>
+[31-07-2025_12-15-14] |    WEBSERVER    |  ->      from . import cli
+[31-07-2025_12-15-14] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 17, in <module>
+[31-07-2025_12-15-14] |    WEBSERVER    |  ->      from .helpers import get_debug_flag
+[31-07-2025_12-15-14] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\helpers.py", line 14, in <module>
+[31-07-2025_12-15-14] |    WEBSERVER    |  ->      from werkzeug.urls import url_quote
+[31-07-2025_12-15-14] |    WEBSERVER    |  ->  ImportError: cannot import name 'url_quote' from 'werkzeug.urls' (C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\urls.py). Did you mean: 'unquote'?
+[31-07-2025_12-15-14] |    WEBSERVER    |  ->  ERROR: 1 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py" (check logs)
+[31-07-2025_12-15-16] | SECURITY SYSTEM |  ->  2025-07-31 12:15:16.339874: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-15-18] | SECURITY SYSTEM |  ->  2025-07-31 12:15:18.126900: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-15-30] | SECURITY SYSTEM |  ->  1 encoding images found.
+[31-07-2025_12-15-30] | SECURITY SYSTEM |  ->  INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[31-07-2025_12-15-30] | SECURITY SYSTEM |  ->  WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+[31-07-2025_12-15-30] | SECURITY SYSTEM |  ->  W0000 00:00:1753928130.977754   20956 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-15-31] | SECURITY SYSTEM |  ->  W0000 00:00:1753928131.021893     372 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-15-35] | SECURITY SYSTEM |  ->  Encoding images loaded
+[31-07-2025_12-15-36] | SECURITY SYSTEM |  ->  C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\protobuf\symbol_database.py:55: UserWarning: SymbolDatabase.GetPrototype() is deprecated. Please use message_factory.GetMessageClass() instead. SymbolDatabase.GetPrototype() will be removed soon.
+[31-07-2025_12-15-36] | SECURITY SYSTEM |  ->    warnings.warn('SymbolDatabase.GetPrototype() is deprecated. Please '
+[31-07-2025_12-15-36] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-15-36] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-15-40] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-15-40] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-15-48] | SECURITY SYSTEM |  ->  Traceback (most recent call last):
+[31-07-2025_12-15-48] | SECURITY SYSTEM |  ->    File "<string>", line 1, in <module>
+[31-07-2025_12-15-48] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+[31-07-2025_12-15-48] | SECURITY SYSTEM |  ->      exitcode = _main(fd, parent_sentinel)
+[31-07-2025_12-15-48] | SECURITY SYSTEM |  ->                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-15-48] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 131, in _main
+[31-07-2025_12-15-48] | SECURITY SYSTEM |  ->      prepare(preparation_data)
+[31-07-2025_12-15-48] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 246, in prepare
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->      _fixup_main_from_path(data['init_main_from_path'])
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 297, in _fixup_main_from_path
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->      main_content = runpy.run_path(main_path,
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "<frozen runpy>", line 286, in run_path
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "<frozen runpy>", line 98, in _run_module_code
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "<frozen runpy>", line 88, in _run_code
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py", line 2, in <module>
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->      from cvzone.PoseModule import PoseDetector
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\cvzone\PoseModule.py", line 9, in <module>
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->      import mediapipe as mp
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\__init__.py", line 17, in <module>
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python as tasks
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\__init__.py", line 17, in <module>
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->      from . import audio
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\__init__.py", line 18, in <module>
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python.audio.audio_classifier
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\audio_classifier.py", line 26, in <module>
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.audio.core import base_audio_task_api
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\core\base_audio_task_api.py", line 25, in <module>
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.core.optional_dependencies import doc_controls
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\core\optional_dependencies.py", line 20, in <module>
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->      from tensorflow.tools.docs import doc_controls
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\__init__.py", line 51, in <module>
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->      from tensorflow._api.v2 import compat
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\_api\v2\compat\__init__.py", line 8, in <module>
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->      from tensorflow._api.v2.compat import v1
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\_api\v2\compat\v1\__init__.py", line 30, in <module>
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->      from tensorflow._api.v2.compat.v1 import compat
+[31-07-2025_12-15-49] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\_api\v2\compat\v1\compat\__init__.py", line 8, in <module>
+[31-07-2025_12-15-50] | SECURITY SYSTEM |  ->  ERROR: 3221225786 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-17-05] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+
+[31-07-2025_12-17-05] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-17-06] |    WEBSERVER    |  ->  [ERROR:0@0.614] global obsensor_uvc_stream_channel.cpp:156 cv::obsensor::getStreamChannelGroup Camera index out of range
+[31-07-2025_12-17-08] |    WEBSERVER    |  ->   * Serving Flask app 'server'
+[31-07-2025_12-17-08] |    WEBSERVER    |  ->   * Debug mode: on
+[31-07-2025_12-17-08] |    WEBSERVER    |  ->  WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+[31-07-2025_12-17-08] |    WEBSERVER    |  ->   * Running on all addresses (0.0.0.0)
+[31-07-2025_12-17-08] |    WEBSERVER    |  ->   * Running on http://127.0.0.1:8040
+[31-07-2025_12-17-08] |    WEBSERVER    |  ->   * Running on http://10.131.36.50:8040
+[31-07-2025_12-17-08] |    WEBSERVER    |  ->  Press CTRL+C to quit
+[31-07-2025_12-17-09] | SECURITY SYSTEM |  ->  2025-07-31 12:17:09.441241: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-17-18] |    WEBSERVER    |  ->  127.0.0.1 - - [31/Jul/2025 12:17:18] "GET / HTTP/1.1" 200 -
+[31-07-2025_12-17-18] |    WEBSERVER    |  ->  127.0.0.1 - - [31/Jul/2025 12:17:18] "GET / HTTP/1.1" 200 -
+[31-07-2025_12-17-18] | SECURITY SYSTEM |  ->  2025-07-31 12:17:18.877874: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-17-31] |    WEBSERVER    |  ->  127.0.0.1 - - [31/Jul/2025 12:17:31] "GET / HTTP/1.1" 200 -
+[31-07-2025_12-17-38] | SECURITY SYSTEM |  ->  1 encoding images found.
+[31-07-2025_12-17-38] | SECURITY SYSTEM |  ->  INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[31-07-2025_12-17-38] | SECURITY SYSTEM |  ->  WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+[31-07-2025_12-17-39] | SECURITY SYSTEM |  ->  W0000 00:00:1753928258.942438   22376 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-17-39] | SECURITY SYSTEM |  ->  W0000 00:00:1753928258.999283   22376 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-17-43] | SECURITY SYSTEM |  ->  Encoding images loaded
+[31-07-2025_12-17-45] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-17-45] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-17-47] | SECURITY SYSTEM |  ->  C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\protobuf\symbol_database.py:55: UserWarning: SymbolDatabase.GetPrototype() is deprecated. Please use message_factory.GetMessageClass() instead. SymbolDatabase.GetPrototype() will be removed soon.
+[31-07-2025_12-17-47] | SECURITY SYSTEM |  ->    warnings.warn('SymbolDatabase.GetPrototype() is deprecated. Please '
+[31-07-2025_12-17-49] |    WEBSERVER    |  ->  127.0.0.1 - - [31/Jul/2025 12:17:49] "GET / HTTP/1.1" 200 -
+[31-07-2025_12-17-52] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-17-52] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-18-02] | SECURITY SYSTEM |  ->  Traceback (most recent call last):
+[31-07-2025_12-18-02] | SECURITY SYSTEM |  ->    File "<string>", line 1, in <module>
+[31-07-2025_12-18-02] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+[31-07-2025_12-18-02] | SECURITY SYSTEM |  ->      exitcode = _main(fd, parent_sentinel)
+[31-07-2025_12-18-02] | SECURITY SYSTEM |  ->                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-18-02] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 131, in _main
+[31-07-2025_12-18-02] | SECURITY SYSTEM |  ->      prepare(preparation_data)
+[31-07-2025_12-18-02] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 246, in prepare
+[31-07-2025_12-18-02] | SECURITY SYSTEM |  ->      _fixup_main_from_path(data['init_main_from_path'])
+[31-07-2025_12-18-02] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 297, in _fixup_main_from_path
+[31-07-2025_12-18-02] | SECURITY SYSTEM |  ->      main_content = runpy.run_path(main_path,
+[31-07-2025_12-18-02] | SECURITY SYSTEM |  ->                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-18-02] | SECURITY SYSTEM |  ->    File "<frozen runpy>", line 286, in run_path
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "<frozen runpy>", line 98, in _run_module_code
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "<frozen runpy>", line 88, in _run_code
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py", line 2, in <module>
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->      from cvzone.PoseModule import PoseDetector
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\cvzone\PoseModule.py", line 9, in <module>
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->      import mediapipe as mp
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\__init__.py", line 17, in <module>
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python as tasks
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\__init__.py", line 17, in <module>
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->      from . import audio
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\__init__.py", line 18, in <module>
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python.audio.audio_classifier
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\audio_classifier.py", line 26, in <module>
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.audio.core import base_audio_task_api
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\core\base_audio_task_api.py", line 25, in <module>
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.core.optional_dependencies import doc_controls
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\core\optional_dependencies.py", line 20, in <module>
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->      from tensorflow.tools.docs import doc_controls
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\__init__.py", line 45, in <module>
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->      from tensorflow._api.v2 import __internal__
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\_api\v2\__internal__\__init__.py", line 11, in <module>
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->  Traceback (most recent call last):
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "<string>", line 1, in <module>
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->      exitcode = _main(fd, parent_sentinel)
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 131, in _main
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->      prepare(preparation_data)
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 246, in prepare
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->      _fixup_main_from_path(data['init_main_from_path'])
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 297, in _fixup_main_from_path
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->      main_content = runpy.run_path(main_path,
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-18-03] | SECURITY SYSTEM |  ->    File "<frozen runpy>", line 286, in run_path
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "<frozen runpy>", line 98, in _run_module_code
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "<frozen runpy>", line 88, in _run_code
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py", line 2, in <module>
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      from cvzone.PoseModule import PoseDetector
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\cvzone\PoseModule.py", line 9, in <module>
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      import mediapipe as mp
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\__init__.py", line 17, in <module>
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python as tasks
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\__init__.py", line 17, in <module>
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      from . import audio
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\__init__.py", line 18, in <module>
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python.audio.audio_classifier
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\audio_classifier.py", line 26, in <module>
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.audio.core import base_audio_task_api
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\core\base_audio_task_api.py", line 25, in <module>
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.core.optional_dependencies import doc_controls
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\core\optional_dependencies.py", line 20, in <module>
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      from tensorflow.tools.docs import doc_controls
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\__init__.py", line 462, in <module>
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      importlib.import_module("keras.src.optimizers")
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py", line 90, in import_module
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      return _bootstrap._gcd_import(name[level:], package, level)
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\keras\__init__.py", line 10, in <module>
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      from keras.api import *  # noqa: F403
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      ^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\keras\api\__init__.py", line 9, in <module>
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      from keras.api import applications
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\keras\api\applications\__init__.py", line 19, in <module>
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      from tensorflow._api.v2.__internal__ import distribute
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\_api\v2\__internal__\distribute\__init__.py", line 8, in <module>
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      from keras.api.applications import resnet50
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap_external>", line 990, in exec_module
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap_external>", line 1086, in get_code
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap_external>", line 1185, in get_data
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->  KeyboardInterrupt
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      from tensorflow._api.v2.__internal__.distribute import combinations
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\_api\v2\__internal__\distribute\combinations\__init__.py", line 8, in <module>
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      from tensorflow.python.distribute.combinations import env # line: 456
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-18-04] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\python\distribute\combinations.py", line 33, in <module>
+[31-07-2025_12-18-06] | SECURITY SYSTEM |  ->  ERROR: 3221225786 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-18-08] |    WEBSERVER    |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py:7: SyntaxWarning: invalid escape sequence '\w'
+[31-07-2025_12-18-08] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-18-08] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-18-08] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-18-10] | SECURITY SYSTEM |  ->  2025-07-31 12:18:10.201420: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-18-11] | SECURITY SYSTEM |  ->  2025-07-31 12:18:11.551853: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-18-14] |    WEBSERVER    |  ->   * Serving Flask app 'server'
+[31-07-2025_12-18-14] |    WEBSERVER    |  ->   * Debug mode: on
+[31-07-2025_12-18-14] |    WEBSERVER    |  ->  WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+[31-07-2025_12-18-14] |    WEBSERVER    |  ->   * Running on all addresses (0.0.0.0)
+[31-07-2025_12-18-14] |    WEBSERVER    |  ->   * Running on http://127.0.0.1:8040
+[31-07-2025_12-18-14] |    WEBSERVER    |  ->   * Running on http://10.131.36.50:8040
+[31-07-2025_12-18-14] |    WEBSERVER    |  ->  Press CTRL+C to quit
+[31-07-2025_12-18-21] |    WEBSERVER    |  ->  127.0.0.1 - - [31/Jul/2025 12:18:21] "GET / HTTP/1.1" 200 -
+[31-07-2025_12-18-21] |    WEBSERVER    |  ->  127.0.0.1 - - [31/Jul/2025 12:18:21] "GET /video_feed HTTP/1.1" 200 -
+[31-07-2025_12-18-22] |    WEBSERVER    |  ->  127.0.0.1 - - [31/Jul/2025 12:18:22] "GET /favicon.ico HTTP/1.1" 404 -
+[31-07-2025_12-18-25] | SECURITY SYSTEM |  ->  1 encoding images found.
+[31-07-2025_12-18-25] | SECURITY SYSTEM |  ->  INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[31-07-2025_12-18-25] | SECURITY SYSTEM |  ->  WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+[31-07-2025_12-18-25] | SECURITY SYSTEM |  ->  W0000 00:00:1753928305.654169   12872 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-18-25] | SECURITY SYSTEM |  ->  W0000 00:00:1753928305.695076   11068 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-18-31] | SECURITY SYSTEM |  ->  Encoding images loaded
+[31-07-2025_12-18-31] | SECURITY SYSTEM |  ->  [ WARN:1@22.856] global cap_msmf.cpp:471 `anonymous-namespace'::SourceReaderCB::OnReadSample videoio(MSMF): OnReadSample() is called with error status: -1072875772
+[31-07-2025_12-18-31] | SECURITY SYSTEM |  ->  [ WARN:1@22.856] global cap_msmf.cpp:483 `anonymous-namespace'::SourceReaderCB::OnReadSample videoio(MSMF): async ReadSample() call is failed with error status: -1072875772
+[31-07-2025_12-18-31] | SECURITY SYSTEM |  ->  [ WARN:0@22.856] global cap_msmf.cpp:1759 CvCapture_MSMF::grabFrame videoio(MSMF): can't grab frame. Error: -1072875772
+[31-07-2025_12-18-31] | SECURITY SYSTEM |  ->  [ WARN:0@22.856] global cap_msmf.cpp:1759 CvCapture_MSMF::grabFrame videoio(MSMF): can't grab frame. Error: -1072875772
+[31-07-2025_12-18-32] | SECURITY SYSTEM |  ->  ERROR: 1 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-21-15] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-21-15] |    WEBSERVER    |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py:7: SyntaxWarning: invalid escape sequence '\w'
+[31-07-2025_12-21-15] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-21-15] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-21-19] | SECURITY SYSTEM |  ->  2025-07-31 12:21:19.685757: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-21-21] | SECURITY SYSTEM |  ->  2025-07-31 12:21:21.821304: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-21-23] |    WEBSERVER    |  ->   * Serving Flask app 'server'
+[31-07-2025_12-21-23] |    WEBSERVER    |  ->   * Debug mode: on
+[31-07-2025_12-21-23] |    WEBSERVER    |  ->  WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+[31-07-2025_12-21-23] |    WEBSERVER    |  ->   * Running on all addresses (0.0.0.0)
+[31-07-2025_12-21-23] |    WEBSERVER    |  ->   * Running on http://127.0.0.1:8040
+[31-07-2025_12-21-24] |    WEBSERVER    |  ->   * Running on http://10.131.36.50:8040
+[31-07-2025_12-21-24] |    WEBSERVER    |  ->  Press CTRL+C to quit
+[31-07-2025_12-21-47] |    WEBSERVER    |  ->  127.0.0.1 - - [31/Jul/2025 12:21:47] "GET / HTTP/1.1" 200 -
+[31-07-2025_12-21-47] |    WEBSERVER    |  ->  127.0.0.1 - - [31/Jul/2025 12:21:47] "GET /video_feed HTTP/1.1" 200 -
+[31-07-2025_12-21-48] | SECURITY SYSTEM |  ->  1 encoding images found.
+[31-07-2025_12-21-48] | SECURITY SYSTEM |  ->  INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[31-07-2025_12-21-48] | SECURITY SYSTEM |  ->  WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+[31-07-2025_12-21-48] | SECURITY SYSTEM |  ->  W0000 00:00:1753928508.383443    1968 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-21-48] | SECURITY SYSTEM |  ->  W0000 00:00:1753928508.430146   11368 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-21-56] | SECURITY SYSTEM |  ->  Encoding images loaded
+[31-07-2025_12-21-56] | SECURITY SYSTEM |  ->  [ WARN:1@40.526] global cap_msmf.cpp:471 `anonymous-namespace'::SourceReaderCB::OnReadSample videoio(MSMF): OnReadSample() is called with error status: -1072875772
+[31-07-2025_12-21-56] | SECURITY SYSTEM |  ->  [ WARN:1@40.528] global cap_msmf.cpp:483 `anonymous-namespace'::SourceReaderCB::OnReadSample videoio(MSMF): async ReadSample() call is failed with error status: -1072875772
+[31-07-2025_12-21-56] | SECURITY SYSTEM |  ->  [ WARN:0@40.529] global cap_msmf.cpp:1759 CvCapture_MSMF::grabFrame videoio(MSMF): can't grab frame. Error: -1072875772
+[31-07-2025_12-21-56] | SECURITY SYSTEM |  ->  [ WARN:0@40.529] global cap_msmf.cpp:1759 CvCapture_MSMF::grabFrame videoio(MSMF): can't grab frame. Error: -1072875772
+[31-07-2025_12-21-59] | SECURITY SYSTEM |  ->  ERROR: 1 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-26-01] |    WEBSERVER    |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py:7: SyntaxWarning: invalid escape sequence '\w'
+[31-07-2025_12-26-01] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-26-02] |    WEBSERVER    |  ->  Traceback (most recent call last):
+[31-07-2025_12-26-02] |    WEBSERVER    |  ->    File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py", line 2, in <module>
+[31-07-2025_12-26-02] |    WEBSERVER    |  ->      from flask import Response, Flask, render_template
+[31-07-2025_12-26-02] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\__init__.py", line 7, in <module>
+[31-07-2025_12-26-02] |    WEBSERVER    |  ->      from .app import Flask as Flask
+[31-07-2025_12-26-02] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 27, in <module>
+[31-07-2025_12-26-02] |    WEBSERVER    |  ->      from . import cli
+[31-07-2025_12-26-02] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 17, in <module>
+[31-07-2025_12-26-02] |    WEBSERVER    |  ->      from .helpers import get_debug_flag
+[31-07-2025_12-26-02] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\helpers.py", line 14, in <module>
+[31-07-2025_12-26-02] |    WEBSERVER    |  ->      from werkzeug.urls import url_quote
+[31-07-2025_12-26-02] |    WEBSERVER    |  ->  ImportError: cannot import name 'url_quote' from 'werkzeug.urls' (C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\urls.py). Did you mean: 'unquote'?
+[31-07-2025_12-26-02] |    WEBSERVER    |  ->  ERROR: 1 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py" (check logs)
+[31-07-2025_12-26-05] | SECURITY SYSTEM |  ->  2025-07-31 12:26:05.508622: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-26-07] | SECURITY SYSTEM |  ->  2025-07-31 12:26:07.903049: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-26-26] | SECURITY SYSTEM |  ->  1 encoding images found.
+[31-07-2025_12-26-26] | SECURITY SYSTEM |  ->  INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[31-07-2025_12-26-27] | SECURITY SYSTEM |  ->  WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+[31-07-2025_12-26-27] | SECURITY SYSTEM |  ->  W0000 00:00:1753928787.081152   19128 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-26-27] | SECURITY SYSTEM |  ->  W0000 00:00:1753928787.317751   19128 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-26-32] | SECURITY SYSTEM |  ->  Encoding images loaded
+[31-07-2025_12-26-32] | SECURITY SYSTEM |  ->  C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\protobuf\symbol_database.py:55: UserWarning: SymbolDatabase.GetPrototype() is deprecated. Please use message_factory.GetMessageClass() instead. SymbolDatabase.GetPrototype() will be removed soon.
+[31-07-2025_12-26-32] | SECURITY SYSTEM |  ->    warnings.warn('SymbolDatabase.GetPrototype() is deprecated. Please '
+[31-07-2025_12-26-33] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-26-33] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-26-40] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-26-40] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->  Traceback (most recent call last):
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "<string>", line 1, in <module>
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->      exitcode = _main(fd, parent_sentinel)
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 131, in _main
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->      prepare(preparation_data)
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 246, in prepare
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->      _fixup_main_from_path(data['init_main_from_path'])
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 297, in _fixup_main_from_path
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->      main_content = runpy.run_path(main_path,
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "<frozen runpy>", line 286, in run_path
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "<frozen runpy>", line 98, in _run_module_code
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "<frozen runpy>", line 88, in _run_code
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py", line 2, in <module>
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->      from cvzone.PoseModule import PoseDetector
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\cvzone\PoseModule.py", line 9, in <module>
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->      import mediapipe as mp
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\__init__.py", line 17, in <module>
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python as tasks
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\__init__.py", line 17, in <module>
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->      from . import audio
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\__init__.py", line 18, in <module>
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python.audio.audio_classifier
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\audio_classifier.py", line 26, in <module>
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.audio.core import base_audio_task_api
+[31-07-2025_12-26-50] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\core\base_audio_task_api.py", line 25, in <module>
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.core.optional_dependencies import doc_controls
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\core\optional_dependencies.py", line 20, in <module>
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->      from tensorflow.tools.docs import doc_controls
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\__init__.py", line 51, in <module>
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->      from tensorflow._api.v2 import compat
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\_api\v2\compat\__init__.py", line 8, in <module>
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->      from tensorflow._api.v2.compat import v1
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\_api\v2\compat\v1\__init__.py", line 30, in <module>
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->      from tensorflow._api.v2.compat.v1 import compat
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\_api\v2\compat\v1\compat\__init__.py", line 8, in <module>
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->      from tensorflow._api.v2.compat.v1.compat import v1
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\_api\v2\compat\v1\compat\v1\__init__.py", line 33, in <module>
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->      from tensorflow._api.v2.compat.v1 import debugging
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\_api\v2\compat\v1\debugging\__init__.py", line 8, in <module>
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->      from tensorflow._api.v2.compat.v1.debugging import experimental
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\_api\v2\compat\v1\debugging\experimental\__init__.py", line 8, in <module>
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->      from tensorflow.python.debug.lib.dumping_callback import disable_dump_debug_info # line: 863
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-26-51] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\python\debug\__init__.py", line 62, in <module>
+[31-07-2025_12-26-55] | SECURITY SYSTEM |  ->  ERROR: 3221225786 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-26-58] |    WEBSERVER    |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py:7: SyntaxWarning: invalid escape sequence '\w'
+[31-07-2025_12-26-58] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-26-59] |    WEBSERVER    |  ->  Traceback (most recent call last):
+[31-07-2025_12-26-59] |    WEBSERVER    |  ->    File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py", line 2, in <module>
+[31-07-2025_12-26-59] |    WEBSERVER    |  ->      from flask import Response, Flask, render_template
+[31-07-2025_12-26-59] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\__init__.py", line 7, in <module>
+[31-07-2025_12-26-59] |    WEBSERVER    |  ->      from .app import Flask as Flask
+[31-07-2025_12-26-59] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 27, in <module>
+[31-07-2025_12-26-59] |    WEBSERVER    |  ->      from . import cli
+[31-07-2025_12-26-59] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\cli.py", line 17, in <module>
+[31-07-2025_12-26-59] |    WEBSERVER    |  ->      from .helpers import get_debug_flag
+[31-07-2025_12-26-59] |    WEBSERVER    |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\helpers.py", line 14, in <module>
+[31-07-2025_12-26-59] |    WEBSERVER    |  ->      from werkzeug.urls import url_quote
+[31-07-2025_12-26-59] |    WEBSERVER    |  ->  ImportError: cannot import name 'url_quote' from 'werkzeug.urls' (C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\urls.py). Did you mean: 'unquote'?
+[31-07-2025_12-26-59] |    WEBSERVER    |  ->  ERROR: 1 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py" (check logs)
+[31-07-2025_12-27-01] | SECURITY SYSTEM |  ->  2025-07-31 12:27:01.227413: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-27-02] | SECURITY SYSTEM |  ->  2025-07-31 12:27:02.422691: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-27-15] | SECURITY SYSTEM |  ->  1 encoding images found.
+[31-07-2025_12-27-15] | SECURITY SYSTEM |  ->  INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[31-07-2025_12-27-15] | SECURITY SYSTEM |  ->  WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+[31-07-2025_12-27-15] | SECURITY SYSTEM |  ->  W0000 00:00:1753928835.313099   15164 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-27-15] | SECURITY SYSTEM |  ->  W0000 00:00:1753928835.348562   11780 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-27-19] | SECURITY SYSTEM |  ->  Encoding images loaded
+[31-07-2025_12-27-19] | SECURITY SYSTEM |  ->  C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\protobuf\symbol_database.py:55: UserWarning: SymbolDatabase.GetPrototype() is deprecated. Please use message_factory.GetMessageClass() instead. SymbolDatabase.GetPrototype() will be removed soon.
+[31-07-2025_12-27-19] | SECURITY SYSTEM |  ->    warnings.warn('SymbolDatabase.GetPrototype() is deprecated. Please '
+[31-07-2025_12-27-22] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-27-22] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-27-25] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-27-25] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-27-37] | SECURITY SYSTEM |  ->  Face detected look into the camera for reconition
+[31-07-2025_12-27-43] | SECURITY SYSTEM |  ->  Unknown face detected
+[31-07-2025_12-27-52] | SECURITY SYSTEM |  ->  ERROR: 3221225786 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-28-11] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+
+[31-07-2025_12-28-11] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-28-11] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-28-15] | SECURITY SYSTEM |  ->  2025-07-31 12:28:15.166239: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-28-16] | SECURITY SYSTEM |  ->  2025-07-31 12:28:16.489067: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-28-18] |    WEBSERVER    |  ->   * Serving Flask app 'server'
+[31-07-2025_12-28-18] |    WEBSERVER    |  ->   * Debug mode: on
+[31-07-2025_12-28-18] |    WEBSERVER    |  ->  WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+[31-07-2025_12-28-18] |    WEBSERVER    |  ->   * Running on all addresses (0.0.0.0)
+[31-07-2025_12-28-18] |    WEBSERVER    |  ->   * Running on http://127.0.0.1:8040
+[31-07-2025_12-28-18] |    WEBSERVER    |  ->   * Running on http://10.131.36.50:8040
+[31-07-2025_12-28-18] |    WEBSERVER    |  ->  Press CTRL+C to quit
+[31-07-2025_12-28-30] | SECURITY SYSTEM |  ->  1 encoding images found.
+[31-07-2025_12-28-30] | SECURITY SYSTEM |  ->  INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[31-07-2025_12-28-30] | SECURITY SYSTEM |  ->  WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+[31-07-2025_12-28-30] | SECURITY SYSTEM |  ->  W0000 00:00:1753928910.949536    8052 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-28-30] | SECURITY SYSTEM |  ->  W0000 00:00:1753928910.995136   21912 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-28-35] |    WEBSERVER    |  ->  127.0.0.1 - - [31/Jul/2025 12:28:35] "GET / HTTP/1.1" 200 -
+[31-07-2025_12-28-35] |    WEBSERVER    |  ->  127.0.0.1 - - [31/Jul/2025 12:28:35] "GET /video_feed HTTP/1.1" 200 -
+[31-07-2025_12-28-37] | SECURITY SYSTEM |  ->  Encoding images loaded
+[31-07-2025_12-28-37] | SECURITY SYSTEM |  ->  [ WARN:1@25.766] global cap_msmf.cpp:471 `anonymous-namespace'::SourceReaderCB::OnReadSample videoio(MSMF): OnReadSample() is called with error status: -1072875772
+[31-07-2025_12-28-37] | SECURITY SYSTEM |  ->  [ WARN:1@25.768] global cap_msmf.cpp:483 `anonymous-namespace'::SourceReaderCB::OnReadSample videoio(MSMF): async ReadSample() call is failed with error status: -1072875772
+[31-07-2025_12-28-37] | SECURITY SYSTEM |  ->  [ WARN:0@25.769] global cap_msmf.cpp:1759 CvCapture_MSMF::grabFrame videoio(MSMF): can't grab frame. Error: -1072875772
+[31-07-2025_12-28-37] | SECURITY SYSTEM |  ->  [ WARN:0@25.769] global cap_msmf.cpp:1759 CvCapture_MSMF::grabFrame videoio(MSMF): can't grab frame. Error: -1072875772
+[31-07-2025_12-28-39] | SECURITY SYSTEM |  ->  ERROR: 1 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-29-23] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+
+[31-07-2025_12-29-23] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+)
+[31-07-2025_12-29-24] |    WEBSERVER    |  ->  [ERROR:0@0.636] global obsensor_uvc_stream_channel.cpp:156 cv::obsensor::getStreamChannelGroup Camera index out of range
+[31-07-2025_12-29-26] | SECURITY SYSTEM |  ->  2025-07-31 12:29:26.419812: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-29-26] |    WEBSERVER    |  ->   * Serving Flask app 'server'
+[31-07-2025_12-29-26] |    WEBSERVER    |  ->   * Debug mode: on
+[31-07-2025_12-29-26] |    WEBSERVER    |  ->  WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+[31-07-2025_12-29-26] |    WEBSERVER    |  ->   * Running on all addresses (0.0.0.0)
+[31-07-2025_12-29-26] |    WEBSERVER    |  ->   * Running on http://127.0.0.1:8040
+[31-07-2025_12-29-26] |    WEBSERVER    |  ->   * Running on http://10.131.36.50:8040
+[31-07-2025_12-29-26] |    WEBSERVER    |  ->  Press CTRL+C to quit
+[31-07-2025_12-29-28] | SECURITY SYSTEM |  ->  2025-07-31 12:29:28.315672: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-29-43] | SECURITY SYSTEM |  ->  1 encoding images found.
+[31-07-2025_12-29-43] | SECURITY SYSTEM |  ->  INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[31-07-2025_12-29-43] | SECURITY SYSTEM |  ->  WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+[31-07-2025_12-29-43] | SECURITY SYSTEM |  ->  W0000 00:00:1753928983.718124   15380 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-29-43] | SECURITY SYSTEM |  ->  W0000 00:00:1753928983.762808   20024 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-29-48] | SECURITY SYSTEM |  ->  Encoding images loaded
+[31-07-2025_12-29-49] | SECURITY SYSTEM |  ->  C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\protobuf\symbol_database.py:55: UserWarning: SymbolDatabase.GetPrototype() is deprecated. Please use message_factory.GetMessageClass() instead. SymbolDatabase.GetPrototype() will be removed soon.
+[31-07-2025_12-29-49] | SECURITY SYSTEM |  ->    warnings.warn('SymbolDatabase.GetPrototype() is deprecated. Please '
+[31-07-2025_12-29-49] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-29-49] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-29-52] |    WEBSERVER    |  ->  127.0.0.1 - - [31/Jul/2025 12:29:52] "GET / HTTP/1.1" 200 -
+[31-07-2025_12-29-58] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-29-58] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-30-11] | SECURITY SYSTEM |  ->  Face detected look into the camera for reconition
+[31-07-2025_12-30-19] | SECURITY SYSTEM |  ->  Traceback (most recent call last):
+[31-07-2025_12-30-19] | SECURITY SYSTEM |  ->    File "<string>", line 1, in <module>
+[31-07-2025_12-30-19] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+[31-07-2025_12-30-19] | SECURITY SYSTEM |  ->      exitcode = _main(fd, parent_sentinel)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-31-29] |    WEBSERVER    |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py:7: SyntaxWarning: invalid escape sequence '\w'
+[31-07-2025_12-31-29] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-31-30] |    WEBSERVER    |  ->  [ERROR:0@0.629] global obsensor_uvc_stream_channel.cpp:156 cv::obsensor::getStreamChannelGroup Camera index out of range
+[31-07-2025_12-31-31] | SECURITY SYSTEM |  ->  2025-07-31 12:31:31.434313: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-31-32] |    WEBSERVER    |  ->   * Serving Flask app 'server'
+[31-07-2025_12-31-32] |    WEBSERVER    |  ->   * Debug mode: on
+[31-07-2025_12-31-32] |    WEBSERVER    |  ->  WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+[31-07-2025_12-31-32] |    WEBSERVER    |  ->   * Running on all addresses (0.0.0.0)
+[31-07-2025_12-31-32] |    WEBSERVER    |  ->   * Running on http://127.0.0.1:8040
+[31-07-2025_12-31-32] |    WEBSERVER    |  ->   * Running on http://10.131.36.50:8040
+[31-07-2025_12-31-32] |    WEBSERVER    |  ->  Press CTRL+C to quit
+[31-07-2025_12-31-32] | SECURITY SYSTEM |  ->  2025-07-31 12:31:32.727035: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-31-53] | SECURITY SYSTEM |  ->  1 encoding images found.
+[31-07-2025_12-31-53] | SECURITY SYSTEM |  ->  INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[31-07-2025_12-31-53] | SECURITY SYSTEM |  ->  WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+[31-07-2025_12-31-53] | SECURITY SYSTEM |  ->  W0000 00:00:1753929113.365055    4296 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-31-53] | SECURITY SYSTEM |  ->  W0000 00:00:1753929113.504095   15072 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-32-01] | SECURITY SYSTEM |  ->  Encoding images loaded
+[31-07-2025_12-32-01] | SECURITY SYSTEM |  ->  [ WARN:1@32.019] global cap_msmf.cpp:471 `anonymous-namespace'::SourceReaderCB::OnReadSample videoio(MSMF): OnReadSample() is called with error status: -1072875772
+[31-07-2025_12-32-01] | SECURITY SYSTEM |  ->  [ WARN:1@32.019] global cap_msmf.cpp:483 `anonymous-namespace'::SourceReaderCB::OnReadSample videoio(MSMF): async ReadSample() call is failed with error status: -1072875772
+[31-07-2025_12-32-01] | SECURITY SYSTEM |  ->  [ WARN:0@32.019] global cap_msmf.cpp:1759 CvCapture_MSMF::grabFrame videoio(MSMF): can't grab frame. Error: -1072875772
+[31-07-2025_12-32-01] | SECURITY SYSTEM |  ->  [ WARN:0@32.019] global cap_msmf.cpp:1759 CvCapture_MSMF::grabFrame videoio(MSMF): can't grab frame. Error: -1072875772
+[31-07-2025_12-32-03] | SECURITY SYSTEM |  ->  ERROR: 1 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-32-10] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+
+[31-07-2025_12-32-10] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-32-10] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-32-11] |    WEBSERVER    |  ->  [ERROR:0@0.605] global obsensor_uvc_stream_channel.cpp:156 cv::obsensor::getStreamChannelGroup Camera index out of range
+[31-07-2025_12-32-13] | SECURITY SYSTEM |  ->  2025-07-31 12:32:13.380381: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-32-13] |    WEBSERVER    |  ->   * Serving Flask app 'server'
+[31-07-2025_12-32-13] |    WEBSERVER    |  ->   * Debug mode: on
+[31-07-2025_12-32-13] |    WEBSERVER    |  ->  WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+[31-07-2025_12-32-13] |    WEBSERVER    |  ->   * Running on all addresses (0.0.0.0)
+[31-07-2025_12-32-13] |    WEBSERVER    |  ->   * Running on http://127.0.0.1:8040
+[31-07-2025_12-32-13] |    WEBSERVER    |  ->   * Running on http://10.131.36.50:8040
+[31-07-2025_12-32-13] |    WEBSERVER    |  ->  Press CTRL+C to quit
+[31-07-2025_12-32-15] | SECURITY SYSTEM |  ->  2025-07-31 12:32:15.007024: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-32-28] | SECURITY SYSTEM |  ->  1 encoding images found.
+[31-07-2025_12-32-28] | SECURITY SYSTEM |  ->  INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[31-07-2025_12-32-29] | SECURITY SYSTEM |  ->  WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+[31-07-2025_12-32-29] | SECURITY SYSTEM |  ->  W0000 00:00:1753929149.021180   14428 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-32-29] | SECURITY SYSTEM |  ->  W0000 00:00:1753929149.063005   18124 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-32-33] | SECURITY SYSTEM |  ->  Encoding images loaded
+[31-07-2025_12-32-35] | SECURITY SYSTEM |  ->  C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\protobuf\symbol_database.py:55: UserWarning: SymbolDatabase.GetPrototype() is deprecated. Please use message_factory.GetMessageClass() instead. SymbolDatabase.GetPrototype() will be removed soon.
+[31-07-2025_12-32-35] | SECURITY SYSTEM |  ->    warnings.warn('SymbolDatabase.GetPrototype() is deprecated. Please '
+[31-07-2025_12-32-36] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-32-36] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-32-55] | SECURITY SYSTEM |  ->  Motion detected
+[31-07-2025_12-32-59] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-32-59] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-33-18] | SECURITY SYSTEM |  ->  Person detected initiate face detection
+[31-07-2025_12-33-26] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-33-26] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-33-37] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-33-37] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-33-50] | SECURITY SYSTEM |  ->  Traceback (most recent call last):
+[31-07-2025_12-33-50] | SECURITY SYSTEM |  ->    File "<string>", line 1, in <module>
+[31-07-2025_12-33-50] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+[31-07-2025_12-33-50] | SECURITY SYSTEM |  ->  Traceback (most recent call last):
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-33-52] |    WEBSERVER    |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py:7: SyntaxWarning: invalid escape sequence '\w'
+[31-07-2025_12-33-52] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-33-53] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-33-53] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-33-56] | SECURITY SYSTEM |  ->  2025-07-31 12:33:56.504900: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-33-58] | SECURITY SYSTEM |  ->  2025-07-31 12:33:58.831382: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-34-01] |    WEBSERVER    |  ->   * Serving Flask app 'server'
+[31-07-2025_12-34-01] |    WEBSERVER    |  ->   * Debug mode: on
+[31-07-2025_12-34-01] |    WEBSERVER    |  ->  WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+[31-07-2025_12-34-01] |    WEBSERVER    |  ->   * Running on all addresses (0.0.0.0)
+[31-07-2025_12-34-01] |    WEBSERVER    |  ->   * Running on http://127.0.0.1:8040
+[31-07-2025_12-34-01] |    WEBSERVER    |  ->   * Running on http://10.131.36.50:8040
+[31-07-2025_12-34-02] |    WEBSERVER    |  ->  Press CTRL+C to quit
+[31-07-2025_12-34-11] |    WEBSERVER    |  ->  127.0.0.1 - - [31/Jul/2025 12:34:11] "GET / HTTP/1.1" 200 -
+[31-07-2025_12-34-11] |    WEBSERVER    |  ->  127.0.0.1 - - [31/Jul/2025 12:34:11] "GET /video_feed HTTP/1.1" 200 -
+[31-07-2025_12-34-20] | SECURITY SYSTEM |  ->  ERROR: 3221225786 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-34-22] |    WEBSERVER    |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py:7: SyntaxWarning: invalid escape sequence '\w'
+[31-07-2025_12-34-22] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-34-22] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-34-23] |    WEBSERVER    |  ->  [ERROR:0@0.942] global obsensor_uvc_stream_channel.cpp:156 cv::obsensor::getStreamChannelGroup Camera index out of range
+[31-07-2025_12-34-25] | SECURITY SYSTEM |  ->  2025-07-31 12:34:25.872215: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-34-25] |    WEBSERVER    |  ->   * Serving Flask app 'server'
+[31-07-2025_12-34-26] |    WEBSERVER    |  ->   * Debug mode: on
+[31-07-2025_12-34-26] |    WEBSERVER    |  ->  WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+[31-07-2025_12-34-26] |    WEBSERVER    |  ->   * Running on all addresses (0.0.0.0)
+[31-07-2025_12-34-26] |    WEBSERVER    |  ->   * Running on http://127.0.0.1:8040
+[31-07-2025_12-34-26] |    WEBSERVER    |  ->   * Running on http://10.131.36.50:8040
+[31-07-2025_12-34-26] |    WEBSERVER    |  ->  Press CTRL+C to quit
+[31-07-2025_12-34-26] | SECURITY SYSTEM |  ->  Traceback (most recent call last):
+[31-07-2025_12-34-26] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py", line 2, in <module>
+[31-07-2025_12-34-26] | SECURITY SYSTEM |  ->      from cvzone.PoseModule import PoseDetector
+[31-07-2025_12-34-26] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\cvzone\PoseModule.py", line 9, in <module>
+[31-07-2025_12-34-26] | SECURITY SYSTEM |  ->      import mediapipe as mp
+[31-07-2025_12-34-26] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\__init__.py", line 17, in <module>
+[31-07-2025_12-34-26] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python as tasks
+[31-07-2025_12-34-26] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\__init__.py", line 17, in <module>
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-34-33] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-34-33] |    WEBSERVER    |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py:7: SyntaxWarning: invalid escape sequence '\w'
+[31-07-2025_12-34-33] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-34-33] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-34-34] |    WEBSERVER    |  ->  [ERROR:0@0.915] global obsensor_uvc_stream_channel.cpp:156 cv::obsensor::getStreamChannelGroup Camera index out of range
+[31-07-2025_12-34-35] | SECURITY SYSTEM |  ->  Traceback (most recent call last):
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py", line 2, in <module>
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->      from cvzone.PoseModule import PoseDetector
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\cvzone\PoseModule.py", line 9, in <module>
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->      import mediapipe as mp
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\__init__.py", line 17, in <module>
+[31-07-2025_12-34-36] |    WEBSERVER    |  ->  ERROR: 3221225786 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py" (check logs)
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\__init__.py", line 17, in <module>
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->      from . import audio
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\__init__.py", line 18, in <module>
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python.audio.audio_classifier
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\audio_classifier.py", line 26, in <module>
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.audio.core import base_audio_task_api
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\core\base_audio_task_api.py", line 25, in <module>
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.core.optional_dependencies import doc_controls
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\core\optional_dependencies.py", line 20, in <module>
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->      from tensorflow.tools.docs import doc_controls
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\__init__.py", line 30, in <module>
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->      import distutils as _distutils
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 1322, in _find_and_load_unlocked
+[31-07-2025_12-34-36] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 1262, in _find_spec
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\_distutils_hack\__init__.py", line 90, in find_spec
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->      return method()
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->             ^^^^^^^^
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\_distutils_hack\__init__.py", line 101, in spec_for_distutils
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->      mod = importlib.import_module('setuptools._distutils')
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py", line 90, in import_module
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->      return _bootstrap._gcd_import(name[level:], package, level)
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\setuptools\__init__.py", line 13, in <module>
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->      from . import version as _version_module
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\setuptools\version.py", line 1, in <module>
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->      from ._importlib import metadata
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\setuptools\_importlib.py", line 45, in <module>
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->      import importlib.metadata as metadata  # noqa: F401
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap_external>", line 990, in exec_module
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap_external>", line 1086, in get_code
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap_external>", line 1185, in get_data
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->  KeyboardInterrupt
+[31-07-2025_12-34-37] | SECURITY SYSTEM |  ->  ERROR: 3221225786 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-34-41] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-34-41] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-34-41] |    WEBSERVER    |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py:7: SyntaxWarning: invalid escape sequence '\w'
+[31-07-2025_12-34-41] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-34-43] |    WEBSERVER    |  ->  [ERROR:0@0.991] global obsensor_uvc_stream_channel.cpp:156 cv::obsensor::getStreamChannelGroup Camera index out of range
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->  Traceback (most recent call last):
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py", line 2, in <module>
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->      from cvzone.PoseModule import PoseDetector
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\cvzone\PoseModule.py", line 9, in <module>
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->      import mediapipe as mp
+[31-07-2025_12-34-44] |    WEBSERVER    |  ->  ERROR: 3221225786 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py" (check logs)
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\__init__.py", line 17, in <module>
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python as tasks
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\__init__.py", line 17, in <module>
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->      from . import audio
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\__init__.py", line 18, in <module>
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python.audio.audio_classifier
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\audio_classifier.py", line 26, in <module>
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.audio.core import base_audio_task_api
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\core\base_audio_task_api.py", line 25, in <module>
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.core.optional_dependencies import doc_controls
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\core\optional_dependencies.py", line 20, in <module>
+[31-07-2025_12-34-44] | SECURITY SYSTEM |  ->      from tensorflow.tools.docs import doc_controls
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\__init__.py", line 30, in <module>
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->      import distutils as _distutils
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 1322, in _find_and_load_unlocked
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 1262, in _find_spec
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\_distutils_hack\__init__.py", line 90, in find_spec
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->      return method()
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->             ^^^^^^^^
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\_distutils_hack\__init__.py", line 101, in spec_for_distutils
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->      mod = importlib.import_module('setuptools._distutils')
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py", line 90, in import_module
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->      return _bootstrap._gcd_import(name[level:], package, level)
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\setuptools\__init__.py", line 254, in <module>
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->      monkey.patch_all()
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\setuptools\monkey.py", line 86, in patch_all
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->      patch_for_msvc_specialized_compiler()
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\setuptools\monkey.py", line 153, in patch_for_msvc_specialized_compiler
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->      patch_func(*msvc14('_get_vc_env'))
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->                  ^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-34-45] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\setuptools\monkey.py", line 143, in patch_params
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->      mod = import_module(mod_name)
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->            ^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py", line 90, in import_module
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->      return _bootstrap._gcd_import(name[level:], package, level)
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\setuptools\_distutils\_msvccompiler.py", line 19, in <module>
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->      import unittest.mock as mock
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\unittest\mock.py", line 26, in <module>
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->      import asyncio
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\asyncio\__init__.py", line 8, in <module>
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->      from .base_events import *
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 40, in <module>
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->      from . import events
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 844, in <module>
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->      from _asyncio import (_get_running_loop, _set_running_loop,
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 921, in _load_unlocked
+[31-07-2025_12-34-46] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 819, in module_from_spec
+[31-07-2025_12-34-47] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 798, in _init_module_attrs
+[31-07-2025_12-34-47] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 638, in cached
+[31-07-2025_12-34-47] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap_external>", line 613, in _get_cached
+[31-07-2025_12-34-47] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap_external>", line 507, in cache_from_source
+[31-07-2025_12-34-47] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap_external>", line 134, in _path_split
+[31-07-2025_12-34-47] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap_external>", line 134, in <genexpr>
+[31-07-2025_12-34-47] | SECURITY SYSTEM |  ->  KeyboardInterrupt
+[31-07-2025_12-34-47] | SECURITY SYSTEM |  ->  ERROR: 3221225786 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-34-51] |    WEBSERVER    |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py:7: SyntaxWarning: invalid escape sequence '\w'
+[31-07-2025_12-34-51] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-34-51] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-34-51] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-34-52] |    WEBSERVER    |  ->  [ERROR:0@0.959] global obsensor_uvc_stream_channel.cpp:156 cv::obsensor::getStreamChannelGroup Camera index out of range
+[31-07-2025_12-34-53] |    WEBSERVER    |  ->  ERROR: 3221225786 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py" (check logs)
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->  Traceback (most recent call last):
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py", line 2, in <module>
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->      from cvzone.PoseModule import PoseDetector
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\cvzone\PoseModule.py", line 9, in <module>
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->      import mediapipe as mp
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\__init__.py", line 17, in <module>
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python as tasks
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\__init__.py", line 17, in <module>
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->      from . import audio
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\__init__.py", line 18, in <module>
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python.audio.audio_classifier
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\audio_classifier.py", line 26, in <module>
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.audio.core import base_audio_task_api
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\core\base_audio_task_api.py", line 23, in <module>
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.audio.core import audio_record
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\core\audio_record.py", line 19, in <module>
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->      import sounddevice as sd
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\sounddevice.py", line 2894, in <module>
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->      _initialize()
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\sounddevice.py", line 2858, in _initialize
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->      _check(_lib.Pa_Initialize(), 'Error initializing PortAudio')
+[31-07-2025_12-34-54] | SECURITY SYSTEM |  ->             ^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-34-55] | SECURITY SYSTEM |  ->  KeyboardInterrupt
+[31-07-2025_12-34-55] | SECURITY SYSTEM |  ->  ERROR: 3221225786 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-35-27] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-35-27] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-35-27] |    WEBSERVER    |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\server.py:7: SyntaxWarning: invalid escape sequence '\w'
+[31-07-2025_12-35-27] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-35-29] |    WEBSERVER    |  ->  [ERROR:0@1.472] global obsensor_uvc_stream_channel.cpp:156 cv::obsensor::getStreamChannelGroup Camera index out of range
+[31-07-2025_12-35-30] | SECURITY SYSTEM |  ->  2025-07-31 12:35:30.993257: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-35-31] |    WEBSERVER    |  ->   * Serving Flask app 'server'
+[31-07-2025_12-35-31] |    WEBSERVER    |  ->   * Debug mode: on
+[31-07-2025_12-35-31] |    WEBSERVER    |  ->  WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+[31-07-2025_12-35-31] |    WEBSERVER    |  ->   * Running on all addresses (0.0.0.0)
+[31-07-2025_12-35-31] |    WEBSERVER    |  ->   * Running on http://127.0.0.1:8040
+[31-07-2025_12-35-31] |    WEBSERVER    |  ->   * Running on http://10.131.36.50:8040
+[31-07-2025_12-35-31] |    WEBSERVER    |  ->  Press CTRL+C to quit
+[31-07-2025_12-35-33] | SECURITY SYSTEM |  ->  2025-07-31 12:35:33.384410: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-35-56] | SECURITY SYSTEM |  ->  1 encoding images found.
+[31-07-2025_12-35-56] | SECURITY SYSTEM |  ->  INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+[31-07-2025_12-35-56] | SECURITY SYSTEM |  ->  WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+[31-07-2025_12-35-57] | SECURITY SYSTEM |  ->  W0000 00:00:1753929356.964918   17476 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-35-57] | SECURITY SYSTEM |  ->  W0000 00:00:1753929357.021413    7700 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+[31-07-2025_12-36-05] | SECURITY SYSTEM |  ->  Encoding images loaded
+[31-07-2025_12-36-07] | SECURITY SYSTEM |  ->  C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\google\protobuf\symbol_database.py:55: UserWarning: SymbolDatabase.GetPrototype() is deprecated. Please use message_factory.GetMessageClass() instead. SymbolDatabase.GetPrototype() will be removed soon.
+[31-07-2025_12-36-08] | SECURITY SYSTEM |  ->    warnings.warn('SymbolDatabase.GetPrototype() is deprecated. Please '
+[31-07-2025_12-36-08] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-36-08] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-36-17] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+[31-07-2025_12-36-17] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-36-38] | SECURITY SYSTEM |  ->  Face detected look into the camera for reconition
+[31-07-2025_12-36-54] | SECURITY SYSTEM |  ->  Unknown face detected
+[31-07-2025_12-37-26] | SECURITY SYSTEM |  ->  ERROR: 3221225786 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+[31-07-2025_12-37-28] | SECURITY SYSTEM |  ->  C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py:15: SyntaxWarning: invalid escape sequence '\s'
+
+[31-07-2025_12-37-28] |    WEBSERVER    |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\w_server.log"))
+[31-07-2025_12-37-28] | SECURITY SYSTEM |  ->    fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+[31-07-2025_12-37-30] |    WEBSERVER    |  ->  [ERROR:0@1.194] global obsensor_uvc_stream_channel.cpp:156 cv::obsensor::getStreamChannelGroup Camera index out of range
+[31-07-2025_12-37-32] |    WEBSERVER    |  ->   * Serving Flask app 'server'
+[31-07-2025_12-37-32] |    WEBSERVER    |  ->   * Debug mode: on
+[31-07-2025_12-37-32] |    WEBSERVER    |  ->  WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+[31-07-2025_12-37-32] |    WEBSERVER    |  ->   * Running on all addresses (0.0.0.0)
+[31-07-2025_12-37-32] |    WEBSERVER    |  ->   * Running on http://127.0.0.1:8040
+[31-07-2025_12-37-32] |    WEBSERVER    |  ->   * Running on http://10.131.36.50:8040
+[31-07-2025_12-37-32] |    WEBSERVER    |  ->  Press CTRL+C to quit
+[31-07-2025_12-37-32] | SECURITY SYSTEM |  ->  2025-07-31 12:37:32.473037: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-37-35] | SECURITY SYSTEM |  ->  2025-07-31 12:37:35.158033: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+[31-07-2025_12-37-40] | SECURITY SYSTEM |  ->  Traceback (most recent call last):
+[31-07-2025_12-37-40] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py", line 2, in <module>
+[31-07-2025_12-37-40] | SECURITY SYSTEM |  ->      from cvzone.PoseModule import PoseDetector
+[31-07-2025_12-37-40] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\cvzone\PoseModule.py", line 9, in <module>
+[31-07-2025_12-37-40] | SECURITY SYSTEM |  ->      import mediapipe as mp
+[31-07-2025_12-37-40] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\__init__.py", line 17, in <module>
+[31-07-2025_12-37-40] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python as tasks
+[31-07-2025_12-37-40] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\__init__.py", line 17, in <module>
+[31-07-2025_12-37-40] | SECURITY SYSTEM |  ->      from . import audio
+[31-07-2025_12-37-40] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\__init__.py", line 18, in <module>
+[31-07-2025_12-37-41] | SECURITY SYSTEM |  ->      import mediapipe.tasks.python.audio.audio_classifier
+[31-07-2025_12-37-41] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\audio_classifier.py", line 26, in <module>
+[31-07-2025_12-37-41] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.audio.core import base_audio_task_api
+[31-07-2025_12-37-41] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\audio\core\base_audio_task_api.py", line 25, in <module>
+[31-07-2025_12-37-41] | SECURITY SYSTEM |  ->      from mediapipe.tasks.python.core.optional_dependencies import doc_controls
+[31-07-2025_12-37-41] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\mediapipe\tasks\python\core\optional_dependencies.py", line 20, in <module>
+[31-07-2025_12-37-41] | SECURITY SYSTEM |  ->      from tensorflow.tools.docs import doc_controls
+[31-07-2025_12-37-41] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\tensorflow\__init__.py", line 462, in <module>
+[31-07-2025_12-37-41] | SECURITY SYSTEM |  ->      importlib.import_module("keras.src.optimizers")
+[31-07-2025_12-37-41] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py", line 90, in import_module
+[31-07-2025_12-37-41] | SECURITY SYSTEM |  ->      return _bootstrap._gcd_import(name[level:], package, level)
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\keras\__init__.py", line 10, in <module>
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->      from keras.api import *  # noqa: F403
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->      ^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\keras\api\__init__.py", line 8, in <module>
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->      from keras.api import activations
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\keras\api\activations\__init__.py", line 7, in <module>
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->      from keras.src.activations import deserialize
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\keras\src\__init__.py", line 1, in <module>
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->      from keras.src import activations
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\keras\src\activations\__init__.py", line 3, in <module>
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->      from keras.src.activations.activations import elu
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\keras\src\activations\activations.py", line 2, in <module>
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->      from keras.src import ops
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->    File "C:\Users\omtoi\AppData\Local\Programs\Python\Python312\Lib\site-packages\keras\src\ops\__init__.py", line 16, in <module>
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->      from keras.src.ops.numpy import *  # noqa: F403
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap_external>", line 990, in exec_module
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap_external>", line 1123, in get_code
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->    File "<frozen importlib._bootstrap_external>", line 752, in _compile_bytecode
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->  KeyboardInterrupt
+[31-07-2025_12-37-42] | SECURITY SYSTEM |  ->  ERROR: 3221225786 python "C:\Users\omtoi\OneDrive\Documents\SecureHome-main\SecureHome-main\main.py" (check logs)
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------
+--------------------------------------------------| STARTED |--------------------------------------------------

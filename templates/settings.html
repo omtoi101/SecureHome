@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureHome Settings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        .settings-container {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #4ade80;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #e5e7eb;
+        }
+
+        .form-group input[type="number"],
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4ade80;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #4ade80;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            color: white;
+        }
+
+        .btn-save:hover {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            transform: translateY(-2px);
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            transform: translateY(-2px);
+        }
+
+        .btn-reload {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+        }
+
+        .btn-reload:hover {
+            background: linear-gradient(135deg, #4f46e5, #4338ca);
+            transform: translateY(-2px);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .description {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .warning-box {
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .warning-box h3 {
+            color: #fbbf24;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .warning-box p {
+            color: #fde68a;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚙️ SecureHome Settings</h1>
+            <a href="/" class="back-btn">
+                ← Back to Dashboard
+            </a>
+        </div>
+
+        <div class="settings-container">
+            <div class="warning-box">
+                <h3>⚠️ Important Notice</h3>
+                <p>Changes to these settings will require a system restart to take effect. A backup of your current configuration will be automatically created before saving.</p>
+            </div>
+
+            <form id="settingsForm">
+                <div class="section">
+                    <div class="section-title">
+                        🔧 System Settings
+                    </div>
+                    <div class="form-grid">
+                        <div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="motion_detection" name="motion_detection">
+                                <label for="motion_detection">Motion Detection</label>
+                            </div>
+                            <div class="description">Enable/disable motion detection alerts</div>
+
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="speech" name="speech">
+                                <label for="speech">Text-to-Speech</label>
+                            </div>
+                            <div class="description">Enable voice announcements</div>
+
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="webserver" name="webserver">
+                                <label for="webserver">Web Server</label>
+                            </div>
+                            <div class="description">Enable the web dashboard</div>
+                        </div>
+                        <div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="discord_notifications" name="discord_notifications">
+                                <label for="discord_notifications">Discord Notifications</label>
+                            </div>
+                            <div class="description">Send alerts to Discord webhook</div>
+
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="discord_bot" name="discord_bot">
+                                <label for="discord_bot">Discord Bot</label>
+                            </div>
+                            <div class="description">Enable Discord bot for face management</div>
+
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="debug" name="debug">
+                                <label for="debug">Debug Mode</label>
+                            </div>
+                            <div class="description">Show detailed error messages</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">
+                        📹 Camera Settings
+                    </div>
+                    <div class="form-grid">
+                        <div>
+                            <div class="form-group">
+                                <label for="main_camera">Main Camera Port</label>
+                                <input type="number" id="main_camera" name="main_camera" min="0" max="10">
+                                <div class="description">Primary camera device index (usually 0)</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="v_cam">Virtual Camera Port</label>
+                                <input type="number" id="v_cam" name="v_cam" min="0" max="10">
+                                <div class="description">Virtual camera output port for web streaming</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fallback_fps">Fallback FPS</label>
+                                <input type="number" id="fallback_fps" name="fallback_fps" min="1" max="60">
+                                <div class="description">Frame rate when auto-detection fails</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <label for="body_inc">Body Detection Frames</label>
+                                <input type="number" id="body_inc" name="body_inc" min="1" max="100">
+                                <div class="description">Frames needed to confirm body detection</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="face_inc">Face Detection Frames</label>
+                                <input type="number" id="face_inc" name="face_inc" min="1" max="50">
+                                <div class="description">Frames needed to confirm face detection</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="motion_inc">Motion Detection Frames</label>
+                                <input type="number" id="motion_inc" name="motion_inc" min="1" max="50">
+                                <div class="description">Frames needed to confirm motion</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="undetected_time">Reset Time (Frames)</label>
+                                <input type="number" id="undetected_time" name="undetected_time" min="10" max="200">
+                                <div class="description">Frames without detection before system resets</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button type="button" class="btn btn-save" onclick="saveConfig()">💾 Save Configuration</button>
+                    <button type="button" class="btn btn-reset" onclick="resetForm()">🔄 Reset Form</button>
+                    <button type="button" class="btn btn-reload" onclick="loadConfig()">📥 Reload from File</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let originalConfig = {};
+
+        // Load configuration on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadConfig();
+        });
+
+        async function loadConfig() {
+            try {
+                const response = await fetch('/api/get_config');
+                const result = await response.json();
+                
+                if (result.success) {
+                    originalConfig = JSON.parse(JSON.stringify(result.config)); // Deep copy
+                    populateForm(result.config);
+                    showNotification('Configuration loaded successfully', 'success');
+                } else {
+                    showNotification('Failed to load configuration: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showNotification('Network error: ' + error.message, 'error');
+            }
+        }
+
+        function populateForm(config) {
+            // Settings checkboxes
+            document.getElementById('motion_detection').checked = config.settings.motion_detection;
+            document.getElementById('speech').checked = config.settings.speech;
+            document.getElementById('webserver').checked = config.settings.webserver;
+            document.getElementById('discord_notifications').checked = config.settings.discord_notifications;
+            document.getElementById('discord_bot').checked = config.settings.discord_bot;
+            document.getElementById('debug').checked = config.settings.debug;
+
+            // Camera settings
+            document.getElementById('main_camera').value = config.camera.main;
+            document.getElementById('v_cam').value = config.camera.v_cam;
+            document.getElementById('body_inc').value = config.camera.body_inc;
+            document.getElementById('face_inc').value = config.camera.face_inc;
+            document.getElementById('motion_inc').value = config.camera.motion_inc;
+            document.getElementById('undetected_time').value = config.camera.undetected_time;
+            document.getElementById('fallback_fps').value = config.camera.fallback_fps;
+        }
+
+        function resetForm() {
+            populateForm(originalConfig);
+            showNotification('Form reset to original values', 'success');
+        }
+
+        async function saveConfig() {
+            const saveBtn = document.querySelector('.btn-save');
+            saveBtn.classList.add('loading');
+            saveBtn.textContent = '💾 Saving...';
+
+            try {
+                const newConfig = {
+                    settings: {
+                        motion_detection: document.getElementById('motion_detection').checked,
+                        speech: document.getElementById('speech').checked,
+                        webserver: document.getElementById('webserver').checked,
+                        discord_notifications: document.getElementById('discord_notifications').checked,
+                        discord_bot: document.getElementById('discord_bot').checked,
+                        debug: document.getElementById('debug').checked
+                    },
+                    camera: {
+                        main: parseInt(document.getElementById('main_camera').value),
+                        v_cam: parseInt(document.getElementById('v_cam').value),
+                        body_inc: parseInt(document.getElementById('body_inc').value),
+                        face_inc: parseInt(document.getElementById('face_inc').value),
+                        motion_inc: parseInt(document.getElementById('motion_inc').value),
+                        undetected_time: parseInt(document.getElementById('undetected_time').value),
+                        fallback_fps: parseInt(document.getElementById('fallback_fps').value)
+                    }
+                };
+
+                const response = await fetch('/api/save_config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newConfig)
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    originalConfig = JSON.parse(JSON.stringify(newConfig)); // Update original
+                    showNotification(result.message + ' - Restart system to apply changes', 'success');
+                } else {
+                    showNotification('Save failed: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showNotification('Network error: ' + error.message, 'error');
+            } finally {
+                saveBtn.classList.remove('loading');
+                saveBtn.textContent = '💾 Save Configuration';
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => document.body.removeChild(notification), 300);
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
