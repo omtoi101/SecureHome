@@ -17,7 +17,7 @@ sys.excepthook = exc_handler
 with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
     config = json.load(conf_file)
 
-cam_n = config["camera"]["v_cam"]
+
 
 outputFrame = None
 lock = threading.Lock()
@@ -27,7 +27,7 @@ system_status = {
     'webserver': True
 }
 
-cap = cv2.VideoCapture(cam_n)
+cap = cv2.VideoCapture(config["camera"]["v_cam"])
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'security_system_key'
 socketio = SocketIO(app, cors_allowed_origins="*")
@@ -112,6 +112,8 @@ def save_config():
 @app.route("/api/reload_camera", methods=['POST'])
 def reload_camera():
     global cap, outputFrame, lock
+    with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
+        config = json.load(conf_file)
     try:
         with lock:
             # Release current camera
@@ -122,7 +124,7 @@ def reload_camera():
             time.sleep(1)
             
             # Reinitialize camera
-            cap = cv2.VideoCapture(cam_n)
+            cap = cv2.VideoCapture(config["camera"]["v_cam"])
             cap.set(3, 1280)  # Width
             cap.set(4, 720)   # Height
             
@@ -142,7 +144,8 @@ def reload_camera():
 @app.route("/api/control/<action>", methods=['POST'])
 def system_control(action):
     global security_process, bot_process, system_status
-    
+    with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
+        config = json.load(conf_file)
     try:
         if action == "start":
             # Start security system
@@ -202,6 +205,58 @@ def system_control(action):
         else:
             return jsonify({"success": False, "error": "Invalid action"})
             
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+
+@app.route("/api/get_env", methods=['GET'])
+def get_env():
+    try:
+        env_path = os.path.join(os.path.dirname(__file__), ".env")
+        if not os.path.exists(env_path):
+            return jsonify({"success": False, "error": ".env file not found"})
+        with open(env_path, "r") as env_file:
+            env_content = env_file.read()
+        return jsonify({"success": True, "env": env_content})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+
+@app.route("/api/save_env", methods=['POST'])
+def save_env():
+    try:
+        data = request.get_json()
+        env_content = data.get("env")
+        if env_content is None:
+            return jsonify({"success": False, "error": "Missing 'env' content"})
+        env_path = os.path.join(os.path.dirname(__file__), "bob.txt")
+        with open(env_path, "w") as env_file:
+            env_file.write(env_content)
+        return jsonify({"success": True, "message": ".env file saved successfully"})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+
+@app.route("/add_user")
+def add_user():
+    return render_template("add_user.html")
+
+@app.route("/api/add_user", methods=['POST'])
+def api_add_user():
+    try:
+        data = request.get_json()
+        name = data.get("name")
+        img_data = data.get("image")
+        if not name or not img_data:
+            return jsonify({"success": False, "error": "Missing name or image"})
+        # Decode base64 image
+        import base64
+        from PIL import Image
+        from io import BytesIO
+        img_bytes = base64.b64decode(img_data.split(',')[1])
+        img = Image.open(BytesIO(img_bytes))
+        # Save image
+        images_dir = os.path.join(os.path.dirname(__file__), "images")
+        os.makedirs(images_dir, exist_ok=True)
+        img.save(os.path.join(images_dir, f"{name}.jpg"))
+        return jsonify({"success": True, "message": "User added successfully"})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)})
 

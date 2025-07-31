@@ -2,8 +2,6 @@ import os, cv2, pyttsx3, pyvirtualcam, multiprocessing, logging, sys, traceback,
 from cvzone.PoseModule import PoseDetector
 from pyvirtualcam import PixelFormat
 from datetime import datetime
-from os import environ
-from dotenv import load_dotenv
 
 from dependencies.Webhook import WebhookBuilder
 from dependencies.Facerec import Facerec
@@ -18,7 +16,6 @@ def exc_handler(exctype, value, tb):
     logger.exception(''.join(traceback.format_exception(exctype, value, tb)))
 sys.excepthook = exc_handler
 
-load_dotenv()
 with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
     config = json.load(conf_file)
 
@@ -32,7 +29,11 @@ motion_detection = config["settings"]["motion_detection"]
 speech = config["settings"]["speech"]
 webserver = config["settings"]["webserver"]
 notifications = config["settings"]["discord_notifications"]
-url = environ["URL"]
+# url = environ["URL"]  # REMOVE THIS LINE
+
+# Get Discord webhook URL from config.json
+url = config.get("discord", {}).get("webhook_url", "")
+
 cam_n = config["camera"]["main"]
 fallback_fps = config["camera"]["fallback_fps"]
 
@@ -299,5 +300,5 @@ if __name__ == '__main__':
 
 	cap.release()
 	cv2.destroyAllWindows()
-		
+
 

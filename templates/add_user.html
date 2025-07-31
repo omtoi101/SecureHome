@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New User</title>
+    <style>
+        body { background: #1e3c72; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px; }
+        .container { max-width: 400px; margin: auto; background: rgba(0,0,0,0.3); border-radius: 15px; padding: 30px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; }
+        input[type="text"] { width: 100%; padding: 10px; border-radius: 8px; border: none; }
+        button { padding: 10px 20px; border-radius: 8px; border: none; background: #2a5298; color: white; font-weight: bold; cursor: pointer; }
+        #video { width: 100%; border-radius: 8px; }
+        #canvas { display: none; }
+        .notification { margin-top: 20px; padding: 10px; border-radius: 8px; }
+        .success { background: #28a745; }
+        .error { background: #dc3545; }
+        .back-btn {
+            background: #2a5298;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .back-btn:hover {
+            background: #1e3c72;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="window.location.href='/settings'" style="margin-bottom:15px;">← Back to Settings</button>
+        <h2>Add New User</h2>
+        <div class="form-group">
+            <label for="username">User Name</label>
+            <input type="text" id="username" placeholder="Enter name">
+        </div>
+        <div class="form-group">
+            <video id="video" autoplay></video>
+            <canvas id="canvas"></canvas>
+        </div>
+        <div class="form-group">
+            <button onclick="takePhoto()">📸 Take Photo</button>
+            <button onclick="submitUser()">💾 Save User</button>
+        </div>
+        <div id="notification"></div>
+    </div>
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        let imageData = null;
+
+        // Start camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => { video.srcObject = stream; })
+            .catch(err => { showNotification('Camera access denied', 'error'); });
+
+        function takePhoto() {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            imageData = canvas.toDataURL('image/jpeg');
+            showNotification('Photo captured! Ready to save.', 'success');
+        }
+
+        function submitUser() {
+            const name = document.getElementById('username').value.trim();
+            if (!name) {
+                showNotification('Please enter a name.', 'error');
+                return;
+            }
+            if (!imageData) {
+                showNotification('Please take a photo first.', 'error');
+                return;
+            }
+            fetch('/api/add_user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, image: imageData })
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    showNotification(result.message, 'success');
+                } else {
+                    showNotification(result.error, 'error');
+                }
+            })
+            .catch(() => showNotification('Network error', 'error'));
+        }
+
+        function showNotification(msg, type) {
+            const n = document.getElementById('notification');
+            n.textContent = msg;
+            n.className = 'notification ' + type;
+        }
+    </script>
+</body>
+</html>

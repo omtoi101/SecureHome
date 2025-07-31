@@ -1,7 +1,6 @@
 import discord, os, asyncio, logging, sys, traceback, requests, random, colorama, glob
 from discord.ext import commands
-from os import environ
-from dotenv import load_dotenv
+import json
 
 from dependencies.Facedet import FaceDet
 
@@ -14,10 +13,13 @@ def exc_handler(exctype, value, tb):
     logger.exception(''.join(traceback.format_exception(exctype, value, tb)))
 sys.excepthook = exc_handler
 
+with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
+    config = json.load(conf_file)
 
-load_dotenv()
+# Get Discord bot token and other info from config.json
+bot_token = config.get("discord", {}).get("bot_token", "")
 
-TOKEN = environ["TOKEN"]
+TOKEN = bot_token
 facedet = FaceDet(os.path.dirname(__file__))
 images_path = os.path.join(os.path.dirname(__file__), "images\\")
 bot = commands.Bot(command_prefix='.', intents=discord.Intents.all())
