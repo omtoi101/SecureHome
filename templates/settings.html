@@ -254,10 +254,9 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>⚙️ SecureHome Settings</h1>
-            <a href="/" class="back-btn">
-                ← Back to Dashboard
-            </a>
+            <h1>SecureHome Settings</h1>
+            <button class="back-btn" onclick="window.location.href='/'">← Back</button>
+            <button class="back-btn" style="margin-left:10px;" onclick="window.location.href='/add_user'">➕ Add New User</button>
         </div>
 
         <div class="settings-container">
@@ -365,6 +364,22 @@
                     </div>
                 </div>
 
+                <div class="section">
+                    <div class="section-title">
+                        💬 Discord Settings
+                    </div>
+                    <div class="form-group">
+                        <label for="discord_webhook_url">Webhook URL</label>
+                        <input type="text" id="discord_webhook_url" name="discord_webhook_url" placeholder="Discord Webhook URL">
+                        <div class="description">URL for Discord notifications</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="discord_bot_token">Bot Token</label>
+                        <input type="text" id="discord_bot_token" name="discord_bot_token" placeholder="Discord Bot Token">
+                        <div class="description">Token for Discord bot</div>
+                    </div>
+                </div>
+
                 <div class="action-buttons">
                     <button type="button" class="btn btn-save" onclick="saveConfig()">💾 Save Configuration</button>
                     <button type="button" class="btn btn-reset" onclick="resetForm()">🔄 Reset Form</button>
@@ -380,6 +395,8 @@
         // Load configuration on page load
         document.addEventListener('DOMContentLoaded', function() {
             loadConfig();
+            loadEnv();
+            loadDiscord();
         });
 
         async function loadConfig() {
@@ -416,6 +433,8 @@
             document.getElementById('motion_inc').value = config.camera.motion_inc;
             document.getElementById('undetected_time').value = config.camera.undetected_time;
             document.getElementById('fallback_fps').value = config.camera.fallback_fps;
+            document.getElementById('discord_webhook_url').value = config.discord.webhook_url;
+            document.getElementById('discord_bot_token').value = config.discord.bot_token;
         }
 
         function resetForm() {
@@ -446,6 +465,10 @@
                         motion_inc: parseInt(document.getElementById('motion_inc').value),
                         undetected_time: parseInt(document.getElementById('undetected_time').value),
                         fallback_fps: parseInt(document.getElementById('fallback_fps').value)
+                    },
+                    discord: {
+                        webhook_url: document.getElementById('discord_webhook_url').value,
+                        bot_token: document.getElementById('discord_bot_token').value,
                     }
                 };
 
@@ -472,6 +495,8 @@
                 saveBtn.textContent = '💾 Save Configuration';
             }
         }
+
+
 
         function showNotification(message, type) {
             const notification = document.createElement('div');

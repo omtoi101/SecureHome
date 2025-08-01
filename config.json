@@ -4,7 +4,7 @@
         "speech": true,
         "webserver": true,
         "discord_notifications": true,
-        "discord_bot": false,
+        "discord_bot": true,
         "debug": true
     },
     "camera": {
@@ -17,7 +17,7 @@
         "fallback_fps": 30
     },
     "discord": {
-        "webhook_url": "poop",
-        "bot_token": ""
+        "webhook_url": "url",
+        "bot_token": "token"
     }
 }

@@ -138,7 +138,8 @@ if __name__ == '__main__':
 					continue
 				cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 225, 225), 1)
 				cv2.putText(frame, "Status: {}".format('Movement'), (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 225, 225), 2)
-			cv2.resize(frame, (1280,720))
+
+			frame = cv2.resize(frame, (1280, 720))
 			_, frame2 = cap.read()
 			if contours != ():
 				motion_c+=1
@@ -194,7 +195,7 @@ if __name__ == '__main__':
 							10, size)
 				v_path = fr"{path}\recording_{file_t}.avi"
 				just_ran.append("recorder")
-			if body_c > 1 or face_c > 1:
+			if body_c > 5 or face_c > 5:
 				result.write(frame)
 
 
@@ -204,7 +205,7 @@ if __name__ == '__main__':
 			
 
 			if undetected_c == undetected_time:
-				if intruder and body_c > 1 and notifications:
+				if intruder and (body_c > 5 or face_c > 5) and notifications:
 					webhook.thread("recording", v_path)
 				print("Camera reset.")
 				undetected_c = 0
@@ -295,6 +296,7 @@ if __name__ == '__main__':
 			
 			
 			if webserver:
+				img = cv2.resize(img, (640, 480))
 				cam.send(img)
 				cam.sleep_until_next_frame()
 
