@@ -467,8 +467,10 @@
             </div>
             <img src="/video_feed" class="camera-feed" alt="Camera Feed">
             <div class="camera-info">
-                <span>Detection Count: <span id="detection-count">0</span></span>
-                <span>Status: <span id="camera-status">ONLINE</span></span>
+                <form id="tts-form" style="width:100%;display:flex;gap:10px;align-items:center;">
+                    <input type="text" id="tts-input" placeholder="Type a message to speak..." style="flex:1;padding:8px;border-radius:6px;border:none;font-size:14px;">
+                    <button type="submit" id="tts-btn" style="padding:8px 16px;border-radius:6px;background:#2a5298;color:white;border:none;font-weight:600;cursor:pointer;">🔊 Speak</button>
+                </form>
             </div>
         </div>
 
@@ -759,6 +761,39 @@
                 document.getElementById('detection-count').textContent = detectionCount;
             }
         }, 5000);
+
+        // Text-to-speech message box logic
+        document.getElementById('tts-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const input = document.getElementById('tts-input');
+            const btn = document.getElementById('tts-btn');
+            const message = input.value.trim();
+            if (!message) {
+                showNotification('Please enter a message to speak.', 'error');
+                return;
+            }
+            btn.classList.add('loading');
+            btn.textContent = '🔊 Speaking...';
+            try {
+                const response = await fetch('/api/speak', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    showNotification('Message spoken!', 'success');
+                    input.value = '';
+                } else {
+                    showNotification('TTS failed: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showNotification('Network error: ' + error.message, 'error');
+            } finally {
+                btn.classList.remove('loading');
+                btn.textContent = '🔊 Speak';
+            }
+        });
     </script>
 </body>
 </html>

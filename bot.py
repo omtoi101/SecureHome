@@ -7,7 +7,7 @@ from dependencies.Facedet import FaceDet
 colorama.init()
 
 logger = logging.getLogger('logger')
-fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\d_bot.log"))
+fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), r"logs\d_bot.log"))
 logger.addHandler(fh)
 def exc_handler(exctype, value, tb):
     logger.exception(''.join(traceback.format_exception(exctype, value, tb)))
@@ -84,7 +84,7 @@ async def delface(ctx, name):
         face = face.split(".")[0]
         faces[i] = face
     if name in faces:
-        os.remove(os.path.join(os.path.dirname(__file__), f"images\{name}.jpg"))
+        os.remove(os.path.join(os.path.dirname(__file__), fr"images\{name}.jpg"))
         await ctx.send(f"**{name}** removed from database.")
     else:
         await ctx.send(f"**{name}** is not in the database.")
@@ -124,6 +124,9 @@ async def help(ctx):
 
 
 async def main():
-  await bot.start(TOKEN)
+  try:
+      await bot.start(TOKEN)
+  except discord.errors.LoginFailure:
+      logging.error("Invalid bot token. Please check your token and try again.")
 
 asyncio.run(main())

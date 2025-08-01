@@ -2,100 +2,690 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add New User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - SecureHome</title>
     <style>
-        body { background: #1e3c72; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px; }
-        .container { max-width: 400px; margin: auto; background: rgba(0,0,0,0.3); border-radius: 15px; padding: 30px; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; }
-        input[type="text"] { width: 100%; padding: 10px; border-radius: 8px; border: none; }
-        button { padding: 10px 20px; border-radius: 8px; border: none; background: #2a5298; color: white; font-weight: bold; cursor: pointer; }
-        #video { width: 100%; border-radius: 8px; }
-        #canvas { display: none; }
-        .notification { margin-top: 20px; padding: 10px; border-radius: 8px; }
-        .success { background: #28a745; }
-        .error { background: #dc3545; }
-        .back-btn {
-            background: #2a5298;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .add-user-section, .manage-users-section {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #4ade80;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #e5e7eb;
+        }
+
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4ade80;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .camera-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        #video {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: #000;
+        }
+
+        #canvas {
+            display: none;
+        }
+
+        .camera-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border: 3px solid #4ade80;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .camera-status {
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .camera-ready {
+            background: rgba(74, 222, 128, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+        }
+
+        .camera-error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .btn {
+            padding: 12px 20px;
             border: none;
             border-radius: 8px;
-            padding: 8px 16px;
-            font-size: 16px;
+            font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #4f46e5, #4338ca);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            transform: translateY(-2px);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .user-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .user-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .user-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 10px;
+            word-break: break-word;
+        }
+
+        .user-actions {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            min-width: auto;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+            word-wrap: break-word;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+            position: relative;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .preview-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 12px;
+            border: 2px solid #4ade80;
             margin-bottom: 10px;
         }
-        .back-btn:hover {
-            background: #1e3c72;
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .users-grid::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .users-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .users-grid::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <button class="back-btn" onclick="window.location.href='/settings'" style="margin-bottom:15px;">← Back to Settings</button>
-        <h2>Add New User</h2>
-        <div class="form-group">
-            <label for="username">User Name</label>
-            <input type="text" id="username" placeholder="Enter name">
+        <div class="header">
+            <h1>👥 User Management</h1>
+            <a href="/settings" class="back-btn">← Back to Settings</a>
         </div>
-        <div class="form-group">
-            <video id="video" autoplay></video>
-            <canvas id="canvas"></canvas>
+
+        <div class="main-content">
+            <!-- Add User Section -->
+            <div class="add-user-section">
+                <div class="section-title">
+                    ➕ Add New User
+                </div>
+
+                <div class="form-group">
+                    <label for="username">User Name</label>
+                    <input type="text" id="username" placeholder="Enter user name" maxlength="30">
+                </div>
+
+                <div class="camera-container">
+                    <div id="camera-status" class="camera-status camera-error">
+                        📷 Initializing camera...
+                    </div>
+                    <div style="position: relative; display: inline-block;">
+                        <video id="video" autoplay playsinline></video>
+                        <div class="camera-overlay"></div>
+                    </div>
+                    <canvas id="canvas"></canvas>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="takePhoto()" id="capture-btn" disabled>
+                        📸 Capture Photo
+                    </button>
+                    <button class="btn btn-success" onclick="submitUser()" id="save-btn" disabled>
+                        💾 Save User
+                    </button>
+                </div>
+
+                <div class="preview-section" id="preview-section" style="display: none;">
+                    <h4>📷 Captured Photo</h4>
+                    <img id="preview-image" class="preview-image" alt="Preview">
+                    <p>Ready to save! Make sure the face is clearly visible.</p>
+                </div>
+            </div>
+
+            <!-- Manage Users Section -->
+            <div class="manage-users-section">
+                <div class="section-title">
+                    👤 Manage Users
+                </div>
+
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="🔍 Search users..." oninput="filterUsers()">
+                </div>
+
+                <div class="users-grid" id="users-grid">
+                    <div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.6);">
+                        Loading users...
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="loadUsers()">🔄 Refresh Users</button>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <button onclick="takePhoto()">📸 Take Photo</button>
-            <button onclick="submitUser()">💾 Save User</button>
-        </div>
-        <div id="notification"></div>
     </div>
+
     <script>
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
-        let imageData = null;
+        const cameraStatus = document.getElementById('camera-status');
+        const captureBtn = document.getElementById('capture-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const previewSection = document.getElementById('preview-section');
+        const previewImage = document.getElementById('preview-image');
+        const usersGrid = document.getElementById('users-grid');
+        const searchInput = document.getElementById('search-input');
 
-        // Start camera
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => { video.srcObject = stream; })
-            .catch(err => { showNotification('Camera access denied', 'error'); });
+        let imageData = null;
+        let currentStream = null;
+        let allUsers = [];
+
+        // Initialize camera on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCamera();
+            loadUsers();
+        });
+
+        async function initializeCamera() {
+            try {
+                cameraStatus.textContent = '📷 Requesting camera access...';
+                cameraStatus.className = 'camera-status camera-error';
+
+                const constraints = {
+                    video: {
+                        width: { ideal: 640 },
+                        height: { ideal: 480 },
+                        facingMode: 'user'
+                    }
+                };
+
+                currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+                video.srcObject = currentStream;
+
+                video.onloadedmetadata = () => {
+                    cameraStatus.textContent = '✅ Camera ready - Position your face in the circle';
+                    cameraStatus.className = 'camera-status camera-ready';
+                    captureBtn.disabled = false;
+                };
+
+            } catch (err) {
+                console.error('Camera error:', err);
+                cameraStatus.textContent = '❌ Camera access denied or not available';
+                cameraStatus.className = 'camera-status camera-error';
+                showNotification('Camera access denied. Please check permissions.', 'error');
+            }
+        }
 
         function takePhoto() {
+            if (!video.videoWidth || !video.videoHeight) {
+                showNotification('Camera not ready. Please wait.', 'error');
+                return;
+            }
+
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-            imageData = canvas.toDataURL('image/jpeg');
-            showNotification('Photo captured! Ready to save.', 'success');
+            
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            imageData = canvas.toDataURL('image/jpeg', 0.8);
+            previewImage.src = imageData;
+            previewSection.style.display = 'block';
+            saveBtn.disabled = false;
+            
+            showNotification('📸 Photo captured! Ready to save.', 'success');
         }
 
-        function submitUser() {
+        async function submitUser() {
             const name = document.getElementById('username').value.trim();
+            
             if (!name) {
-                showNotification('Please enter a name.', 'error');
+                showNotification('❌ Please enter a user name.', 'error');
                 return;
             }
+            
+            if (name.length > 30) {
+                showNotification('❌ Name too long. Maximum 30 characters.', 'error');
+                return;
+            }
+            
             if (!imageData) {
-                showNotification('Please take a photo first.', 'error');
+                showNotification('❌ Please take a photo first.', 'error');
                 return;
             }
-            fetch('/api/add_user', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: name, image: imageData })
-            })
-            .then(res => res.json())
-            .then(result => {
+
+            saveBtn.classList.add('loading');
+            
+            try {
+                const response = await fetch('/api/add_user', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: name, image: imageData })
+                });
+
+                const result = await response.json();
+                
                 if (result.success) {
-                    showNotification(result.message, 'success');
+                    showNotification(`✅ ${name} added successfully!`, 'success');
+                    
+                    // Reset form
+                    document.getElementById('username').value = '';
+                    imageData = null;
+                    previewSection.style.display = 'none';
+                    saveBtn.disabled = true;
+                    
+                    // Reload users
+                    setTimeout(loadUsers, 1000);
                 } else {
-                    showNotification(result.error, 'error');
+                    showNotification('❌ ' + result.error, 'error');
                 }
-            })
-            .catch(() => showNotification('Network error', 'error'));
+            } catch (error) {
+                showNotification('❌ Network error: ' + error.message, 'error');
+            } finally {
+                saveBtn.classList.remove('loading');
+            }
         }
 
-        function showNotification(msg, type) {
-            const n = document.getElementById('notification');
-            n.textContent = msg;
-            n.className = 'notification ' + type;
+        async function loadUsers() {
+            try {
+                const response = await fetch('/api/list_users');
+                const result = await response.json();
+                
+                if (result.success) {
+                    allUsers = result.users;
+                    displayUsers(allUsers);
+                } else {
+                    usersGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.6);">Failed to load users</div>';
+                }
+            } catch (error) {
+                usersGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.6);">Error loading users</div>';
+                console.error('Error loading users:', error);
+            }
+        }
+
+        function displayUsers(users) {
+            if (users.length === 0) {
+                usersGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.6);">No users found</div>';
+                return;
+            }
+
+            usersGrid.innerHTML = users.map(user => `
+                <div class="user-card">
+                    <img src="/api/user_image/${user.name}" class="user-image" alt="${user.name}" onerror="this.style.display='none'">
+                    <div class="user-name">${user.name}</div>
+                    <div class="user-actions">
+                        <button class="btn btn-danger btn-small" onclick="deleteUser('${user.name}')">
+                            🗑️ Delete
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterUsers() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredUsers = allUsers.filter(user => 
+                user.name.toLowerCase().includes(searchTerm)
+            );
+            displayUsers(filteredUsers);
+        }
+
+        async function deleteUser(username) {
+            if (!confirm(`Are you sure you want to delete user "${username}"?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/delete_user', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: username })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification(`✅ ${username} deleted successfully!`, 'success');
+                    loadUsers(); // Reload the users list
+                } else {
+                    showNotification('❌ ' + result.error, 'error');
+                }
+            } catch (error) {
+                showNotification('❌ Network error: ' + error.message, 'error');
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // Speak message function
+        async function speakMessage() {
+            const input = document.getElementById('tts-input');
+            const speakBtn = document.getElementById('speak-btn');
+            const message = input.value.trim();
+            
+            if (!message) {
+                showNotification('❌ Please enter a message to speak.', 'error');
+                return;
+            }
+
+            speakBtn.classList.add('loading');
+            speakBtn.textContent = '🔊 Speaking...';
+
+            try {
+                const response = await fetch('/api/speak', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification('🔊 Message sent to TTS system!', 'success');
+                    input.value = '';
+                } else {
+                    showNotification('❌ TTS failed: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showNotification('❌ Network error: ' + error.message, 'error');
+            } finally {
+                speakBtn.classList.remove('loading');
+                speakBtn.textContent = '🎤 Speak Message';
+            }
         }
     </script>
 </body>

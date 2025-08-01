@@ -1,8 +1,7 @@
-import threading, time, cv2, logging, sys, traceback, os, json, colorama, subprocess, signal
-from flask import Response, Flask, render_template, jsonify, request
+import threading, time, cv2, logging, sys, traceback, os, json, colorama, subprocess
+from flask import Response, Flask, render_template, jsonify, request, send_from_directory
 from flask_socketio import SocketIO, emit
 from datetime import datetime
-import queue
 
 colorama.init()
 
@@ -257,6 +256,71 @@ def api_add_user():
         os.makedirs(images_dir, exist_ok=True)
         img.save(os.path.join(images_dir, f"{name}.jpg"))
         return jsonify({"success": True, "message": "User added successfully"})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+
+@app.route("/api/list_users", methods=['GET'])
+def list_users():
+    try:
+        images_dir = os.path.join(os.path.dirname(__file__), "images")
+        if not os.path.exists(images_dir):
+            return jsonify({"success": True, "users": []})
+        users = []
+        for filename in os.listdir(images_dir):
+            if filename.lower().endswith(('.jpg', '.jpeg', '.png')):
+                user = os.path.splitext(filename)[0]
+                if user:
+                    users.append({"name": user})
+        return jsonify({"success": True, "users": users})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+
+@app.route("/api/user_image/<username>")
+def user_image(username):
+    images_dir = os.path.join(os.path.dirname(__file__), "images")
+    # Try jpg, jpeg, png in order
+    for ext in ["jpg", "jpeg", "png"]:
+        filename = f"{username}.{ext}"
+        filepath = os.path.join(images_dir, filename)
+        if os.path.exists(filepath):
+            return send_from_directory(images_dir, filename)
+    # If not found, return 404
+    return '', 404
+
+@app.route("/api/delete_user", methods=['POST'])
+def delete_user():
+    try:
+        data = request.get_json()
+        name = data.get("name")
+        if not name:
+            return jsonify({"success": False, "error": "Missing user name"})
+        images_dir = os.path.join(os.path.dirname(__file__), "images")
+        deleted = False
+        for ext in ["jpg", "jpeg", "png"]:
+            filename = f"{name}.{ext}"
+            filepath = os.path.join(images_dir, filename)
+            if os.path.exists(filepath):
+                os.remove(filepath)
+                deleted = True
+        if deleted:
+            return jsonify({"success": True, "message": f"User '{name}' deleted"})
+        else:
+            return jsonify({"success": False, "error": "User image not found"})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+
+@app.route("/api/speak", methods=['POST'])
+def api_speak():
+    try:
+        data = request.get_json()
+        message = data.get("message", "").strip()
+        if not message:
+            return jsonify({"success": False, "error": "No message provided"})
+        import pyttsx3
+        engine = pyttsx3.init()
+        engine.say(message)
+        engine.runAndWait()
+        return jsonify({"success": True})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)})
 

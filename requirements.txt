@@ -4,8 +4,12 @@ discord.py
 discord_webhook
 face_recognition
 Flask
+Flask-SocketIO
 numpy
 opencv_contrib_python
 opencv_python
 python-dotenv
 mediapipe
+pyttsx3
+Pillow
+eventlet
