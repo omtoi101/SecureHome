@@ -1,9 +1,799 @@
-<html>
-  <head>
-    <title>Video Surveillance</title>
-  </head>
-  <body>
-    <h1>Surveillance cam</h1>
-    <img src="{{ url_for('video_feed') }}">
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureHome Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 30px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .settings-btn {
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .settings-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+            color: white;
+            text-decoration: none;
+        }
+
+        .main-container {
+            display: flex;
+            height: calc(100vh - 80px);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .camera-section {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .camera-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .camera-title-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .camera-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .reload-btn {
+            padding: 6px 12px;
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .reload-btn:hover {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            transform: translateY(-1px);
+        }
+
+        .reload-btn:active {
+            transform: translateY(0);
+        }
+
+        .status-indicators {
+            display: flex;
+            gap: 15px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-online { background-color: #00ff88; }
+        .status-offline { background-color: #ff4444; }
+
+        .camera-feed {
+            width: 100%;
+            height: calc(100% - 120px);
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            object-fit: cover;
+            background: #000;
+        }
+
+        .camera-info {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .control-section {
+            width: 450px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .control-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .control-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: white;
+        }
+
+        .btn-start:hover {
+            background: linear-gradient(135deg, #00cc6a, #00aa55);
+            transform: translateY(-2px);
+        }
+
+        .btn-stop {
+            background: linear-gradient(135deg, #ff4444, #cc3333);
+            color: white;
+        }
+
+        .btn-stop:hover {
+            background: linear-gradient(135deg, #cc3333, #aa2222);
+            transform: translateY(-2px);
+        }
+
+        .btn-restart {
+            background: linear-gradient(135deg, #ffaa00, #cc8800);
+            color: white;
+        }
+
+        .btn-restart:hover {
+            background: linear-gradient(135deg, #cc8800, #aa6600);
+            transform: translateY(-2px);
+        }
+
+        .screenshot-section {
+            margin-bottom: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .screenshot-btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 auto;
+        }
+
+        .screenshot-btn:hover {
+            background: linear-gradient(135deg, #4f46e5, #4338ca);
+            transform: translateY(-2px);
+        }
+
+        .terminal-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            position: relative;
+        }
+
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-shrink: 0;
+        }
+
+        .terminal-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .terminal-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .detection-count {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .clear-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clear-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .terminal {
+            flex: 1;
+            background: #1a1a1a;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #00ff88;
+            min-height: 200px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .terminal::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .terminal::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .terminal::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .terminal::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .log-entry {
+            margin-bottom: 2px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            max-width: 100%;
+            overflow-wrap: break-word;
+            display: block;
+        }
+
+        .log-system { color: #00ff88; }
+        .log-security { color: #ff6b6b; }
+        .log-discord { color: #7289da; }
+        .log-webserver { color: #ffd93d; }
+        .log-error { color: #ff4757; }
+        .log-warning { color: #ffa502; }
+        .log-info { color: #3742fa; }
+
+        .scroll-to-bottom-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-to-bottom-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #ff4444, #cc3333);
+        }
+
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .pulse {
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏠 SecureHome Dashboard</h1>
+        <div class="header-controls">
+            <a href="/settings" class="settings-btn">
+                ⚙️ Settings
+            </a>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="camera-section">
+            <div class="camera-header">
+                <div class="camera-title-section">
+                    <div class="camera-title">📷 Live Camera Feed</div>
+                    <button class="reload-btn" onclick="reloadCamera()">
+                        🔄 Reload Camera
+                    </button>
+                </div>
+                <div class="status-indicators">
+                    <div class="status-indicator">
+                        <div class="status-dot status-offline" id="status-security"></div>
+                        <span>Security System</span>
+                    </div>
+                    <div class="status-indicator">
+                        <div class="status-dot status-offline" id="status-discord"></div>
+                        <span>Discord Bot</span>
+                    </div>
+                    <div class="status-indicator">
+                        <div class="status-dot status-online" id="status-webserver"></div>
+                        <span>Web Server</span>
+                    </div>
+                </div>
+            </div>
+            <img src="/video_feed" class="camera-feed" alt="Camera Feed">
+            <div class="camera-info">
+                <form id="tts-form" style="width:100%;display:flex;gap:10px;align-items:center;">
+                    <input type="text" id="tts-input" placeholder="Type a message to speak..." style="flex:1;padding:8px;border-radius:6px;border:none;font-size:14px;">
+                    <button type="submit" id="tts-btn" style="padding:8px 16px;border-radius:6px;background:#2a5298;color:white;border:none;font-weight:600;cursor:pointer;">🔊 Speak</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="control-section">
+            <div class="control-header">🎛️ System Controls</div>
+            
+            <div class="control-buttons">
+                <button class="control-btn btn-start" onclick="controlSystem('start')">START</button>
+                <button class="control-btn btn-stop" onclick="controlSystem('stop')">STOP</button>
+                <button class="control-btn btn-restart" onclick="controlSystem('restart')">RESTART</button>
+            </div>
+
+            <div class="screenshot-section">
+                <button class="screenshot-btn" onclick="takeScreenshot()">
+                    📸 Screenshot
+                </button>
+            </div>
+
+            <div class="terminal-section">
+                <div class="terminal-header">
+                    <div class="terminal-title">📟 System Output</div>
+                    <div class="terminal-controls">
+                        <div class="detection-count">Live Logs</div>
+                        <button class="clear-btn" onclick="clearTerminal()">🗑️ Clear</button>
+                    </div>
+                </div>
+                <div class="terminal" id="terminal"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Socket.IO connection
+        const socket = io();
+        const terminal = document.getElementById('terminal');
+        let detectionCount = 36;
+        let isUserScrolling = false;
+        let scrollTimeout;
+
+        // Track if user is manually scrolling
+        terminal.addEventListener('scroll', function() {
+            const isAtBottom = terminal.scrollTop + terminal.clientHeight >= terminal.scrollHeight - 5;
+            isUserScrolling = !isAtBottom;
+            
+            // Clear existing timeout
+            clearTimeout(scrollTimeout);
+            
+            // Reset scrolling flag after 3 seconds of no scroll activity
+            scrollTimeout = setTimeout(() => {
+                isUserScrolling = false;
+            }, 3000);
+
+            // Show/hide scroll button
+            const scrollBtn = document.querySelector('.scroll-to-bottom-btn');
+            if (scrollBtn) {
+                scrollBtn.style.display = isAtBottom ? 'none' : 'flex';
+            }
+        });
+
+        // Socket event handlers
+        socket.on('connect', function() {
+            console.log('Connected to server');
+        });
+
+        socket.on('log', function(data) {
+            addLogEntry(data.data);
+        });
+
+        function addLogEntry(message) {
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            
+            // Color code based on message content
+            if (message.includes('ERROR')) {
+                logEntry.classList.add('log-error');
+            } else if (message.includes('WARNING')) {
+                logEntry.classList.add('log-warning');
+            } else if (message.includes('DISCORD BOT')) {
+                logEntry.classList.add('log-discord');
+            } else if (message.includes('WEBSERVER')) {
+                logEntry.classList.add('log-webserver');
+            } else if (message.includes('SECURITY SYSTEM')) {
+                logEntry.classList.add('log-security');
+            } else if (message.includes('SYSTEM')) {
+                logEntry.classList.add('log-system');
+            } else {
+                logEntry.classList.add('log-info');
+            }
+            
+            // Ensure message is properly formatted and truncated if too long
+            const maxLength = 150;
+            let displayMessage = message;
+            if (message.length > maxLength) {
+                displayMessage = message.substring(0, maxLength) + '...';
+                logEntry.title = message; // Show full message on hover
+            }
+            
+            logEntry.textContent = displayMessage;
+            terminal.appendChild(logEntry);
+            
+            // Auto-scroll only if user isn't manually scrolling
+            if (!isUserScrolling) {
+                terminal.scrollTop = terminal.scrollHeight;
+            }
+            
+            // Keep terminal from getting too long (performance optimization)
+            const maxEntries = 500;
+            while (terminal.children.length > maxEntries) {
+                terminal.removeChild(terminal.firstChild);
+            }
+        }
+
+        // Control system functions
+        async function controlSystem(action) {
+            const buttons = document.querySelectorAll('.control-btn');
+            buttons.forEach(btn => btn.classList.add('loading'));
+
+            try {
+                const response = await fetch(`/api/control/${action}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification(result.message, 'success');
+                    updateSystemStatus();
+                } else {
+                    showNotification(result.error, 'error');
+                }
+            } catch (error) {
+                showNotification('Network error: ' + error.message, 'error');
+            } finally {
+                buttons.forEach(btn => btn.classList.remove('loading'));
+            }
+        }
+
+        // Reload camera function
+        async function reloadCamera() {
+            const btn = document.querySelector('.reload-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⏳ Reloading...';
+            btn.classList.add('loading');
+
+            try {
+                const response = await fetch('/api/reload_camera', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification(result.message, 'success');
+                    
+                    // Also reload the video feed image to refresh the stream
+                    const videoFeed = document.querySelector('.camera-feed');
+                    const currentSrc = videoFeed.src;
+                    videoFeed.src = '';
+                    setTimeout(() => {
+                        videoFeed.src = currentSrc + '?t=' + new Date().getTime();
+                    }, 1000);
+                    
+                } else {
+                    showNotification('Camera reload failed: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showNotification('Network error: ' + error.message, 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.classList.remove('loading');
+            }
+        }
+
+        // Screenshot function
+        async function takeScreenshot() {
+            const btn = document.querySelector('.screenshot-btn');
+            btn.classList.add('loading');
+
+            try {
+                const response = await fetch('/api/screenshot', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification(`Screenshot saved: ${result.filename}`, 'success');
+                } else {
+                    showNotification('Screenshot failed: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showNotification('Network error: ' + error.message, 'error');
+            } finally {
+                btn.classList.remove('loading');
+            }
+        }
+
+        // Update system status
+        async function updateSystemStatus() {
+            try {
+                const response = await fetch('/api/status');
+                const result = await response.text();
+                
+                // Check if response is JSON
+                let status;
+                try {
+                    status = JSON.parse(result);
+                } catch (e) {
+                    console.error('Invalid JSON response:', result);
+                    return;
+                }
+
+                document.getElementById('status-security').className = 
+                    `status-dot ${status.security ? 'status-online' : 'status-offline'}`;
+                document.getElementById('status-discord').className = 
+                    `status-dot ${status.discord_bot ? 'status-online' : 'status-offline'}`;
+                document.getElementById('status-webserver').className = 
+                    `status-dot ${status.webserver ? 'status-online' : 'status-offline'}`;
+
+            } catch (error) {
+                console.error('Failed to update status:', error);
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => document.body.removeChild(notification), 300);
+            }, 3000);
+        }
+
+        // Clear terminal function
+        function clearTerminal() {
+            terminal.innerHTML = '';
+            addLogEntry('[SYSTEM] Terminal cleared');
+        }
+
+        // Create scroll to bottom button
+        function createScrollButton() {
+            const scrollButton = document.createElement('button');
+            scrollButton.innerHTML = '↓';
+            scrollButton.className = 'scroll-to-bottom-btn';
+            
+            scrollButton.addEventListener('click', () => {
+                terminal.scrollTop = terminal.scrollHeight;
+                isUserScrolling = false;
+                scrollButton.style.display = 'none';
+            });
+            
+            // Add to terminal section
+            const terminalSection = document.querySelector('.terminal-section');
+            terminalSection.appendChild(scrollButton);
+            
+            return scrollButton;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createScrollButton();
+            updateSystemStatus();
+            setInterval(updateSystemStatus, 5000);
+            
+            // Add some initial log entries
+            addLogEntry('[SYSTEM] SecureHome Dashboard initialized');
+            addLogEntry('[WEBSERVER] Server running on port 8040');
+        });
+
+        // Update detection count periodically
+        setInterval(() => {
+            if (Math.random() > 0.8) {
+                detectionCount++;
+                document.getElementById('detection-count').textContent = detectionCount;
+            }
+        }, 5000);
+
+        // Text-to-speech message box logic
+        document.getElementById('tts-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const input = document.getElementById('tts-input');
+            const btn = document.getElementById('tts-btn');
+            const message = input.value.trim();
+            if (!message) {
+                showNotification('Please enter a message to speak.', 'error');
+                return;
+            }
+            btn.classList.add('loading');
+            btn.textContent = '🔊 Speaking...';
+            try {
+                const response = await fetch('/api/speak', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    showNotification('Message spoken!', 'success');
+                    input.value = '';
+                } else {
+                    showNotification('TTS failed: ' + result.error, 'error');
+                }
+            } catch (error) {
+                showNotification('Network error: ' + error.message, 'error');
+            } finally {
+                btn.classList.remove('loading');
+                btn.textContent = '🔊 Speak';
+            }
+        });
+    </script>
+</body>
 </html>

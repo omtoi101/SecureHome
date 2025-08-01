@@ -2,8 +2,6 @@ import os, cv2, pyttsx3, pyvirtualcam, multiprocessing, logging, sys, traceback,
 from cvzone.PoseModule import PoseDetector
 from pyvirtualcam import PixelFormat
 from datetime import datetime
-from os import environ
-from dotenv import load_dotenv
 
 from dependencies.Webhook import WebhookBuilder
 from dependencies.Facerec import Facerec
@@ -12,13 +10,12 @@ colorama.init()
 
 os.makedirs(os.path.join(os.path.dirname(__file__), "logs\\"), exist_ok=True)
 logger = logging.getLogger('logger')
-fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs\s_cam.log"))
+fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), r"logs\s_cam.log"))
 logger.addHandler(fh)
 def exc_handler(exctype, value, tb):
     logger.exception(''.join(traceback.format_exception(exctype, value, tb)))
 sys.excepthook = exc_handler
 
-load_dotenv()
 with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
     config = json.load(conf_file)
 
@@ -32,7 +29,11 @@ motion_detection = config["settings"]["motion_detection"]
 speech = config["settings"]["speech"]
 webserver = config["settings"]["webserver"]
 notifications = config["settings"]["discord_notifications"]
-url = environ["URL"]
+# url = environ["URL"]  # REMOVE THIS LINE
+
+# Get Discord webhook URL from config.json
+url = config.get("discord", {}).get("webhook_url", "")
+
 cam_n = config["camera"]["main"]
 fallback_fps = config["camera"]["fallback_fps"]
 
@@ -107,6 +108,7 @@ if __name__ == '__main__':
 
 
 
+
 	with pyvirtualcam.Camera(frame_width, frame_height, fps, fmt=PixelFormat.BGR) as cam:
 		while True:
 			check_frame_index+=1
@@ -118,14 +120,13 @@ if __name__ == '__main__':
 					fr.load_encoding_images(os.path.join(os.path.dirname(__file__), r".\images"))
 					print("Reloaded faces")
 
-			_, frame = cap.read()
-
-
-
-			## motion
-			_, frame2 = cap.read()
-			diff = cv2.absdiff(frame, frame2)
-			gray = cv2.cvtColor(diff, cv2.COLOR_BGR2GRAY)
+			ret1, frame = cap.read()
+			ret2, frame2 = cap.read()
+			if not ret1 or not ret2:
+				print("Error: Could not read frames from camera.")
+			else:
+				diff = cv2.absdiff(frame, frame2)
+				gray = cv2.cvtColor(diff, cv2.COLOR_BGR2GRAY)
 			blur = cv2.GaussianBlur(gray, (5,5), 0)
 			_, thresh = cv2.threshold(blur, 20, 255, cv2.THRESH_BINARY)
 			dilated = cv2.dilate(thresh, None, iterations=3)
@@ -137,7 +138,8 @@ if __name__ == '__main__':
 					continue
 				cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 225, 225), 1)
 				cv2.putText(frame, "Status: {}".format('Movement'), (10, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 225, 225), 2)
-			cv2.resize(frame, (1280,720))
+
+			frame = cv2.resize(frame, (1280, 720))
 			_, frame2 = cap.read()
 			if contours != ():
 				motion_c+=1
@@ -193,7 +195,7 @@ if __name__ == '__main__':
 							10, size)
 				v_path = fr"{path}\recording_{file_t}.avi"
 				just_ran.append("recorder")
-			if body_c > 1 or face_c > 1:
+			if body_c > 5 or face_c > 5:
 				result.write(frame)
 
 
@@ -203,7 +205,7 @@ if __name__ == '__main__':
 			
 
 			if undetected_c == undetected_time:
-				if intruder and body_c > 1 and notifications:
+				if intruder and (body_c > 5 or face_c > 5) and notifications:
 					webhook.thread("recording", v_path)
 				print("Camera reset.")
 				undetected_c = 0
@@ -294,10 +296,11 @@ if __name__ == '__main__':
 			
 			
 			if webserver:
+				img = cv2.resize(img, (640, 480))
 				cam.send(img)
 				cam.sleep_until_next_frame()
 
 	cap.release()
 	cv2.destroyAllWindows()
-		
+
 

@@ -1,5 +1,6 @@
 import os, glob, cv2, face_recognition
 import numpy as np
+import logging
 
 class Facerec:
 		def __init__(self):
@@ -39,7 +40,10 @@ class Facerec:
 					print(f"no face detected on {filename}")
 
 				# Store file name and file encoding
-				self.known_face_encodings.append(img_encoding)
+				try:
+					self.known_face_encodings.append(img_encoding)
+				except UnboundLocalError:
+					logging.warning("no face detected in any of the images, please check your users folder")
 				self.known_face_names.append(filename)
 			print("Encoding images loaded")
 
