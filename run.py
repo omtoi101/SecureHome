@@ -226,7 +226,7 @@ def save_env():
         env_content = data.get("env")
         if env_content is None:
             return jsonify({"success": False, "error": "Missing 'env' content"})
-        env_path = os.path.join(os.path.dirname(__file__), "bob.txt")
+        env_path = os.path.join(os.path.dirname(__file__), ".env")
         with open(env_path, "w") as env_file:
             env_file.write(env_content)
         return jsonify({"success": True, "message": ".env file saved successfully"})
