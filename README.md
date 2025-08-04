@@ -29,6 +29,38 @@ I am planning, once I get this installed, to write a script to interact with the
 * Simple to use and understand terminal UI
 * Error logging for all segments of the script (logs folder)
 
+## Web Interface
+The SecureHome application includes a comprehensive web interface for monitoring and controlling the system.
+
+### Dashboard
+The main dashboard provides a real-time view of the system's status and the live camera feed.
+
+**[Screenshot of the Dashboard]**
+
+*   **System Status:** At the top, you can see the status of the main components: the security system, the Discord bot, and the web server.
+*   **Live Feed:** A live video feed from the camera is displayed prominently.
+*   **Text-to-Speech:** You can type a message and have it spoken aloud by the system.
+*   **System Controls:** Start, stop, and restart the security system and Discord bot.
+*   **Screenshot:** Instantly capture a screenshot from the live feed.
+*   **Live Logs:** A real-time log terminal shows the output from the security system and other components.
+
+### Settings
+The settings page allows you to configure all aspects of the application without manually editing the `config.json` file.
+
+**[Screenshot of the Settings Page]**
+
+*   **System Settings:** Enable or disable features like motion detection, text-to-speech, and Discord notifications.
+*   **Camera Settings:** Adjust camera parameters such as camera ports, detection thresholds, and FPS.
+*   **Discord Settings:** Configure your Discord webhook URL and bot token.
+
+### User Management
+The user management page allows you to add and remove users for facial recognition.
+
+**[Screenshot of the User Management Page]**
+
+*   **Add New User:** Use your computer's camera to capture a photo of a new user, assign a name, and save them to the face recognition database.
+*   **Manage Users:** View all existing users, search for specific users, and delete them from the database.
+
 ## Requirements
 * OBS (for virtual webcam)
 * FFMPEG (for video handling)
