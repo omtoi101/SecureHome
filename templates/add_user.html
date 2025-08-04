@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>User Management - SecureHome</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -16,76 +17,129 @@
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
         .header {
             background: rgba(0, 0, 0, 0.3);
-            padding: 20px 30px;
+            padding: 20px;
             border-radius: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .header h1 {
-            font-size: 28px;
+            font-size: clamp(20px, 5vw, 28px);
             font-weight: 600;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
         .back-btn {
-            padding: 10px 20px;
+            padding: 12px 16px;
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 8px;
+            touch-action: manipulation;
+            min-height: 44px;
+            font-size: 14px;
         }
 
-        .back-btn:hover {
+        .back-btn:hover, .back-btn:active {
             background: rgba(255, 255, 255, 0.2);
             color: white;
             text-decoration: none;
-            transform: translateY(-1px);
+            transform: scale(0.95);
+        }
+
+        .mobile-tabs {
+            display: none;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 14px 8px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .tab-btn:active {
+            transform: scale(0.95);
         }
 
         .main-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            gap: 25px;
+        }
+
+        .tab-content {
+            display: block;
         }
 
         .add-user-section, .manage-users-section {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 15px;
-            padding: 30px;
+            padding: 25px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .section-title {
-            font-size: 24px;
+            font-size: clamp(18px, 4vw, 24px);
             font-weight: 600;
             margin-bottom: 25px;
             color: #4ade80;
             display: flex;
             align-items: center;
             gap: 10px;
+            text-align: center;
+            justify-content: center;
         }
 
         .form-group {
@@ -94,26 +148,29 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 600;
             color: #e5e7eb;
+            font-size: 16px;
         }
 
         .form-group input[type="text"] {
             width: 100%;
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            padding: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
             background: rgba(255, 255, 255, 0.1);
             color: white;
-            font-size: 14px;
+            font-size: 16px;
             transition: all 0.3s ease;
+            min-height: 48px;
         }
 
         .form-group input:focus {
             outline: none;
             border-color: #4ade80;
             background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.2);
         }
 
         .form-group input::placeholder {
@@ -123,11 +180,13 @@
         .camera-container {
             position: relative;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         #video {
             width: 100%;
             max-width: 400px;
+            height: auto;
             border-radius: 12px;
             border: 2px solid rgba(255, 255, 255, 0.2);
             background: #000;
@@ -142,47 +201,56 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
+            width: clamp(150px, 40vw, 200px);
+            height: clamp(150px, 40vw, 200px);
             border: 3px solid #4ade80;
             border-radius: 50%;
             pointer-events: none;
             opacity: 0.7;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.4; transform: translate(-50%, -50%) scale(1.05); }
         }
 
         .camera-status {
             text-align: center;
-            padding: 10px;
+            padding: 12px;
             margin-bottom: 15px;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 600;
+            font-size: 15px;
         }
 
         .camera-ready {
             background: rgba(74, 222, 128, 0.2);
             color: #4ade80;
-            border: 1px solid rgba(74, 222, 128, 0.3);
+            border: 2px solid rgba(74, 222, 128, 0.3);
         }
 
         .camera-error {
             background: rgba(239, 68, 68, 0.2);
             color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            border: 2px solid rgba(239, 68, 68, 0.3);
         }
 
         .btn {
-            padding: 12px 20px;
+            padding: 16px 20px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 8px;
             justify-content: center;
-            margin: 5px;
+            touch-action: manipulation;
+            min-height: 56px;
+            position: relative;
         }
 
         .btn-primary {
@@ -190,9 +258,9 @@
             color: white;
         }
 
-        .btn-primary:hover {
+        .btn-primary:active {
             background: linear-gradient(135deg, #4f46e5, #4338ca);
-            transform: translateY(-2px);
+            transform: scale(0.95);
         }
 
         .btn-success {
@@ -200,9 +268,9 @@
             color: white;
         }
 
-        .btn-success:hover {
+        .btn-success:active {
             background: linear-gradient(135deg, #22c55e, #16a34a);
-            transform: translateY(-2px);
+            transform: scale(0.95);
         }
 
         .btn-danger {
@@ -210,148 +278,25 @@
             color: white;
         }
 
-        .btn-danger:hover {
+        .btn-danger:active {
             background: linear-gradient(135deg, #dc2626, #b91c1c);
-            transform: translateY(-2px);
+            transform: scale(0.95);
         }
 
         .btn-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
         .users-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 15px;
-            max-height: 500px;
+            max-height: 400px;
             overflow-y: auto;
             padding: 10px;
-        }
-
-        .user-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .user-card:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .user-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 auto 10px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .user-name {
-            font-weight: 600;
-            margin-bottom: 10px;
-            word-break: break-word;
-        }
-
-        .user-actions {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .btn-small {
-            padding: 6px 12px;
-            font-size: 12px;
-            min-width: auto;
-        }
-
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            z-index: 1000;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            max-width: 300px;
-            word-wrap: break-word;
-        }
-
-        .notification.show {
-            transform: translateX(0);
-        }
-
-        .notification.success {
-            background: linear-gradient(135deg, #4ade80, #22c55e);
-        }
-
-        .notification.error {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-        }
-
-        .loading {
-            opacity: 0.6;
-            pointer-events: none;
-            position: relative;
-        }
-
-        .loading::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 20px;
-            height: 20px;
-            margin: -10px 0 0 -10px;
-            border: 2px solid transparent;
-            border-top: 2px solid #fff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .preview-section {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .preview-image {
-            max-width: 200px;
-            max-height: 200px;
-            border-radius: 12px;
-            border: 2px solid #4ade80;
-            margin-bottom: 10px;
-        }
-
-        .search-box {
-            margin-bottom: 20px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 14px;
-        }
-
-        .search-box input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+            -webkit-overflow-scrolling: touch;
         }
 
         .users-grid::-webkit-scrollbar {
@@ -366,11 +311,362 @@
         .users-grid::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.3);
             border-radius: 4px;
+            min-height: 40px;
         }
 
+        .user-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+        }
+
+        .user-card:active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(0.98);
+        }
+
+        .user-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 12px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 12px;
+            word-break: break-word;
+            font-size: 15px;
+        }
+
+        .user-actions {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 10px 14px;
+            font-size: 13px;
+            min-width: auto;
+            min-height: 40px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 15px;
+            right: 15px;
+            padding: 18px 20px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            z-index: 2000;
+            transform: translateY(-100px);
+            transition: transform 0.3s ease;
+            max-width: none;
+            word-wrap: break-word;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .notification.show {
+            transform: translateY(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(135deg, #4ade80, #22c55e);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 24px;
+            height: 24px;
+            margin: -12px 0 0 -12px;
+            border: 3px solid transparent;
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .preview-section {
+            margin-top: 20px;
+            text-align: center;
+            padding: 20px;
+            background: rgba(74, 222, 128, 0.1);
+            border-radius: 12px;
+            border: 2px solid rgba(74, 222, 128, 0.3);
+        }
+
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 12px;
+            border: 2px solid #4ade80;
+            margin-bottom: 12px;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            min-height: 48px;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #4ade80;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.2);
+        }
+
+        .refresh-btn {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+        }
+
+        /* Mobile-specific styles */
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                padding-bottom: 80px;
+            }
+
+            .header {
+                padding: 15px;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 20px;
+                margin-bottom: 15px;
+            }
+
+            .header-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .back-btn {
+                flex: 1;
+                max-width: 120px;
+                justify-content: center;
+                font-size: 12px;
+                padding: 10px 8px;
+            }
+
+            .mobile-tabs {
+                display: flex;
+            }
+
             .main-content {
+                display: block;
+            }
+
+            .tab-content {
+                display: none;
+            }
+
+            .tab-content.active {
+                display: block;
+            }
+
+            .add-user-section, .manage-users-section {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+
+            .btn-group {
                 grid-template-columns: 1fr;
+                gap: 15px;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: rgba(0, 0, 0, 0.9);
+                padding: 20px;
+                margin: 0;
+                border-radius: 15px 15px 0 0;
+                backdrop-filter: blur(20px);
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .camera-container {
+                margin-bottom: 80px;
+            }
+
+            #video {
+                max-width: 100%;
+                height: auto;
+                aspect-ratio: 4/3;
+            }
+
+            .camera-overlay {
+                width: clamp(120px, 35vw, 160px);
+                height: clamp(120px, 35vw, 160px);
+            }
+
+            .users-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                max-height: 60vh;
+                gap: 12px;
+            }
+
+            .user-card {
+                padding: 12px;
+            }
+
+            .user-image {
+                width: 60px;
+                height: 60px;
+            }
+
+            .user-name {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+
+            .btn-small {
+                padding: 8px 10px;
+                font-size: 11px;
+                min-height: 36px;
+            }
+
+            .preview-section {
+                margin-bottom: 100px;
+            }
+        }
+
+        /* Extra small screens */
+        @media (max-width: 480px) {
+            .users-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .user-card {
+                padding: 10px;
+            }
+
+            .user-image {
+                width: 50px;
+                height: 50px;
+            }
+
+            .section-title {
+                font-size: 16px;
+            }
+
+            .btn-group {
+                padding: 15px;
+            }
+
+            .btn {
+                padding: 18px 16px;
+                font-size: 15px;
+            }
+        }
+
+        /* Landscape mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .btn-group {
+                position: relative;
+                bottom: auto;
+                border-radius: 12px;
+                margin-top: 20px;
+            }
+
+            body {
+                padding-bottom: 15px;
+            }
+
+            .camera-container {
+                margin-bottom: 20px;
+            }
+
+            .preview-section {
+                margin-bottom: 20px;
+            }
+
+            #video {
+                max-height: 40vh;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) {
+            .back-btn:hover,
+            .btn:hover,
+            .user-card:hover {
+                transform: none;
+            }
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .form-group input,
+            .search-box input {
+                border-width: 3px;
+            }
+
+            .btn {
+                border: 2px solid rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .camera-overlay {
+                animation: none;
             }
         }
     </style>
@@ -379,12 +675,21 @@
     <div class="container">
         <div class="header">
             <h1>👥 User Management</h1>
-            <a href="/settings" class="back-btn">← Back to Settings</a>
+            <div class="header-buttons">
+                <a href="/settings" class="back-btn">⚙️ Settings</a>
+                <a href="/" class="back-btn">🏠 Home</a>
+            </div>
+        </div>
+
+        <!-- Mobile Tab Navigation -->
+        <div class="mobile-tabs">
+            <button class="tab-btn active" onclick="switchTab('add')">➕ Add User</button>
+            <button class="tab-btn" onclick="switchTab('manage')">👤 Manage</button>
         </div>
 
         <div class="main-content">
             <!-- Add User Section -->
-            <div class="add-user-section">
+            <div id="add-tab" class="add-user-section tab-content active">
                 <div class="section-title">
                     ➕ Add New User
                 </div>
@@ -399,7 +704,7 @@
                         📷 Initializing camera...
                     </div>
                     <div style="position: relative; display: inline-block;">
-                        <video id="video" autoplay playsinline></video>
+                        <video id="video" autoplay playsinline muted></video>
                         <div class="camera-overlay"></div>
                     </div>
                     <canvas id="canvas"></canvas>
@@ -407,7 +712,7 @@
 
                 <div class="btn-group">
                     <button class="btn btn-primary" onclick="takePhoto()" id="capture-btn" disabled>
-                        📸 Capture Photo
+                        📸 Capture
                     </button>
                     <button class="btn btn-success" onclick="submitUser()" id="save-btn" disabled>
                         💾 Save User
@@ -422,7 +727,7 @@
             </div>
 
             <!-- Manage Users Section -->
-            <div class="manage-users-section">
+            <div id="manage-tab" class="manage-users-section tab-content">
                 <div class="section-title">
                     👤 Manage Users
                 </div>
@@ -432,14 +737,12 @@
                 </div>
 
                 <div class="users-grid" id="users-grid">
-                    <div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.6);">
+                    <div class="empty-state">
                         Loading users...
                     </div>
                 </div>
 
-                <div style="text-align: center; margin-top: 20px;">
-                    <button class="btn btn-primary" onclick="loadUsers()">🔄 Refresh Users</button>
-                </div>
+                <button class="btn btn-primary refresh-btn" onclick="loadUsers()">🔄 Refresh Users</button>
             </div>
         </div>
     </div>
@@ -458,9 +761,47 @@
         let imageData = null;
         let currentStream = null;
         let allUsers = [];
+        let currentTab = 'add';
+
+        // Mobile tab switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName + '-tab').classList.add('active');
+
+            currentTab = tabName;
+
+            // Load users when switching to manage tab
+            if (tabName === 'manage') {
+                loadUsers();
+            }
+        }
+
+        // Auto-switch tabs on desktop
+        function initializeTabSystem() {
+            if (window.innerWidth > 768) {
+                // Desktop: show both sections
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('active');
+                    content.style.display = 'block';
+                });
+                document.querySelector('.mobile-tabs').style.display = 'none';
+                document.querySelector('.main-content').style.display = 'grid';
+            } else {
+                // Mobile: show tabs
+                document.querySelector('.mobile-tabs').style.display = 'flex';
+                document.querySelector('.main-content').style.display = 'block';
+                switchTab('add');
+            }
+        }
 
         // Initialize camera on page load
         document.addEventListener('DOMContentLoaded', function() {
+            initializeTabSystem();
             initializeCamera();
             loadUsers();
         });
@@ -491,14 +832,19 @@
                 console.error('Camera error:', err);
                 cameraStatus.textContent = '❌ Camera access denied or not available';
                 cameraStatus.className = 'camera-status camera-error';
-                showNotification('Camera access denied. Please check permissions.', 'error');
+                showNotification('Camera access denied. Please check permissions and try again.', 'error');
             }
         }
 
         function takePhoto() {
             if (!video.videoWidth || !video.videoHeight) {
-                showNotification('Camera not ready. Please wait.', 'error');
+                showNotification('Camera not ready. Please wait a moment.', 'error');
                 return;
+            }
+
+            // Add haptic feedback
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
             }
 
             canvas.width = video.videoWidth;
@@ -534,6 +880,7 @@
             }
 
             saveBtn.classList.add('loading');
+            saveBtn.style.position = 'relative';
             
             try {
                 const response = await fetch('/api/add_user', {
@@ -553,8 +900,14 @@
                     previewSection.style.display = 'none';
                     saveBtn.disabled = true;
                     
-                    // Reload users
-                    setTimeout(loadUsers, 1000);
+                    // Reload users and switch to manage tab on mobile
+                    setTimeout(() => {
+                        loadUsers();
+                        if (window.innerWidth <= 768) {
+                            // Auto-switch to manage tab to see the new user
+                            document.querySelectorAll('.tab-btn')[1].click();
+                        }
+                    }, 1000);
                 } else {
                     showNotification('❌ ' + result.error, 'error');
                 }
@@ -562,6 +915,7 @@
                 showNotification('❌ Network error: ' + error.message, 'error');
             } finally {
                 saveBtn.classList.remove('loading');
+                saveBtn.style.position = '';
             }
         }
 
@@ -574,23 +928,25 @@
                     allUsers = result.users;
                     displayUsers(allUsers);
                 } else {
-                    usersGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.6);">Failed to load users</div>';
+                    usersGrid.innerHTML = '<div class="empty-state">Failed to load users</div>';
                 }
             } catch (error) {
-                usersGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.6);">Error loading users</div>';
+                usersGrid.innerHTML = '<div class="empty-state">Error loading users</div>';
                 console.error('Error loading users:', error);
             }
         }
 
         function displayUsers(users) {
             if (users.length === 0) {
-                usersGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.6);">No users found</div>';
+                usersGrid.innerHTML = '<div class="empty-state">No users found<br><small>Add your first user to get started!</small></div>';
                 return;
             }
 
             usersGrid.innerHTML = users.map(user => `
                 <div class="user-card">
-                    <img src="/api/user_image/${user.name}" class="user-image" alt="${user.name}" onerror="this.style.display='none'">
+                    <img src="/api/user_image/${user.name}" class="user-image" alt="${user.name}" 
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div style="display:none; width:60px; height:60px; background:rgba(255,255,255,0.2); border-radius:50%; margin:0 auto 12px; align-items:center; justify-content:center; font-size:24px;">👤</div>
                     <div class="user-name">${user.name}</div>
                     <div class="user-actions">
                         <button class="btn btn-danger btn-small" onclick="deleteUser('${user.name}')">
@@ -610,8 +966,15 @@
         }
 
         async function deleteUser(username) {
-            if (!confirm(`Are you sure you want to delete user "${username}"?`)) {
+            // Mobile-friendly confirmation
+            const confirmMessage = `Delete user "${username}"?\n\nThis action cannot be undone.`;
+            if (!confirm(confirmMessage)) {
                 return;
+            }
+
+            // Add haptic feedback
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100]);
             }
 
             try {
@@ -635,6 +998,9 @@
         }
 
         function showNotification(message, type) {
+            // Remove existing notifications
+            document.querySelectorAll('.notification').forEach(n => n.remove());
+            
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.textContent = message;
@@ -651,42 +1017,95 @@
             }, 4000);
         }
 
-        // Speak message function
-        async function speakMessage() {
-            const input = document.getElementById('tts-input');
-            const speakBtn = document.getElementById('speak-btn');
-            const message = input.value.trim();
-            
-            if (!message) {
-                showNotification('❌ Please enter a message to speak.', 'error');
-                return;
-            }
+        // Handle window resize
+        window.addEventListener('resize', initializeTabSystem);
 
-            speakBtn.classList.add('loading');
-            speakBtn.textContent = '🔊 Speaking...';
-
-            try {
-                const response = await fetch('/api/speak', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: message })
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    showNotification('🔊 Message sent to TTS system!', 'success');
-                    input.value = '';
-                } else {
-                    showNotification('❌ TTS failed: ' + result.error, 'error');
+        // Handle orientation change
+        window.addEventListener('orientationchange', function() {
+            setTimeout(() => {
+                initializeTabSystem();
+                // Reinitialize camera after orientation change
+                if (currentStream) {
+                    initializeCamera();
                 }
-            } catch (error) {
-                showNotification('❌ Network error: ' + error.message, 'error');
-            } finally {
-                speakBtn.classList.remove('loading');
-                speakBtn.textContent = '🎤 Speak Message';
+            }, 500);
+        });
+
+        // Prevent double-tap zoom on iOS
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Add haptic feedback to interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.btn, .back-btn, .tab-btn').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    if (navigator.vibrate) {
+                        navigator.vibrate(10);
+                    }
+                });
+            });
+        });
+
+        // Handle camera permissions on mobile
+        function requestCameraPermission() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                initializeCamera();
+            } else {
+                cameraStatus.textContent = '❌ Camera not supported on this device';
+                cameraStatus.className = 'camera-status camera-error';
             }
         }
+
+        // Auto-focus username input when switching to add tab
+        function focusUsernameInput() {
+            if (currentTab === 'add' && window.innerWidth <= 768) {
+                setTimeout(() => {
+                    document.getElementById('username').focus();
+                }, 300);
+            }
+        }
+
+        // Enhanced error handling for mobile
+        window.addEventListener('error', function(e) {
+            console.error('Global error:', e.error);
+            showNotification('An error occurred. Please refresh the page.', 'error');
+        });
+
+        // Service worker registration for PWA capabilities (optional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // Uncomment if you want PWA capabilities
+                // navigator.serviceWorker.register('/sw.js');
+            });
+        }
+
+        // Handle back button on mobile browsers
+        window.addEventListener('popstate', function(event) {
+            if (window.innerWidth <= 768 && currentTab !== 'add') {
+                switchTab('add');
+                history.pushState(null, null, window.location.href);
+            }
+        });
+
+        // Cleanup camera stream when page is hidden (mobile battery optimization)
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                if (currentStream) {
+                    currentStream.getTracks().forEach(track => track.stop());
+                }
+            } else {
+                // Reinitialize camera when page becomes visible again
+                if (currentTab === 'add') {
+                    setTimeout(initializeCamera, 500);
+                }
+            }
+        });
     </script>
 </body>
 </html>

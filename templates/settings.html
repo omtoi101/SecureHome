@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>SecureHome Settings</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -16,57 +17,70 @@
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         .header {
             background: rgba(0, 0, 0, 0.3);
-            padding: 20px 30px;
+            padding: 20px;
             border-radius: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .header h1 {
-            font-size: 28px;
+            font-size: clamp(20px, 5vw, 28px);
             font-weight: 600;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
         .back-btn {
-            padding: 10px 20px;
+            padding: 12px 18px;
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 8px;
+            touch-action: manipulation;
+            min-height: 44px;
+            font-size: 14px;
         }
 
-        .back-btn:hover {
+        .back-btn:hover, .back-btn:active {
             background: rgba(255, 255, 255, 0.2);
             color: white;
             text-decoration: none;
-            transform: translateY(-1px);
+            transform: scale(0.95);
         }
 
         .settings-container {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 15px;
-            padding: 30px;
+            padding: 25px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
@@ -77,18 +91,20 @@
         }
 
         .section-title {
-            font-size: 20px;
+            font-size: clamp(18px, 4vw, 20px);
             font-weight: 600;
             margin-bottom: 20px;
             color: #4ade80;
             display: flex;
             align-items: center;
             gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(74, 222, 128, 0.3);
         }
 
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr;
             gap: 20px;
         }
 
@@ -98,69 +114,119 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-weight: 600;
             color: #e5e7eb;
+            font-size: 16px;
         }
 
         .form-group input[type="number"],
         .form-group input[type="text"] {
             width: 100%;
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            padding: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
             background: rgba(255, 255, 255, 0.1);
             color: white;
-            font-size: 14px;
+            font-size: 16px;
             transition: all 0.3s ease;
+            min-height: 48px;
         }
 
         .form-group input:focus {
             outline: none;
             border-color: #4ade80;
             background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.2);
         }
 
         .form-group input::placeholder {
             color: rgba(255, 255, 255, 0.5);
         }
 
+        .checkbox-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
         .checkbox-group {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 15px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+            cursor: pointer;
+        }
+
+        .checkbox-group:active {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(0.98);
         }
 
         .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
+            width: 24px;
+            height: 24px;
             accent-color: #4ade80;
+            cursor: pointer;
+            transform: scale(1.2);
         }
 
         .checkbox-group label {
             margin: 0;
             cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .checkbox-group .description {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 4px;
+            font-style: italic;
+            line-height: 1.3;
+        }
+
+        .checkbox-content {
+            flex: 1;
         }
 
         .action-buttons {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
-            justify-content: center;
             margin-top: 30px;
-            flex-wrap: wrap;
+            position: sticky;
+            bottom: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .btn {
-            padding: 12px 24px;
+            padding: 18px 24px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            touch-action: manipulation;
+            min-height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
         }
 
         .btn-save {
@@ -168,9 +234,9 @@
             color: white;
         }
 
-        .btn-save:hover {
+        .btn-save:active {
             background: linear-gradient(135deg, #22c55e, #16a34a);
-            transform: translateY(-2px);
+            transform: scale(0.95);
         }
 
         .btn-reset {
@@ -178,9 +244,9 @@
             color: white;
         }
 
-        .btn-reset:hover {
+        .btn-reset:active {
             background: linear-gradient(135deg, #d97706, #b45309);
-            transform: translateY(-2px);
+            transform: scale(0.95);
         }
 
         .btn-reload {
@@ -188,26 +254,30 @@
             color: white;
         }
 
-        .btn-reload:hover {
+        .btn-reload:active {
             background: linear-gradient(135deg, #4f46e5, #4338ca);
-            transform: translateY(-2px);
+            transform: scale(0.95);
         }
 
         .notification {
             position: fixed;
             top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            border-radius: 8px;
+            left: 15px;
+            right: 15px;
+            padding: 18px 20px;
+            border-radius: 12px;
             color: white;
             font-weight: 600;
-            z-index: 1000;
-            transform: translateX(400px);
+            z-index: 2000;
+            transform: translateY(-100px);
             transition: transform 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            font-size: 15px;
         }
 
         .notification.show {
-            transform: translateX(0);
+            transform: translateY(0);
         }
 
         .notification.success {
@@ -223,101 +293,333 @@
             pointer-events: none;
         }
 
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 24px;
+            height: 24px;
+            margin: -12px 0 0 -12px;
+            border: 3px solid transparent;
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         .description {
-            font-size: 12px;
+            font-size: 13px;
             color: rgba(255, 255, 255, 0.7);
-            margin-top: 5px;
+            margin-top: 8px;
             font-style: italic;
+            line-height: 1.4;
         }
 
         .warning-box {
             background: rgba(245, 158, 11, 0.2);
-            border: 1px solid rgba(245, 158, 11, 0.4);
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
+            border: 2px solid rgba(245, 158, 11, 0.4);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
         }
 
         .warning-box h3 {
             color: #fbbf24;
-            margin-bottom: 8px;
-            font-size: 16px;
+            margin-bottom: 10px;
+            font-size: 18px;
         }
 
         .warning-box p {
             color: #fde68a;
-            font-size: 14px;
-            line-height: 1.4;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .collapsible-section {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .collapsible-header {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            touch-action: manipulation;
+            user-select: none;
+        }
+
+        .collapsible-header:active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .collapsible-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .collapsible-content.expanded {
+            padding: 20px;
+            max-height: 1000px;
+        }
+
+        .expand-icon {
+            transition: transform 0.3s ease;
+            font-size: 18px;
+        }
+
+        .expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 15px;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 22px;
+                margin-bottom: 10px;
+            }
+
+            .header-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .back-btn {
+                flex: 1;
+                max-width: 150px;
+                justify-content: center;
+                font-size: 13px;
+                padding: 10px 12px;
+            }
+
+            .settings-container {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-container {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: 0;
+                border-radius: 15px 15px 0 0;
+                padding: 20px;
+                background: rgba(0, 0, 0, 0.9);
+                backdrop-filter: blur(20px);
+            }
+
+            body {
+                padding-bottom: 120px;
+            }
+
+            .collapsible-header {
+                padding: 18px;
+            }
+
+            .section-title {
+                font-size: 18px;
+                justify-content: center;
+                text-align: center;
+            }
+        }
+
+        /* Extra small screens */
+        @media (max-width: 480px) {
+            .settings-container {
+                padding: 15px;
+            }
+
+            .checkbox-group {
+                padding: 15px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .checkbox-group input[type="checkbox"] {
+                align-self: flex-start;
+            }
+
+            .form-group input {
+                padding: 18px;
+                font-size: 16px;
+            }
+
+            .btn {
+                padding: 20px 24px;
+                font-size: 15px;
+            }
+        }
+
+        /* Landscape mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .action-buttons {
+                position: relative;
+                bottom: auto;
+            }
+
+            body {
+                padding-bottom: 15px;
+            }
+
+            .checkbox-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) {
+            .back-btn:hover,
+            .btn:hover,
+            .checkbox-group:hover {
+                transform: none;
+            }
+        }
+
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Dark mode optimizations */
+        @media (prefers-color-scheme: dark) {
+            .form-group input {
+                background: rgba(255, 255, 255, 0.08);
+            }
+        }
+
+        /* Focus styles for accessibility */
+        .back-btn:focus,
+        .btn:focus,
+        .form-group input:focus,
+        .checkbox-group:focus-within {
+            outline: 2px solid #4ade80;
+            outline-offset: 2px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>SecureHome Settings</h1>
-            <button class="back-btn" onclick="window.location.href='/'">← Back</button>
-            <button class="back-btn" style="margin-left:10px;" onclick="window.location.href='/add_user'">➕ User Management</button>
+            <h1>⚙️ Settings</h1>
+            <div class="header-buttons">
+                <a href="/" class="back-btn">🏠 Dashboard</a>
+                <a href="/add_user" class="back-btn">👥 Users</a>
+            </div>
         </div>
 
         <div class="settings-container">
             <div class="warning-box">
                 <h3>⚠️ Important Notice</h3>
-                <p>Changes to these settings will require a system restart to take effect. A backup of your current configuration will be automatically created before saving.</p>
+                <p>Changes require a system restart to take effect. Your current configuration will be automatically backed up before saving.</p>
             </div>
 
             <form id="settingsForm">
-                <div class="section">
-                    <div class="section-title">
-                        🔧 System Settings
-                    </div>
-                    <div class="form-grid">
-                        <div>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="motion_detection" name="motion_detection">
-                                <label for="motion_detection">Motion Detection</label>
-                            </div>
-                            <div class="description">Enable/disable motion detection alerts</div>
-
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="speech" name="speech">
-                                <label for="speech">Text-to-Speech</label>
-                            </div>
-                            <div class="description">Enable voice announcements</div>
-
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="webserver" name="webserver">
-                                <label for="webserver">Web Server</label>
-                            </div>
-                            <div class="description">Enable the web dashboard</div>
+                <!-- System Settings -->
+                <div class="collapsible-section">
+                    <div class="collapsible-header" onclick="toggleSection(this)">
+                        <div class="section-title">
+                            🔧 System Settings
                         </div>
-                        <div>
-                            <div class="checkbox-group">
+                        <span class="expand-icon">▼</span>
+                    </div>
+                    <div class="collapsible-content expanded">
+                        <div class="checkbox-container">
+                            <div class="checkbox-group" onclick="toggleCheckbox('motion_detection')">
+                                <input type="checkbox" id="motion_detection" name="motion_detection">
+                                <div class="checkbox-content">
+                                    <label for="motion_detection">Motion Detection</label>
+                                    <div class="description">Enable/disable motion detection alerts</div>
+                                </div>
+                            </div>
+
+                            <div class="checkbox-group" onclick="toggleCheckbox('speech')">
+                                <input type="checkbox" id="speech" name="speech">
+                                <div class="checkbox-content">
+                                    <label for="speech">Text-to-Speech</label>
+                                    <div class="description">Enable voice announcements</div>
+                                </div>
+                            </div>
+
+                            <div class="checkbox-group" onclick="toggleCheckbox('webserver')">
+                                <input type="checkbox" id="webserver" name="webserver">
+                                <div class="checkbox-content">
+                                    <label for="webserver">Web Server</label>
+                                    <div class="description">Enable the web dashboard</div>
+                                </div>
+                            </div>
+
+                            <div class="checkbox-group" onclick="toggleCheckbox('discord_notifications')">
                                 <input type="checkbox" id="discord_notifications" name="discord_notifications">
-                                <label for="discord_notifications">Discord Notifications</label>
+                                <div class="checkbox-content">
+                                    <label for="discord_notifications">Discord Notifications</label>
+                                    <div class="description">Send alerts to Discord webhook</div>
+                                </div>
                             </div>
-                            <div class="description">Send alerts to Discord webhook</div>
 
-                            <div class="checkbox-group">
+                            <div class="checkbox-group" onclick="toggleCheckbox('discord_bot')">
                                 <input type="checkbox" id="discord_bot" name="discord_bot">
-                                <label for="discord_bot">Discord Bot</label>
+                                <div class="checkbox-content">
+                                    <label for="discord_bot">Discord Bot</label>
+                                    <div class="description">Enable Discord bot for face management</div>
+                                </div>
                             </div>
-                            <div class="description">Enable Discord bot for face management</div>
 
-                            <div class="checkbox-group">
+                            <div class="checkbox-group" onclick="toggleCheckbox('debug')">
                                 <input type="checkbox" id="debug" name="debug">
-                                <label for="debug">Debug Mode</label>
+                                <div class="checkbox-content">
+                                    <label for="debug">Debug Mode</label>
+                                    <div class="description">Show detailed error messages</div>
+                                </div>
                             </div>
-                            <div class="description">Show detailed error messages</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="section">
-                    <div class="section-title">
-                        📹 Camera Settings
+                <!-- Camera Settings -->
+                <div class="collapsible-section">
+                    <div class="collapsible-header" onclick="toggleSection(this)">
+                        <div class="section-title">
+                            📹 Camera Settings
+                        </div>
+                        <span class="expand-icon">▼</span>
                     </div>
-                    <div class="form-grid">
-                        <div>
+                    <div class="collapsible-content">
+                        <div class="form-grid">
                             <div class="form-group">
                                 <label for="main_camera">Main Camera Port</label>
                                 <input type="number" id="main_camera" name="main_camera" min="0" max="10">
@@ -335,8 +637,7 @@
                                 <input type="number" id="fallback_fps" name="fallback_fps" min="1" max="60">
                                 <div class="description">Frame rate when auto-detection fails</div>
                             </div>
-                        </div>
-                        <div>
+
                             <div class="form-group">
                                 <label for="body_inc">Body Detection Frames</label>
                                 <input type="number" id="body_inc" name="body_inc" min="1" max="100">
@@ -364,28 +665,34 @@
                     </div>
                 </div>
 
-                <div class="section">
-                    <div class="section-title">
-                        💬 Discord Settings
+                <!-- Discord Settings -->
+                <div class="collapsible-section">
+                    <div class="collapsible-header" onclick="toggleSection(this)">
+                        <div class="section-title">
+                            💬 Discord Settings
+                        </div>
+                        <span class="expand-icon">▼</span>
                     </div>
-                    <div class="form-group">
-                        <label for="discord_webhook_url">Webhook URL</label>
-                        <input type="text" id="discord_webhook_url" name="discord_webhook_url" placeholder="Discord Webhook URL">
-                        <div class="description">URL for Discord notifications</div>
+                    <div class="collapsible-content">
+                        <div class="form-group">
+                            <label for="discord_webhook_url">Webhook URL</label>
+                            <input type="text" id="discord_webhook_url" name="discord_webhook_url" placeholder="Discord Webhook URL">
+                            <div class="description">URL for Discord notifications</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="discord_bot_token">Bot Token</label>
+                            <input type="text" id="discord_bot_token" name="discord_bot_token" placeholder="Discord Bot Token">
+                            <div class="description">Token for Discord bot</div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="discord_bot_token">Bot Token</label>
-                        <input type="text" id="discord_bot_token" name="discord_bot_token" placeholder="Discord Bot Token">
-                        <div class="description">Token for Discord bot</div>
-                    </div>
-                </div>
-
-                <div class="action-buttons">
-                    <button type="button" class="btn btn-save" onclick="saveConfig()">💾 Save Configuration</button>
-                    <button type="button" class="btn btn-reset" onclick="resetForm()">🔄 Reset Form</button>
-                    <button type="button" class="btn btn-reload" onclick="loadConfig()">📥 Reload from File</button>
                 </div>
             </form>
+
+            <div class="action-buttons">
+                <button type="button" class="btn btn-save" onclick="saveConfig()">💾 Save</button>
+                <button type="button" class="btn btn-reset" onclick="resetForm()">🔄 Reset</button>
+                <button type="button" class="btn btn-reload" onclick="loadConfig()">📥 Reload</button>
+            </div>
         </div>
     </div>
 
@@ -395,9 +702,61 @@
         // Load configuration on page load
         document.addEventListener('DOMContentLoaded', function() {
             loadConfig();
-            loadEnv();
-            loadDiscord();
+            
+            // Auto-expand first section on mobile
+            if (window.innerWidth <= 768) {
+                const firstSection = document.querySelector('.collapsible-section');
+                if (firstSection) {
+                    firstSection.classList.add('expanded');
+                }
+            } else {
+                // Expand all sections on desktop
+                document.querySelectorAll('.collapsible-section').forEach(section => {
+                    section.classList.add('expanded');
+                    const content = section.querySelector('.collapsible-content');
+                    if (content) {
+                        content.classList.add('expanded');
+                    }
+                });
+            }
         });
+
+        function toggleSection(header) {
+            const section = header.parentElement;
+            const content = section.querySelector('.collapsible-content');
+            const isExpanded = section.classList.contains('expanded');
+
+            if (window.innerWidth <= 768) {
+                // On mobile, close other sections first
+                document.querySelectorAll('.collapsible-section').forEach(s => {
+                    if (s !== section) {
+                        s.classList.remove('expanded');
+                        s.querySelector('.collapsible-content').classList.remove('expanded');
+                    }
+                });
+            }
+
+            // Toggle current section
+            if (isExpanded) {
+                section.classList.remove('expanded');
+                content.classList.remove('expanded');
+            } else {
+                section.classList.add('expanded');
+                content.classList.add('expanded');
+            }
+        }
+
+        function toggleCheckbox(checkboxId) {
+            const checkbox = document.getElementById(checkboxId);
+            checkbox.checked = !checkbox.checked;
+            
+            // Visual feedback
+            const group = checkbox.closest('.checkbox-group');
+            group.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                group.style.transform = '';
+            }, 150);
+        }
 
         async function loadConfig() {
             try {
@@ -433,6 +792,8 @@
             document.getElementById('motion_inc').value = config.camera.motion_inc;
             document.getElementById('undetected_time').value = config.camera.undetected_time;
             document.getElementById('fallback_fps').value = config.camera.fallback_fps;
+            
+            // Discord settings
             document.getElementById('discord_webhook_url').value = config.discord.webhook_url;
             document.getElementById('discord_bot_token').value = config.discord.bot_token;
         }
@@ -445,6 +806,7 @@
         async function saveConfig() {
             const saveBtn = document.querySelector('.btn-save');
             saveBtn.classList.add('loading');
+            saveBtn.style.position = 'relative';
             saveBtn.textContent = '💾 Saving...';
 
             try {
@@ -468,9 +830,21 @@
                     },
                     discord: {
                         webhook_url: document.getElementById('discord_webhook_url').value,
-                        bot_token: document.getElementById('discord_bot_token').value,
+                        bot_token: document.getElementById('discord_bot_token').value
                     }
                 };
+
+                // Validate required fields
+                const requiredFields = ['main_camera', 'v_cam', 'body_inc', 'face_inc', 'motion_inc', 'undetected_time', 'fallback_fps'];
+                const missingFields = requiredFields.filter(field => {
+                    const value = document.getElementById(field).value;
+                    return !value || isNaN(parseInt(value));
+                });
+
+                if (missingFields.length > 0) {
+                    showNotification('Please fill in all camera settings fields', 'error');
+                    return;
+                }
 
                 const response = await fetch('/api/save_config', {
                     method: 'POST',
@@ -484,21 +858,23 @@
                 
                 if (result.success) {
                     originalConfig = JSON.parse(JSON.stringify(newConfig)); // Update original
-                    showNotification(result.message + ' - Restart system to apply changes', 'success');
+                    showNotification('✅ Configuration saved! Restart system to apply changes', 'success');
                 } else {
-                    showNotification('Save failed: ' + result.error, 'error');
+                    showNotification('❌ Save failed: ' + result.error, 'error');
                 }
             } catch (error) {
-                showNotification('Network error: ' + error.message, 'error');
+                showNotification('❌ Network error: ' + error.message, 'error');
             } finally {
                 saveBtn.classList.remove('loading');
-                saveBtn.textContent = '💾 Save Configuration';
+                saveBtn.style.position = '';
+                saveBtn.textContent = '💾 Save';
             }
         }
 
-
-
         function showNotification(message, type) {
+            // Remove existing notifications
+            document.querySelectorAll('.notification').forEach(n => n.remove());
+            
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.textContent = message;
@@ -507,9 +883,66 @@
             setTimeout(() => notification.classList.add('show'), 100);
             setTimeout(() => {
                 notification.classList.remove('show');
-                setTimeout(() => document.body.removeChild(notification), 300);
-            }, 4000);
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 5000);
         }
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                // Desktop: expand all sections
+                document.querySelectorAll('.collapsible-section').forEach(section => {
+                    section.classList.add('expanded');
+                    section.querySelector('.collapsible-content').classList.add('expanded');
+                });
+            }
+        });
+
+        // Handle orientation change
+        window.addEventListener('orientationchange', function() {
+            setTimeout(() => {
+                // Refresh layout after orientation change
+                if (window.innerWidth <= 768) {
+                    document.querySelectorAll('.collapsible-section').forEach((section, index) => {
+                        if (index === 0) {
+                            section.classList.add('expanded');
+                            section.querySelector('.collapsible-content').classList.add('expanded');
+                        } else {
+                            section.classList.remove('expanded');
+                            section.querySelector('.collapsible-content').classList.remove('expanded');
+                        }
+                    });
+                }
+            }, 500);
+        });
+
+        // Prevent double-tap zoom on iOS
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Add haptic feedback for supported devices
+        function hapticFeedback() {
+            if (navigator.vibrate) {
+                navigator.vibrate(10);
+            }
+        }
+
+        // Add haptic feedback to interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.btn, .checkbox-group, .back-btn').forEach(element => {
+                element.addEventListener('touchstart', hapticFeedback);
+            });
+        });
     </script>
 </body>
 </html>
