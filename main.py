@@ -93,6 +93,11 @@ class SecurityCamera:
         self.face_names = []
         self.body_bbox = {}
 
+        # FPS calculation
+        self.fps_start_time = time.time()
+        self.fps_frame_count = 0
+        self.current_fps = 0
+
     def reset_state(self):
         print("Camera reset.")
         self.motion_c = 0
@@ -167,6 +172,13 @@ class SecurityCamera:
 
                 self.frame_count += 1
                 self._reload_faces_if_changed()
+
+                # Calculate FPS
+                self.fps_frame_count += 1
+                if time.time() - self.fps_start_time >= 1:
+                    self.current_fps = self.fps_frame_count
+                    self.fps_frame_count = 0
+                    self.fps_start_time = time.time()
 
                 motion_detected, contours = self._detect_motion(frame, self.prev_frame)
 
@@ -246,6 +258,10 @@ class SecurityCamera:
             self.prev_detection = False
 
     def _draw_overlays(self, frame, contours, face_locations, face_names):
+        # Draw FPS
+        fps_text = f"FPS: {self.current_fps}"
+        cv2.putText(frame, fps_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
         # Note: motion detection contours are from a resized frame, so drawing them directly on the original might be inaccurate.
         # For this example, we'll skip drawing motion boxes, but a real implementation would scale them.
 
