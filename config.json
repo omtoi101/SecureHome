@@ -14,8 +14,7 @@
         "face_inc": 5,
         "motion_inc": 10,
         "undetected_time": 30,
-        "fallback_fps": 30,
-        "detection_interval": 5
+        "fallback_fps": 30
     },
     "discord": {
         "webhook_url": "url",

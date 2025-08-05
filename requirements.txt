@@ -13,7 +13,3 @@ mediapipe
 pyttsx3
 Pillow
 eventlet
-Flask-SQLAlchemy
-Flask-Login
-Flask-Limiter
-Werkzeug

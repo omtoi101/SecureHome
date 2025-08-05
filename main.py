@@ -16,6 +16,8 @@ from pyvirtualcam import PixelFormat
 from datetime import datetime
 from dependencies.Webhook import WebhookBuilder
 from dependencies.Facerec import Facerec
+from database import db, User
+from auth import get_all_users
 
 colorama.init()
 
@@ -50,11 +52,12 @@ class FrameReader(threading.Thread):
         self.stopped.set()
 
 class SecurityCamera:
-    def __init__(self, config):
+    def __init__(self, config, app):
         self.config = config
         self.settings = config['settings']
         self.camera_config = config['camera']
         self.detection_interval = self.camera_config.get("detection_interval", 5)
+        self.app = app
 
         # Frame reading setup
         self.frame_queue = queue.Queue(maxsize=2)
@@ -70,8 +73,9 @@ class SecurityCamera:
 
         # Load face encodings
         self.images_dir = os.path.join(os.path.dirname(__file__), "images")
-        self.face_recognizer.load_encoding_images(self.images_dir)
-        self.face_list = os.listdir(self.images_dir)
+        with self.app.app_context():
+            self.users = get_all_users()
+            self.face_recognizer.load_encoding_images(self.users, self.images_dir)
 
         # Video capture setup
         self.frame_width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -92,11 +96,6 @@ class SecurityCamera:
         self.face_locations = []
         self.face_names = []
         self.body_bbox = {}
-
-        # FPS calculation
-        self.fps_start_time = time.time()
-        self.fps_frame_count = 0
-        self.current_fps = 0
 
     def reset_state(self):
         print("Camera reset.")
@@ -127,13 +126,14 @@ class SecurityCamera:
 
     def _reload_faces_if_changed(self):
         self.check_frame_index += 1
-        if self.check_frame_index == 50:
+        if self.check_frame_index == 500: # Check less frequently
             self.check_frame_index = 0
-            current_face_list = os.listdir(self.images_dir)
-            if self.face_list != current_face_list:
-                self.face_list = current_face_list
-                self.face_recognizer.load_encoding_images(self.images_dir)
-                print("Reloaded faces")
+            with self.app.app_context():
+                new_users = get_all_users()
+                if len(new_users) != len(self.users):
+                    self.users = new_users
+                    self.face_recognizer.load_encoding_images(self.users, self.images_dir)
+                    print("Reloaded faces from database.")
 
     def _c_face(self, facelist: list):
         if not facelist:
@@ -173,16 +173,8 @@ class SecurityCamera:
                 self.frame_count += 1
                 self._reload_faces_if_changed()
 
-                # Calculate FPS
-                self.fps_frame_count += 1
-                if time.time() - self.fps_start_time >= 1:
-                    self.current_fps = self.fps_frame_count
-                    self.fps_frame_count = 0
-                    self.fps_start_time = time.time()
-
                 motion_detected, contours = self._detect_motion(frame, self.prev_frame)
 
-                # Run expensive detections only every N frames
                 if self.frame_count % self.detection_interval == 0:
                     face_detected, self.face_locations, self.face_names = self._detect_faces(frame)
                     body_detected, self.body_bbox = self._detect_bodies(frame)
@@ -225,15 +217,13 @@ class SecurityCamera:
         dilated = cv2.dilate(thresh, None, iterations=3)
         contours, _ = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-        valid_contours = [c for c in contours if cv2.contourArea(c) >= 1000] # Adjusted for smaller size
+        valid_contours = [c for c in contours if cv2.contourArea(c) >= 1000]
         return len(valid_contours) > 0, valid_contours
 
     def _detect_faces(self, frame):
-        # Resize frame to speed up detection
         small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
         face_locations, face_names = self.face_recognizer.detect_known_faces(small_frame)
 
-        # Scale face locations back to original frame size
         face_locations_orig = []
         for (top, right, bottom, left) in face_locations:
             face_locations_orig.append((top*2, right*2, bottom*2, left*2))
@@ -258,13 +248,6 @@ class SecurityCamera:
             self.prev_detection = False
 
     def _draw_overlays(self, frame, contours, face_locations, face_names):
-        # Draw FPS
-        fps_text = f"FPS: {self.current_fps}"
-        cv2.putText(frame, fps_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-
-        # Note: motion detection contours are from a resized frame, so drawing them directly on the original might be inaccurate.
-        # For this example, we'll skip drawing motion boxes, but a real implementation would scale them.
-
         for face_loc, name in zip(face_locations, face_names):
             color = (0, 0, 225) if name == "Unknown" else (0, 225, 0)
             y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
@@ -302,12 +285,10 @@ class SecurityCamera:
     def _handle_notifications(self, frame, face_names):
         cam_conf = self.camera_config
 
-        # Motion
         if self.settings['motion_detection'] and self.motion_c == cam_conf['motion_inc'] and "motion" not in self.just_ran:
             if not self.f_reset: self.speak("Motion detected")
             self.just_ran.append("motion")
 
-        # Body
         if self.body_c == cam_conf['body_inc'] and self.face_c == 0 and "body_1" not in self.just_ran:
             if not self.f_reset: self.speak("Person detected, initiate face detection")
             self._save_image(frame, "body")
@@ -328,7 +309,6 @@ class SecurityCamera:
                     self.webhook_builder.thread("intruder", img_path)
             self.just_ran.append("body_4")
 
-        # Face
         name = face_names[0] if face_names else ""
         if self.face_c == 1 and "face_1" not in self.just_ran:
             if not self.f_reset: self.speak("Face detected, look into the camera for recognition")
@@ -352,14 +332,14 @@ class SecurityCamera:
                 self.detected_person = True
                 self.intruder = False
                 self.f_reset = True
-            self.face_c = 0 # Reset face counter after check
-
+            self.face_c = 0
 
 if __name__ == '__main__':
+    from run import app
     with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
         config_data = json.load(conf_file)
 
-    camera_system = SecurityCamera(config_data)
+    camera_system = SecurityCamera(config_data, app)
     try:
         camera_system.start()
     except KeyboardInterrupt:

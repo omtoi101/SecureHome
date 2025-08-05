@@ -705,8 +705,16 @@
     <div class="header">
         <h1>🏠 SecureHome</h1>
         <div class="header-controls">
+            {% if current_user.is_admin %}
+            <a href="/admin" class="settings-btn">
+                👑 <span>Admin</span>
+            </a>
+            {% endif %}
             <a href="/settings" class="settings-btn">
                 ⚙️ <span>Settings</span>
+            </a>
+            <a href="/logout" class="settings-btn">
+                🚪 <span>Logout</span>
             </a>
         </div>
     </div>
