@@ -2,49 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>SecureHome Dashboard</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .header {
             background: rgba(0, 0, 0, 0.3);
-            padding: 15px 30px;
+            padding: 15px 20px;
             border-bottom: 2px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header h1 {
-            font-size: 24px;
+            font-size: clamp(18px, 4vw, 24px);
             font-weight: 600;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .header-controls {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             align-items: center;
         }
 
         .settings-btn {
-            padding: 8px 12px;
+            padding: 10px 15px;
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -56,24 +61,73 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            touch-action: manipulation;
+            min-height: 44px;
+            min-width: 44px;
+            justify-content: center;
         }
 
-        .settings-btn:hover {
+        .settings-btn:hover, .settings-btn:active {
             background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-1px);
+            transform: scale(0.95);
             color: white;
             text-decoration: none;
         }
 
         .main-container {
+            padding: 15px;
             display: flex;
-            height: calc(100vh - 80px);
+            flex-direction: column;
             gap: 20px;
-            padding: 20px;
+            min-height: calc(100vh - 80px);
         }
 
+        .status-bar {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .status-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .status-indicators {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 8px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .status-online { background-color: #00ff88; }
+        .status-offline { background-color: #ff4444; }
+
         .camera-section {
-            flex: 1;
             background: rgba(0, 0, 0, 0.4);
             border-radius: 15px;
             padding: 20px;
@@ -87,127 +141,132 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
-        }
-
-        .camera-title-section {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .camera-title {
-            font-size: 18px;
+            font-size: clamp(16px, 3vw, 18px);
             font-weight: 600;
         }
 
         .reload-btn {
-            padding: 6px 12px;
+            padding: 12px 16px;
             background: linear-gradient(135deg, #4ade80, #22c55e);
             color: white;
             border: none;
-            border-radius: 6px;
-            font-size: 12px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 5px;
-        }
-
-        .reload-btn:hover {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            transform: translateY(-1px);
-        }
-
-        .reload-btn:active {
-            transform: translateY(0);
-        }
-
-        .status-indicators {
-            display: flex;
-            gap: 15px;
-        }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
             gap: 8px;
-            padding: 8px 12px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            font-size: 12px;
-            font-weight: 500;
+            touch-action: manipulation;
+            min-height: 44px;
         }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
+        .reload-btn:hover, .reload-btn:active {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            transform: scale(0.95);
         }
-
-        .status-online { background-color: #00ff88; }
-        .status-offline { background-color: #ff4444; }
 
         .camera-feed {
             width: 100%;
-            height: calc(100% - 120px);
-            border-radius: 10px;
+            height: auto;
+            max-height: 60vh;
+            border-radius: 12px;
             border: 2px solid rgba(255, 255, 255, 0.2);
             object-fit: cover;
             background: #000;
+            display: block;
         }
 
         .camera-info {
             margin-top: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            font-size: 12px;
+            border-radius: 10px;
+            padding: 15px;
         }
 
-        .control-section {
-            width: 450px;
+        .tts-form {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .tts-input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            min-height: 44px;
+        }
+
+        .tts-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .tts-btn {
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            touch-action: manipulation;
+            min-height: 44px;
+            font-size: 14px;
+        }
+
+        .tts-btn:active {
+            transform: scale(0.95);
+        }
+
+        .controls-section {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 15px;
             padding: 20px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
         }
 
         .control-header {
-            font-size: 18px;
+            font-size: clamp(16px, 3vw, 18px);
             font-weight: 600;
             margin-bottom: 20px;
             text-align: center;
-            flex-shrink: 0;
         }
 
         .control-buttons {
-            display: flex;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 12px;
             margin-bottom: 20px;
-            flex-shrink: 0;
         }
 
         .control-btn {
-            flex: 1;
-            padding: 12px;
+            padding: 16px 12px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: 600;
             font-size: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            touch-action: manipulation;
+            min-height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-start {
@@ -215,9 +274,9 @@
             color: white;
         }
 
-        .btn-start:hover {
+        .btn-start:active {
             background: linear-gradient(135deg, #00cc6a, #00aa55);
-            transform: translateY(-2px);
+            transform: scale(0.95);
         }
 
         .btn-stop {
@@ -225,9 +284,9 @@
             color: white;
         }
 
-        .btn-stop:hover {
+        .btn-stop:active {
             background: linear-gradient(135deg, #cc3333, #aa2222);
-            transform: translateY(-2px);
+            transform: scale(0.95);
         }
 
         .btn-restart {
@@ -235,43 +294,48 @@
             color: white;
         }
 
-        .btn-restart:hover {
+        .btn-restart:active {
             background: linear-gradient(135deg, #cc8800, #aa6600);
-            transform: translateY(-2px);
+            transform: scale(0.95);
         }
 
         .screenshot-section {
             margin-bottom: 20px;
             text-align: center;
-            flex-shrink: 0;
         }
 
         .screenshot-btn {
-            padding: 10px 20px;
+            padding: 16px 24px;
             background: linear-gradient(135deg, #6366f1, #4f46e5);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             margin: 0 auto;
+            touch-action: manipulation;
+            min-height: 56px;
+            width: 100%;
+            max-width: 200px;
         }
 
-        .screenshot-btn:hover {
+        .screenshot-btn:active {
             background: linear-gradient(135deg, #4f46e5, #4338ca);
-            transform: translateY(-2px);
+            transform: scale(0.95);
         }
 
         .terminal-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-            position: relative;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .terminal-header {
@@ -279,11 +343,12 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
-            flex-shrink: 0;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .terminal-title {
-            font-size: 16px;
+            font-size: clamp(14px, 3vw, 16px);
             font-weight: 600;
         }
 
@@ -295,55 +360,60 @@
 
         .detection-count {
             background: rgba(255, 255, 255, 0.1);
-            padding: 4px 8px;
-            border-radius: 12px;
+            padding: 8px 12px;
+            border-radius: 16px;
             font-size: 12px;
+            font-weight: 600;
         }
 
         .clear-btn {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
+            touch-action: manipulation;
+            min-height: 44px;
         }
 
-        .clear-btn:hover {
+        .clear-btn:active {
             background: rgba(255, 255, 255, 0.2);
+            transform: scale(0.95);
         }
 
         .terminal {
-            flex: 1;
             background: #1a1a1a;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 15px;
             font-family: 'Courier New', monospace;
-            font-size: 12px;
+            font-size: clamp(11px, 2.5vw, 13px);
             line-height: 1.4;
             overflow-y: auto;
             overflow-x: hidden;
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #00ff88;
-            min-height: 200px;
+            height: 300px;
             word-wrap: break-word;
             white-space: pre-wrap;
+            -webkit-overflow-scrolling: touch;
         }
 
         .terminal::-webkit-scrollbar {
-            width: 8px;
+            width: 12px;
         }
 
         .terminal::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
+            border-radius: 6px;
         }
 
         .terminal::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
+            border-radius: 6px;
+            min-height: 40px;
         }
 
         .terminal::-webkit-scrollbar-thumb:hover {
@@ -351,12 +421,13 @@
         }
 
         .log-entry {
-            margin-bottom: 2px;
+            margin-bottom: 3px;
             word-wrap: break-word;
             white-space: pre-wrap;
             max-width: 100%;
             overflow-wrap: break-word;
             display: block;
+            padding: 2px 0;
         }
 
         .log-system { color: #00ff88; }
@@ -368,45 +439,50 @@
         .log-info { color: #3742fa; }
 
         .scroll-to-bottom-btn {
-            position: absolute;
+            position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 30px;
-            height: 30px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
             color: white;
             cursor: pointer;
             display: none;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: bold;
-            z-index: 10;
+            z-index: 1000;
             transition: all 0.3s ease;
+            touch-action: manipulation;
+            backdrop-filter: blur(10px);
         }
 
-        .scroll-to-bottom-btn:hover {
+        .scroll-to-bottom-btn:active {
             background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
+            transform: scale(0.9);
         }
 
         .notification {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 80px;
+            left: 15px;
+            right: 15px;
             padding: 15px 20px;
-            border-radius: 8px;
+            border-radius: 12px;
             color: white;
             font-weight: 600;
-            z-index: 1000;
-            transform: translateX(400px);
+            z-index: 2000;
+            transform: translateY(-100px);
             transition: transform 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
         }
 
         .notification.show {
-            transform: translateX(0);
+            transform: translateY(0);
         }
 
         .notification.success {
@@ -422,86 +498,311 @@
             pointer-events: none;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        .pulse {
-            animation: pulse 1s infinite;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .mobile-tabs {
+            display: none;
+        }
+
+        .tab-content {
+            display: block;
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            .header {
+                padding: 12px 15px;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .settings-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+                min-width: 40px;
+                min-height: 40px;
+            }
+
+            .settings-btn span {
+                display: none;
+            }
+
+            .main-container {
+                padding: 10px;
+                gap: 15px;
+            }
+
+            .mobile-tabs {
+                display: flex;
+                background: rgba(0, 0, 0, 0.4);
+                border-radius: 12px;
+                padding: 5px;
+                margin-bottom: 15px;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .tab-btn {
+                flex: 1;
+                padding: 12px 8px;
+                background: transparent;
+                border: none;
+                color: rgba(255, 255, 255, 0.7);
+                border-radius: 8px;
+                font-weight: 600;
+                font-size: 12px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                touch-action: manipulation;
+                text-align: center;
+            }
+
+            .tab-btn.active {
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+            }
+
+            .tab-btn:active {
+                transform: scale(0.95);
+            }
+
+            .tab-content {
+                display: none;
+            }
+
+            .tab-content.active {
+                display: block;
+            }
+
+            .control-buttons {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .control-btn {
+                padding: 18px 12px;
+                font-size: 12px;
+                min-height: 60px;
+            }
+
+            .screenshot-btn {
+                width: 100%;
+                max-width: none;
+                padding: 18px 24px;
+                font-size: 16px;
+            }
+
+            .terminal {
+                height: 250px;
+                font-size: 11px;
+                padding: 12px;
+            }
+
+            .camera-feed {
+                max-height: 40vh;
+            }
+
+            .tts-form {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .tts-input, .tts-btn {
+                min-height: 48px;
+                font-size: 16px;
+            }
+
+            .scroll-to-bottom-btn {
+                width: 44px;
+                height: 44px;
+                bottom: 15px;
+                right: 15px;
+                font-size: 16px;
+            }
+        }
+
+        /* Extra small screens */
+        @media (max-width: 480px) {
+            .control-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .status-indicators {
+                grid-template-columns: 1fr;
+            }
+
+            .camera-header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .reload-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Landscape mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .camera-feed {
+                max-height: 50vh;
+            }
+
+            .terminal {
+                height: 200px;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) {
+            .settings-btn:hover,
+            .reload-btn:hover,
+            .control-btn:hover,
+            .screenshot-btn:hover,
+            .clear-btn:hover {
+                transform: none;
+            }
+        }
+
+        /* Dark mode optimizations for mobile */
+        @media (prefers-color-scheme: dark) {
+            .terminal {
+                background: #0a0a0a;
+            }
+        }
+
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>🏠 SecureHome Dashboard</h1>
+        <h1>🏠 SecureHome</h1>
         <div class="header-controls">
+            {% if current_user.is_admin %}
+            <a href="/admin" class="settings-btn">
+                👑 <span>Admin</span>
+            </a>
+            {% endif %}
             <a href="/settings" class="settings-btn">
-                ⚙️ Settings
+                ⚙️ <span>Settings</span>
+            </a>
+            <a href="/logout" class="settings-btn">
+                🚪 <span>Logout</span>
             </a>
         </div>
     </div>
 
+    <!-- Mobile Tab Navigation -->
+    <div class="mobile-tabs">
+        <button class="tab-btn active" onclick="switchTab('status')">📊 Status</button>
+        <button class="tab-btn" onclick="switchTab('camera')">📹 Camera</button>
+        <button class="tab-btn" onclick="switchTab('controls')">🎛️ Controls</button>
+        <button class="tab-btn" onclick="switchTab('logs')">📟 Logs</button>
+    </div>
+
     <div class="main-container">
-        <div class="camera-section">
-            <div class="camera-header">
-                <div class="camera-title-section">
-                    <div class="camera-title">📷 Live Camera Feed</div>
-                    <button class="reload-btn" onclick="reloadCamera()">
-                        🔄 Reload Camera
-                    </button>
-                </div>
+        <!-- Status Section -->
+        <div id="status-tab" class="tab-content active">
+            <div class="status-bar">
+                <div class="status-title">📡 System Status</div>
                 <div class="status-indicators">
                     <div class="status-indicator">
                         <div class="status-dot status-offline" id="status-security"></div>
-                        <span>Security System</span>
+                        <span>Security</span>
                     </div>
                     <div class="status-indicator">
                         <div class="status-dot status-offline" id="status-discord"></div>
-                        <span>Discord Bot</span>
+                        <span>Discord</span>
                     </div>
                     <div class="status-indicator">
                         <div class="status-dot status-online" id="status-webserver"></div>
-                        <span>Web Server</span>
+                        <span>Server</span>
                     </div>
                 </div>
             </div>
-            <img src="/video_feed" class="camera-feed" alt="Camera Feed">
-            <div class="camera-info">
-                <form id="tts-form" style="width:100%;display:flex;gap:10px;align-items:center;">
-                    <input type="text" id="tts-input" placeholder="Type a message to speak..." style="flex:1;padding:8px;border-radius:6px;border:none;font-size:14px;">
-                    <button type="submit" id="tts-btn" style="padding:8px 16px;border-radius:6px;background:#2a5298;color:white;border:none;font-weight:600;cursor:pointer;">🔊 Speak</button>
-                </form>
+        </div>
+
+        <!-- Camera Section -->
+        <div id="camera-tab" class="tab-content">
+            <div class="camera-section">
+                <div class="camera-header">
+                    <div class="camera-title">📷 Live Feed</div>
+                    <button class="reload-btn" onclick="reloadCamera()">
+                        🔄 Reload
+                    </button>
+                </div>
+                <img src="/video_feed" class="camera-feed" alt="Camera Feed" loading="lazy">
+                <div class="camera-info">
+                    <form id="tts-form" class="tts-form">
+                        <input type="text" id="tts-input" class="tts-input" placeholder="Type message to speak..." autocomplete="off">
+                        <button type="submit" id="tts-btn" class="tts-btn">🔊 Speak</button>
+                    </form>
+                </div>
             </div>
         </div>
 
-        <div class="control-section">
-            <div class="control-header">🎛️ System Controls</div>
-            
-            <div class="control-buttons">
-                <button class="control-btn btn-start" onclick="controlSystem('start')">START</button>
-                <button class="control-btn btn-stop" onclick="controlSystem('stop')">STOP</button>
-                <button class="control-btn btn-restart" onclick="controlSystem('restart')">RESTART</button>
-            </div>
+        <!-- Controls Section -->
+        <div id="controls-tab" class="tab-content">
+            <div class="controls-section">
+                <div class="control-header">🎛️ System Controls</div>
+                
+                <div class="control-buttons">
+                    <button class="control-btn btn-start" onclick="controlSystem('start')">▶️ START</button>
+                    <button class="control-btn btn-stop" onclick="controlSystem('stop')">⏹️ STOP</button>
+                    <button class="control-btn btn-restart" onclick="controlSystem('restart')">🔄 RESTART</button>
+                </div>
 
-            <div class="screenshot-section">
-                <button class="screenshot-btn" onclick="takeScreenshot()">
-                    📸 Screenshot
-                </button>
+                <div class="screenshot-section">
+                    <button class="screenshot-btn" onclick="takeScreenshot()">
+                        📸 Take Screenshot
+                    </button>
+                </div>
             </div>
+        </div>
 
+        <!-- Terminal/Logs Section -->
+        <div id="logs-tab" class="tab-content">
             <div class="terminal-section">
                 <div class="terminal-header">
-                    <div class="terminal-title">📟 System Output</div>
+                    <div class="terminal-title">📟 Live Logs</div>
                     <div class="terminal-controls">
-                        <div class="detection-count">Live Logs</div>
-                        <button class="clear-btn" onclick="clearTerminal()">🗑️ Clear</button>
+                        <div class="detection-count">Real-time</div>
+                        <button class="clear-btn" onclick="clearTerminal()">🗑️</button>
                     </div>
                 </div>
                 <div class="terminal" id="terminal"></div>
             </div>
         </div>
     </div>
+
+    <button class="scroll-to-bottom-btn" id="scroll-btn" onclick="scrollToBottom()">↓</button>
 
     <script>
         // Socket.IO connection
@@ -510,25 +811,56 @@
         let detectionCount = 36;
         let isUserScrolling = false;
         let scrollTimeout;
+        let currentTab = 'status';
 
-        // Track if user is manually scrolling
+        // Mobile tab switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName + '-tab').classList.add('active');
+
+            currentTab = tabName;
+
+            // Auto-scroll to bottom when switching to logs
+            if (tabName === 'logs') {
+                setTimeout(() => {
+                    terminal.scrollTop = terminal.scrollHeight;
+                }, 100);
+            }
+        }
+
+        // Auto-switch tabs on desktop
+        function initializeTabSystem() {
+            if (window.innerWidth > 768) {
+                // Desktop: show all content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('active');
+                    content.style.display = 'block';
+                });
+                document.querySelector('.mobile-tabs').style.display = 'none';
+            } else {
+                // Mobile: show tabs
+                document.querySelector('.mobile-tabs').style.display = 'flex';
+                switchTab('status');
+            }
+        }
+
+        // Track scrolling for terminal
         terminal.addEventListener('scroll', function() {
-            const isAtBottom = terminal.scrollTop + terminal.clientHeight >= terminal.scrollHeight - 5;
+            const isAtBottom = terminal.scrollTop + terminal.clientHeight >= terminal.scrollHeight - 10;
             isUserScrolling = !isAtBottom;
             
-            // Clear existing timeout
             clearTimeout(scrollTimeout);
-            
-            // Reset scrolling flag after 3 seconds of no scroll activity
             scrollTimeout = setTimeout(() => {
                 isUserScrolling = false;
             }, 3000);
 
-            // Show/hide scroll button
-            const scrollBtn = document.querySelector('.scroll-to-bottom-btn');
-            if (scrollBtn) {
-                scrollBtn.style.display = isAtBottom ? 'none' : 'flex';
-            }
+            const scrollBtn = document.getElementById('scroll-btn');
+            scrollBtn.style.display = isAtBottom ? 'none' : 'flex';
         });
 
         // Socket event handlers
@@ -561,33 +893,42 @@
                 logEntry.classList.add('log-info');
             }
             
-            // Ensure message is properly formatted and truncated if too long
-            const maxLength = 150;
+            // Truncate long messages for mobile
+            const maxLength = window.innerWidth <= 768 ? 80 : 150;
             let displayMessage = message;
             if (message.length > maxLength) {
                 displayMessage = message.substring(0, maxLength) + '...';
-                logEntry.title = message; // Show full message on hover
+                logEntry.title = message;
             }
             
             logEntry.textContent = displayMessage;
             terminal.appendChild(logEntry);
             
-            // Auto-scroll only if user isn't manually scrolling
-            if (!isUserScrolling) {
+            // Auto-scroll only if user isn't manually scrolling and on logs tab
+            if (!isUserScrolling && (currentTab === 'logs' || window.innerWidth > 768)) {
                 terminal.scrollTop = terminal.scrollHeight;
             }
             
-            // Keep terminal from getting too long (performance optimization)
-            const maxEntries = 500;
+            // Keep terminal from getting too long
+            const maxEntries = 200;
             while (terminal.children.length > maxEntries) {
                 terminal.removeChild(terminal.firstChild);
             }
         }
 
+        function scrollToBottom() {
+            terminal.scrollTop = terminal.scrollHeight;
+            isUserScrolling = false;
+            document.getElementById('scroll-btn').style.display = 'none';
+        }
+
         // Control system functions
         async function controlSystem(action) {
             const buttons = document.querySelectorAll('.control-btn');
-            buttons.forEach(btn => btn.classList.add('loading'));
+            buttons.forEach(btn => {
+                btn.classList.add('loading');
+                btn.style.position = 'relative';
+            });
 
             try {
                 const response = await fetch(`/api/control/${action}`, {
@@ -608,7 +949,10 @@
             } catch (error) {
                 showNotification('Network error: ' + error.message, 'error');
             } finally {
-                buttons.forEach(btn => btn.classList.remove('loading'));
+                buttons.forEach(btn => {
+                    btn.classList.remove('loading');
+                    btn.style.position = '';
+                });
             }
         }
 
@@ -616,8 +960,9 @@
         async function reloadCamera() {
             const btn = document.querySelector('.reload-btn');
             const originalText = btn.innerHTML;
-            btn.innerHTML = '⏳ Reloading...';
+            btn.innerHTML = '⏳ Loading...';
             btn.classList.add('loading');
+            btn.style.position = 'relative';
 
             try {
                 const response = await fetch('/api/reload_camera', {
@@ -632,7 +977,7 @@
                 if (result.success) {
                     showNotification(result.message, 'success');
                     
-                    // Also reload the video feed image to refresh the stream
+                    // Reload the video feed
                     const videoFeed = document.querySelector('.camera-feed');
                     const currentSrc = videoFeed.src;
                     videoFeed.src = '';
@@ -648,6 +993,7 @@
             } finally {
                 btn.innerHTML = originalText;
                 btn.classList.remove('loading');
+                btn.style.position = '';
             }
         }
 
@@ -655,6 +1001,7 @@
         async function takeScreenshot() {
             const btn = document.querySelector('.screenshot-btn');
             btn.classList.add('loading');
+            btn.style.position = 'relative';
 
             try {
                 const response = await fetch('/api/screenshot', {
@@ -667,7 +1014,7 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    showNotification(`Screenshot saved: ${result.filename}`, 'success');
+                    showNotification(`📸 Screenshot saved: ${result.filename}`, 'success');
                 } else {
                     showNotification('Screenshot failed: ' + result.error, 'error');
                 }
@@ -675,6 +1022,7 @@
                 showNotification('Network error: ' + error.message, 'error');
             } finally {
                 btn.classList.remove('loading');
+                btn.style.position = '';
             }
         }
 
@@ -684,7 +1032,6 @@
                 const response = await fetch('/api/status');
                 const result = await response.text();
                 
-                // Check if response is JSON
                 let status;
                 try {
                     status = JSON.parse(result);
@@ -707,6 +1054,9 @@
 
         // Show notification
         function showNotification(message, type) {
+            // Remove existing notifications
+            document.querySelectorAll('.notification').forEach(n => n.remove());
+            
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.textContent = message;
@@ -715,8 +1065,12 @@
             setTimeout(() => notification.classList.add('show'), 100);
             setTimeout(() => {
                 notification.classList.remove('show');
-                setTimeout(() => document.body.removeChild(notification), 300);
-            }, 3000);
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
         }
 
         // Clear terminal function
@@ -725,63 +1079,46 @@
             addLogEntry('[SYSTEM] Terminal cleared');
         }
 
-        // Create scroll to bottom button
-        function createScrollButton() {
-            const scrollButton = document.createElement('button');
-            scrollButton.innerHTML = '↓';
-            scrollButton.className = 'scroll-to-bottom-btn';
-            
-            scrollButton.addEventListener('click', () => {
-                terminal.scrollTop = terminal.scrollHeight;
-                isUserScrolling = false;
-                scrollButton.style.display = 'none';
-            });
-            
-            // Add to terminal section
-            const terminalSection = document.querySelector('.terminal-section');
-            terminalSection.appendChild(scrollButton);
-            
-            return scrollButton;
-        }
+        // Handle window resize
+        window.addEventListener('resize', initializeTabSystem);
 
-        // Initialize
+        // Initialize on load
         document.addEventListener('DOMContentLoaded', function() {
-            createScrollButton();
+            initializeTabSystem();
             updateSystemStatus();
             setInterval(updateSystemStatus, 5000);
             
-            // Add some initial log entries
+            // Add initial log entries
             addLogEntry('[SYSTEM] SecureHome Dashboard initialized');
             addLogEntry('[WEBSERVER] Server running on port 8040');
+            addLogEntry('[MOBILE] Touch-optimized interface loaded');
         });
 
-        // Update detection count periodically
-        setInterval(() => {
-            if (Math.random() > 0.8) {
-                detectionCount++;
-                document.getElementById('detection-count').textContent = detectionCount;
-            }
-        }, 5000);
-
-        // Text-to-speech message box logic
+        // Text-to-speech form handler
         document.getElementById('tts-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const input = document.getElementById('tts-input');
             const btn = document.getElementById('tts-btn');
             const message = input.value.trim();
+            
             if (!message) {
                 showNotification('Please enter a message to speak.', 'error');
                 return;
             }
+            
             btn.classList.add('loading');
+            btn.style.position = 'relative';
             btn.textContent = '🔊 Speaking...';
+            
             try {
                 const response = await fetch('/api/speak', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message })
                 });
+                
                 const result = await response.json();
+                
                 if (result.success) {
                     showNotification('Message spoken!', 'success');
                     input.value = '';
@@ -792,8 +1129,29 @@
                 showNotification('Network error: ' + error.message, 'error');
             } finally {
                 btn.classList.remove('loading');
+                btn.style.position = '';
                 btn.textContent = '🔊 Speak';
             }
+        });
+
+        // Prevent zoom on double tap for iOS
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Handle orientation change
+        window.addEventListener('orientationchange', function() {
+            setTimeout(() => {
+                initializeTabSystem();
+                if (currentTab === 'logs') {
+                    terminal.scrollTop = terminal.scrollHeight;
+                }
+            }, 500);
         });
     </script>
 </body>

@@ -1,7 +1,13 @@
 import threading, time, cv2, logging, sys, traceback, os, json, colorama, subprocess
-from flask import Response, Flask, render_template, jsonify, request, send_from_directory
+from flask import Response, Flask, render_template, jsonify, request, send_from_directory, redirect, url_for, flash
 from flask_socketio import SocketIO, emit
 from datetime import datetime
+from database import db, User
+from auth import get_user_by_username, get_user_by_id, get_all_users, create_user, update_user_profile, delete_user
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_limiter import Limiter
+from functools import wraps
+from flask_limiter.util import get_remote_address
 
 colorama.init()
 
@@ -16,8 +22,6 @@ sys.excepthook = exc_handler
 with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
     config = json.load(conf_file)
 
-
-
 outputFrame = None
 lock = threading.Lock()
 system_status = {
@@ -26,9 +30,30 @@ system_status = {
     'webserver': True
 }
 
-cap = cv2.VideoCapture(config["camera"]["v_cam"])
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'security_system_key'
+app.config['SECRET_KEY'] = 'a_very_secret_key' # Changed for security
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.init_app(app)
+
+# --- Auth Setup ---
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["200 per day", "50 per hour"]
+)
+
+@login_manager.user_loader
+def load_user(user_id):
+    with app.app_context():
+        return User.query.get(int(user_id))
+# --- End Auth Setup ---
+
+cap = cv2.VideoCapture(config["camera"]["v_cam"])
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 time.sleep(2.0)
@@ -37,11 +62,46 @@ time.sleep(2.0)
 security_process = None
 bot_process = None
 
+@app.before_request
+def create_tables():
+    with app.app_context():
+        db.create_all()
+        if not User.query.filter_by(username='admin').first():
+            from auth import create_user
+            try:
+                create_user('admin', 'admin', is_admin=True)
+                print("Admin user created.")
+            except ValueError as e:
+                print(e)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+@limiter.limit("5 per minute")
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    if request.method == 'POST':
+        user = get_user_by_username(request.form['username'])
+        if user and user.check_password(request.form['password']):
+            login_user(user)
+            return redirect(url_for('index'))
+        else:
+            flash('Invalid username or password', 'danger')
+    return render_template('login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
 @app.route("/")
+@login_required
 def index():
     return render_template("index.html")
 
 @app.route("/api/status")
+@login_required
 def get_status():
     global security_process, bot_process
     
@@ -52,6 +112,7 @@ def get_status():
     return jsonify(system_status)
 
 @app.route("/api/screenshot", methods=['POST'])
+@login_required
 def take_screenshot():
     global outputFrame, lock
     try:
@@ -70,10 +131,12 @@ def take_screenshot():
         return jsonify({"success": False, "error": str(e)})
 
 @app.route("/settings")
+@login_required
 def settings():
     return render_template("settings.html")
 
 @app.route("/api/get_config", methods=['GET'])
+@login_required
 def get_config():
     try:
         with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
@@ -83,6 +146,7 @@ def get_config():
         return jsonify({"success": False, "error": str(e)})
 
 @app.route("/api/save_config", methods=['POST'])
+@login_required
 def save_config():
     try:
         new_config = request.get_json()
@@ -109,6 +173,7 @@ def save_config():
         return jsonify({"success": False, "error": str(e)})
 
 @app.route("/api/reload_camera", methods=['POST'])
+@login_required
 def reload_camera():
     global cap, outputFrame, lock
     with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
@@ -141,6 +206,7 @@ def reload_camera():
         return jsonify({"success": False, "error": f"Camera reload failed: {str(e)}"})
 
 @app.route("/api/control/<action>", methods=['POST'])
+@login_required
 def system_control(action):
     global security_process, bot_process, system_status
     with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
@@ -208,6 +274,7 @@ def system_control(action):
         return jsonify({"success": False, "error": str(e)})
 
 @app.route("/api/get_env", methods=['GET'])
+@login_required
 def get_env():
     try:
         env_path = os.path.join(os.path.dirname(__file__), ".env")
@@ -220,6 +287,7 @@ def get_env():
         return jsonify({"success": False, "error": str(e)})
 
 @app.route("/api/save_env", methods=['POST'])
+@login_required
 def save_env():
     try:
         data = request.get_json()
@@ -233,12 +301,6 @@ def save_env():
     except Exception as e:
         return jsonify({"success": False, "error": str(e)})
 
-@app.route("/add_user")
-def add_user():
-    return render_template("add_user.html")
-
-@app.route("/api/add_user", methods=['POST'])
-def api_add_user():
     try:
         data = request.get_json()
         name = data.get("name")
@@ -260,6 +322,7 @@ def api_add_user():
         return jsonify({"success": False, "error": str(e)})
 
 @app.route("/api/list_users", methods=['GET'])
+@login_required
 def list_users():
     try:
         images_dir = os.path.join(os.path.dirname(__file__), "images")
@@ -276,6 +339,7 @@ def list_users():
         return jsonify({"success": False, "error": str(e)})
 
 @app.route("/api/user_image/<username>")
+@login_required
 def user_image(username):
     images_dir = os.path.join(os.path.dirname(__file__), "images")
     # Try jpg, jpeg, png in order
@@ -288,6 +352,7 @@ def user_image(username):
     return '', 404
 
 @app.route("/api/delete_user", methods=['POST'])
+@login_required
 def delete_user():
     try:
         data = request.get_json()
@@ -310,6 +375,7 @@ def delete_user():
         return jsonify({"success": False, "error": str(e)})
 
 @app.route("/api/speak", methods=['POST'])
+@login_required
 def api_speak():
     try:
         data = request.get_json()
@@ -366,9 +432,140 @@ def generate():
             bytearray(encodedImage) + b'\r\n')
 
 @app.route("/video_feed")
+@login_required
 def video_feed():
     return Response(generate(),
         mimetype="multipart/x-mixed-replace; boundary=frame")
+
+# --- Admin Routes ---
+from functools import wraps
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated or not current_user.is_admin:
+            flash("You do not have permission to access this page.", "danger")
+            return redirect(url_for('index'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+@app.route('/admin')
+@login_required
+@admin_required
+def admin_dashboard():
+    return render_template('admin/dashboard.html')
+
+@app.route('/admin/users')
+@login_required
+@admin_required
+def list_admin_users():
+    users = get_all_users()
+    return render_template('admin/users.html', users=users)
+
+@app.route('/admin/users/add', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def add_admin_user():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        is_admin = 'is_admin' in request.form
+        try:
+            create_user(username, password, is_admin)
+            flash(f"User '{username}' created successfully.", "success")
+            return redirect(url_for('list_admin_users'))
+        except ValueError as e:
+            flash(str(e), 'danger')
+    return render_template('admin/edit_user.html', user=None) # Re-use edit template for adding
+
+@app.route('/admin/users/edit/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_admin_user(user_id):
+    user = get_user_by_id(user_id)
+    if not user:
+        flash("User not found.", "danger")
+        return redirect(url_for('list_admin_users'))
+
+    if request.method == 'POST':
+        new_username = request.form['username']
+        new_password = request.form.get('password')
+        is_admin = 'is_admin' in request.form
+
+        try:
+            update_user_profile(user_id, new_username, new_password if new_password else None, is_admin)
+            flash(f"User '{new_username}' updated successfully.", "success")
+            return redirect(url_for('list_admin_users'))
+        except ValueError as e:
+            flash(str(e), 'danger')
+
+    return render_template('admin/edit_user.html', user=user)
+
+@app.route('/admin/users/edit_face/<int:user_id>')
+@login_required
+@admin_required
+def edit_face(user_id):
+    user = get_user_by_id(user_id)
+    if not user:
+        flash("User not found.", "danger")
+        return redirect(url_for('list_admin_users'))
+    return render_template('admin/edit_face.html', user=user)
+
+@app.route('/api/admin/users/edit_face/<int:user_id>', methods=['POST'])
+@login_required
+@admin_required
+def api_edit_face(user_id):
+    user = get_user_by_id(user_id)
+    if not user:
+        return jsonify({"success": False, "error": "User not found"})
+
+    try:
+        data = request.form
+        img_data = data.get("image_data")
+        if not img_data:
+            return jsonify({"success": False, "error": "Missing image data"})
+
+        import base64
+        from PIL import Image
+        from io import BytesIO
+
+        img_bytes = base64.b64decode(img_data.split(',')[1])
+        img = Image.open(BytesIO(img_bytes))
+
+        images_dir = os.path.join(os.path.dirname(__file__), "images")
+        os.makedirs(images_dir, exist_ok=True)
+
+        # Save the image with the user's ID as the filename
+        img.save(os.path.join(images_dir, f"{user.id}.jpg"))
+
+        return jsonify({"success": True, "message": "Face updated successfully"})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+        is_admin = 'is_admin' in request.form
+
+        try:
+            update_user_profile(user_id, new_username, new_password if new_password else None, is_admin)
+            flash(f"User '{new_username}' updated successfully.", "success")
+            return redirect(url_for('list_admin_users'))
+        except ValueError as e:
+            flash(str(e), 'danger')
+
+    return render_template('admin/edit_user.html', user=user)
+
+@app.route('/admin/users/delete/<int:user_id>')
+@login_required
+@admin_required
+def delete_admin_user(user_id):
+    # Prevent admin from deleting themselves
+    if current_user.id == user_id:
+        flash("You cannot delete your own account.", "danger")
+        return redirect(url_for('list_admin_users'))
+
+    if delete_user(user_id):
+        flash("User deleted successfully.", "success")
+    else:
+        flash("User not found.", "danger")
+    return redirect(url_for('list_admin_users'))
 
 @socketio.on('connect')
 def handle_connect():
