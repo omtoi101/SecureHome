@@ -13,3 +13,7 @@ mediapipe
 pyttsx3
 Pillow
 eventlet
+Flask-SQLAlchemy
+Flask-Login
+flask_limiter
+pyvirtualcam
