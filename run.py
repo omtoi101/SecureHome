@@ -513,28 +513,41 @@ def camera_process(frame_queue):
     """
     with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
         config = json.load(conf_file)
-    cap = cv2.VideoCapture(config["camera"]["v_cam"])
+
+    cap = None
+    retry_count = 0
+    max_retries = 3
+
     while True:
-        try:
-            ret, frame = cap.read()
-            if ret:
-                # If the queue is full, remove the oldest frame and add the new one.
-                # This prevents the queue from growing indefinitely.
-                if frame_queue.full():
-                    frame_queue.get_nowait()
-                frame_queue.put(frame)
-            else:
-                # If reading fails, release and reopen the camera
-                cap.release()
-                time.sleep(1)
+        if cap is None or not cap.isOpened():
+            if retry_count < max_retries:
+                print(f"Attempting to open camera (attempt {retry_count + 1}/{max_retries})...")
                 cap = cv2.VideoCapture(config["camera"]["v_cam"])
-        except Exception as e:
-            print(f"Camera process error: {e}")
-            # In case of other errors, also try to reopen the camera
-            if cap.isOpened():
-                cap.release()
-            time.sleep(1)
-            cap = cv2.VideoCapture(config["camera"]["v_cam"])
+                if not cap.isOpened():
+                    retry_count += 1
+                    time.sleep(2)  # Wait before retrying
+                    continue
+                else:
+                    print("Camera opened successfully.")
+                    retry_count = 0 # Reset on success
+            else:
+                print(f"Failed to open camera after {max_retries} attempts. Going into dormant state.")
+                time.sleep(60) # Dormant state
+                retry_count = 0 # Reset to allow new attempts after dormancy
+                continue
+
+        ret, frame = cap.read()
+        if ret:
+            if frame_queue.full():
+                frame_queue.get_nowait()
+            frame_queue.put(frame)
+            retry_count = 0 # Reset on successful read
+        else:
+            print("Failed to read frame from camera. Retrying...")
+            retry_count += 1
+            cap.release()
+            cap = None # Force re-initialization
+
         time.sleep(0.033) # ~30 FPS
 
 
