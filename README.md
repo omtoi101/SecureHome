@@ -17,7 +17,7 @@
 
 ## Getting Started
 
-The easiest way to get SecureHome up and running is with Docker and `docker-compose`.
+The easiest way to get SecureHome up and running is with Docker and `docker compose`.
 
 ### Prerequisites
 
