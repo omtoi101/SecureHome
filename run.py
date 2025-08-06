@@ -96,8 +96,7 @@ security_process = None
 bot_process = None
 
 
-@app.before_request
-def create_tables():
+def initialize_database():
     with app.app_context():
         db.create_all()
         if not User.query.filter_by(username="admin").first():
@@ -108,6 +107,11 @@ def create_tables():
                 print("Admin user created.")
             except ValueError as e:
                 print(e)
+
+
+@app.before_request
+def create_tables():
+    initialize_database()
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -497,17 +501,51 @@ def monitor_process_output(process, service_name):
         socketio.emit("log", {"data": error_msg})
 
 
-def getframe():
+def camera_process(frame_queue):
+    """
+    This function runs in a separate process to read frames from the camera.
+    This is done to prevent the blocking `read()` call from freezing the web server.
+    """
+    with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
+        config = json.load(conf_file)
+    cap = cv2.VideoCapture(config["camera"]["v_cam"])
+    while True:
+        try:
+            ret, frame = cap.read()
+            if ret:
+                # If the queue is full, remove the oldest frame and add the new one.
+                # This prevents the queue from growing indefinitely.
+                if frame_queue.full():
+                    frame_queue.get_nowait()
+                frame_queue.put(frame)
+            else:
+                # If reading fails, release and reopen the camera
+                cap.release()
+                time.sleep(1)
+                cap = cv2.VideoCapture(config["camera"]["v_cam"])
+        except Exception as e:
+            print(f"Camera process error: {e}")
+            # In case of other errors, also try to reopen the camera
+            if cap.isOpened():
+                cap.release()
+            time.sleep(1)
+            cap = cv2.VideoCapture(config["camera"]["v_cam"])
+        time.sleep(0.033) # ~30 FPS
+
+
+def getframe(frame_queue):
+    """
+    This function runs in a thread to get frames from the queue and update the global outputFrame.
+    """
     global outputFrame, lock
     while True:
         try:
-            ret, img = cap.read()
-            if ret and img is not None:
-                with lock:
-                    outputFrame = img
+            frame = frame_queue.get()
+            with lock:
+                outputFrame = frame
         except Exception as e:
-            print(f"Frame capture error: {e}")
-        time.sleep(0.033)  # ~30 FPS
+            print(f"Frame queue error: {e}")
+        time.sleep(0.01) # Small sleep to prevent busy-waiting
 
 
 def generate():
@@ -674,8 +712,22 @@ def handle_connect():
 
 
 if __name__ == "__main__":
-    # Start frame capture thread
-    t = threading.Thread(target=getframe)
+    from multiprocessing import Process, Queue
+    import atexit
+
+    # Create a queue for communication between processes
+    frame_queue = Queue(maxsize=2)
+
+    # Start the camera process
+    camera_p = Process(target=camera_process, args=(frame_queue,))
+    camera_p.daemon = True
+    camera_p.start()
+
+    # Register a function to terminate the camera process upon exit
+    atexit.register(lambda: camera_p.terminate())
+
+    # Start frame capture thread to get frames from the queue
+    t = threading.Thread(target=getframe, args=(frame_queue,))
     t.daemon = True
     t.start()
 

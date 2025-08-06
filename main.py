@@ -123,10 +123,10 @@ class SecurityCamera:
         self.size = (self.frame_width, self.frame_height)
 
         # State variables
+        self.video_writer = None
         self.reset_state()
 
         self.check_frame_index = 0
-        self.video_writer = None
         self.prev_frame = None
         self.frame_count = 0
 
@@ -411,10 +411,13 @@ class SecurityCamera:
 
 
 if __name__ == "__main__":
-    from run import app
+    from run import app, initialize_database
 
     with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
         config_data = json.load(conf_file)
+
+    # Initialize the database before starting the camera system
+    initialize_database()
 
     camera_system = SecurityCamera(config_data, app)
     try:
