@@ -10,30 +10,32 @@ import json
 import colorama
 import threading
 import queue
-import time
 from cvzone.PoseModule import PoseDetector
 from pyvirtualcam import PixelFormat
 from datetime import datetime
 from dependencies.Webhook import WebhookBuilder
 from dependencies.Facerec import Facerec
-from database import db, User
 from auth import get_all_users
 
 colorama.init()
 
 # Setup logging
 os.makedirs(os.path.join(os.path.dirname(__file__), "logs"), exist_ok=True)
-logger = logging.getLogger('logger')
-fh = logging.FileHandler(os.path.join(os.path.dirname(__file__), "logs", "s_cam.log"))
+logger = logging.getLogger("logger")
+log_path = os.path.join(os.path.dirname(__file__), "logs", "s_cam.log")
+fh = logging.FileHandler(log_path)
 logger.addHandler(fh)
 
+
 def exc_handler(exctype, value, tb):
-    logger.exception(''.join(traceback.format_exception(exctype, value, tb)))
+    logger.exception("".join(traceback.format_exception(exctype, value, tb)))
+
 
 sys.excepthook = exc_handler
 
+
 class FrameReader(threading.Thread):
-    def __init__(self, cap, frame_queue, name='frame-reader'):
+    def __init__(self, cap, frame_queue, name="frame-reader"):
         self.cap = cap
         self.frame_queue = frame_queue
         self.stopped = threading.Event()
@@ -51,25 +53,61 @@ class FrameReader(threading.Thread):
     def stop(self):
         self.stopped.set()
 
+
+class FaceDetector(threading.Thread):
+    def __init__(self, face_recognizer, frame_queue, result_queue, name="face-detector"):
+        self.face_recognizer = face_recognizer
+        self.frame_queue = frame_queue
+        self.result_queue = result_queue
+        self.stopped = threading.Event()
+        super().__init__(name=name)
+
+    def run(self):
+        while not self.stopped.is_set():
+            try:
+                frame = self.frame_queue.get(timeout=1)
+                small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
+                face_locations, face_names = self.face_recognizer.detect_known_faces(small_frame)
+                self.result_queue.put((face_locations, face_names))
+            except queue.Empty:
+                continue
+
+    def stop(self):
+        self.stopped.set()
+
+
 class SecurityCamera:
     def __init__(self, config, app):
         self.config = config
-        self.settings = config['settings']
-        self.camera_config = config['camera']
+        self.settings = config["settings"]
+        self.camera_config = config["camera"]
         self.detection_interval = self.camera_config.get("detection_interval", 5)
         self.app = app
 
         # Frame reading setup
         self.frame_queue = queue.Queue(maxsize=2)
-        self.cap = cv2.VideoCapture(self.camera_config["main"])
+        if self.camera_config.get("camera_type") == "ip":
+            self.cap = cv2.VideoCapture(self.camera_config.get("ip_camera_url"))
+        else:
+            self.cap = cv2.VideoCapture(self.camera_config["main"])
         self.cap.set(3, 1280)
         self.cap.set(4, 720)
         self.frame_reader = FrameReader(self.cap, self.frame_queue)
 
-        # Initialize core components
+        # Face detection setup
         self.face_recognizer = Facerec()
+        self.face_detection_queue = queue.Queue(maxsize=1)
+        self.face_detection_results = queue.Queue(maxsize=1)
+        self.face_detector = FaceDetector(
+            self.face_recognizer,
+            self.face_detection_queue,
+            self.face_detection_results,
+        )
+
+        # Initialize core components
         self.pose_detector = PoseDetector(detectionCon=0.5, trackCon=0.5)
-        self.webhook_builder = WebhookBuilder(config.get("discord", {}).get("webhook_url", ""), os.path.dirname(__file__))
+        webhook_url = config.get("discord", {}).get("webhook_url", "")
+        self.webhook_builder = WebhookBuilder(webhook_url, os.path.dirname(__file__))
 
         # Load face encodings
         self.images_dir = os.path.join(os.path.dirname(__file__), "images")
@@ -116,8 +154,10 @@ class SecurityCamera:
 
     def speak(self, text):
         print(text)
-        if self.settings['speech']:
-            multiprocessing.Process(target=self._tts_say, args=(text,), daemon=True).start()
+        if self.settings["speech"]:
+            multiprocessing.Process(
+                target=self._tts_say, args=(text,), daemon=True
+            ).start()
 
     def _tts_say(self, text):
         engine = pyttsx3.init()
@@ -126,7 +166,7 @@ class SecurityCamera:
 
     def _reload_faces_if_changed(self):
         self.check_frame_index += 1
-        if self.check_frame_index == 500: # Check less frequently
+        if self.check_frame_index == 500:  # Check less frequently
             self.check_frame_index = 0
             with self.app.app_context():
                 new_users = get_all_users()
@@ -145,21 +185,28 @@ class SecurityCamera:
 
     def start(self):
         self.frame_reader.start()
+        self.face_detector.start()
         self.run()
 
     def stop(self):
         print("Stopping camera system...")
         self.frame_reader.stop()
+        self.face_detector.stop()
         self.frame_reader.join()
+        self.face_detector.join()
         self.cap.release()
         cv2.destroyAllWindows()
         if self.video_writer:
             self.video_writer.release()
 
-
     def run(self):
         multiprocessing.freeze_support()
-        with pyvirtualcam.Camera(self.frame_width, self.frame_height, self.fps, fmt=PixelFormat.BGR) as cam:
+        with pyvirtualcam.Camera(
+            width=self.frame_width,
+            height=self.frame_height,
+            fps=self.fps,
+            fmt=PixelFormat.BGR,
+        ) as cam:
             while self.frame_reader.is_alive():
                 try:
                     frame = self.frame_queue.get(timeout=1)
@@ -173,18 +220,31 @@ class SecurityCamera:
                 self.frame_count += 1
                 self._reload_faces_if_changed()
 
-                motion_detected, contours = self._detect_motion(frame, self.prev_frame)
+                motion_detected, contours = self._detect_motion(
+                    frame, self.prev_frame
+                )
+
+                if not self.face_detection_queue.full():
+                    self.face_detection_queue.put(frame)
+
+                try:
+                    self.face_locations, self.face_names = self.face_detection_results.get_nowait()
+                except queue.Empty:
+                    pass
+
+                face_detected = len(self.face_locations) > 0
 
                 if self.frame_count % self.detection_interval == 0:
-                    face_detected, self.face_locations, self.face_names = self._detect_faces(frame)
                     body_detected, self.body_bbox = self._detect_bodies(frame)
                 else:
-                    face_detected = len(self.face_locations) > 0
                     body_detected = self.body_bbox != {}
 
-
-                self._update_counters(motion_detected, face_detected, body_detected, self.face_names)
-                self._draw_overlays(frame, contours, self.face_locations, self.face_names)
+                self._update_counters(
+                    motion_detected, face_detected, body_detected, self.face_names
+                )
+                self._draw_overlays(
+                    frame, contours, self.face_locations, self.face_names
+                )
 
                 self._handle_recorder(frame, body_detected, face_detected)
                 self._handle_notifications(frame, self.face_names)
@@ -193,11 +253,11 @@ class SecurityCamera:
                     self.undetected_c += 1
 
                 if self.undetected_c >= self.camera_config["undetected_time"]:
-                    if self.intruder and (self.body_c > 5 or self.face_c > 5) and self.settings['discord_notifications']:
+                    if (self.intruder and (self.body_c > 5 or self.face_c > 5) and self.settings["discord_notifications"]):
                         self.webhook_builder.thread("recording", self.v_path)
                     self.reset_state()
 
-                if self.settings['webserver']:
+                if self.settings["webserver"]:
                     resized_frame = cv2.resize(frame, (640, 480))
                     cam.send(resized_frame)
                     cam.sleep_until_next_frame()
@@ -205,7 +265,6 @@ class SecurityCamera:
                 self.prev_frame = frame
 
         self.stop()
-
 
     def _detect_motion(self, frame1, frame2):
         small_frame1 = cv2.resize(frame1, (640, 480))
@@ -215,7 +274,9 @@ class SecurityCamera:
         blur = cv2.GaussianBlur(gray, (5, 5), 0)
         _, thresh = cv2.threshold(blur, 20, 255, cv2.THRESH_BINARY)
         dilated = cv2.dilate(thresh, None, iterations=3)
-        contours, _ = cv2.findContours(dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        contours, _ = cv2.findContours(
+            dilated, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE
+        )
 
         valid_contours = [c for c in contours if cv2.contourArea(c) >= 1000]
         return len(valid_contours) > 0, valid_contours
@@ -225,22 +286,26 @@ class SecurityCamera:
         face_locations, face_names = self.face_recognizer.detect_known_faces(small_frame)
 
         face_locations_orig = []
-        for (top, right, bottom, left) in face_locations:
-            face_locations_orig.append((top*2, right*2, bottom*2, left*2))
+        for top, right, bottom, left in face_locations:
+            face_locations_orig.append((top * 2, right * 2, bottom * 2, left * 2))
 
         return len(face_locations_orig) > 0, face_locations_orig, face_names
 
     def _detect_bodies(self, frame):
         img = self.pose_detector.findPose(frame, draw=False)
-        _, bboxInfo = self.pose_detector.findPosition(img, bboxWithHands=False)
+        _, bboxInfo = self.pose_detector.findPosition(
+            img, bboxWithHands=False
+        )
         return bboxInfo != {}, bboxInfo
 
     def _update_counters(self, motion, face, body, face_names):
-        if motion: self.motion_c += 1
+        if motion:
+            self.motion_c += 1
         if face:
             self.face_c += 1
             self.face_det.extend(face_names)
-        if body: self.body_c += 1
+        if body:
+            self.body_c += 1
 
         if body or face:
             self.prev_detection = True
@@ -260,15 +325,17 @@ class SecurityCamera:
         self.clips_dir = os.path.join(os.path.dirname(__file__), "clipped", path_t)
         os.makedirs(self.clips_dir, exist_ok=True)
 
-        is_recording_trigger = (self.body_c == 1) or (self.face_c == 1 and not self.f_reset)
+        is_recording_trigger = (self.body_c == 1) or (
+            self.face_c == 1 and not self.f_reset
+        )
 
         if is_recording_trigger and "recorder" not in self.just_ran:
             file_t = now.strftime("%d-%m-%Y_%H-%M-%S")
-            self.v_path = os.path.join(self.clips_dir, f"recording_{file_t}.avi")
+            self.v_path = os.path.join(
+                self.clips_dir, f"recording_{file_t}.avi"
+            )
             self.video_writer = cv2.VideoWriter(
-                self.v_path,
-                cv2.VideoWriter_fourcc(*'MJPG'),
-                10, self.size
+                self.v_path, cv2.VideoWriter_fourcc(*"MJPG"), 10, self.size
             )
             self.just_ran.append("recorder")
 
@@ -285,48 +352,56 @@ class SecurityCamera:
     def _handle_notifications(self, frame, face_names):
         cam_conf = self.camera_config
 
-        if self.settings['motion_detection'] and self.motion_c == cam_conf['motion_inc'] and "motion" not in self.just_ran:
-            if not self.f_reset: self.speak("Motion detected")
+        if (self.settings["motion_detection"] and self.motion_c == cam_conf["motion_inc"] and "motion" not in self.just_ran):
+            if not self.f_reset:
+                self.speak("Motion detected")
             self.just_ran.append("motion")
 
-        if self.body_c == cam_conf['body_inc'] and self.face_c == 0 and "body_1" not in self.just_ran:
-            if not self.f_reset: self.speak("Person detected, initiate face detection")
+        if (self.body_c == cam_conf["body_inc"] and self.face_c == 0 and "body_1" not in self.just_ran):
+            if not self.f_reset:
+                self.speak("Person detected, initiate face detection")
             self._save_image(frame, "body")
             self.just_ran.append("body_1")
-        elif self.body_c == cam_conf['body_inc'] * 2 and self.face_c == 0 and "body_2" not in self.just_ran:
-            if not self.f_reset: self.speak("Initiate face detection now, you are already on camera")
+        elif (self.body_c == cam_conf["body_inc"] * 2 and self.face_c == 0 and "body_2" not in self.just_ran):
+            if not self.f_reset:
+                self.speak("Initiate face detection now, you are already on camera")
             self._save_image(frame, "body_1")
             self.just_ran.append("body_2")
-        elif self.body_c == cam_conf['body_inc'] * 3 and self.face_c == 0 and "body_3" not in self.just_ran:
-            if not self.f_reset: self.speak("Face not detected")
+        elif (self.body_c == cam_conf["body_inc"] * 3 and self.face_c == 0 and "body_3" not in self.just_ran):
+            if not self.f_reset:
+                self.speak("Face not detected")
             self._save_image(frame, "body_nf")
             self.just_ran.append("body_3")
-        elif self.body_c == cam_conf['body_inc'] * 4 and self.face_c == 0 and "body_4" not in self.just_ran:
+        elif (self.body_c == cam_conf["body_inc"] * 4 and self.face_c == 0 and "body_4" not in self.just_ran):
             if not self.f_reset:
                 self.speak("Intruder detected")
-                if self.settings['discord_notifications']:
+                if self.settings["discord_notifications"]:
                     img_path = self._save_image(frame, "body_nf2")
                     self.webhook_builder.thread("intruder", img_path)
             self.just_ran.append("body_4")
 
         name = face_names[0] if face_names else ""
         if self.face_c == 1 and "face_1" not in self.just_ran:
-            if not self.f_reset: self.speak("Face detected, look into the camera for recognition")
-            if name == "Unknown": self._save_image(frame, "unknown_face")
+            if not self.f_reset:
+                self.speak(
+                    "Face detected, look into the camera for recognition"
+                )
+            if name == "Unknown":
+                self._save_image(frame, "unknown_face")
             self.just_ran.append("face_1")
-        elif self.face_c == cam_conf['face_inc']:
+        elif self.face_c == cam_conf["face_inc"]:
             d_face = self._c_face(self.face_det)
             if d_face == "Unknown":
                 if not self.f_reset:
                     self.speak("Unknown face detected")
-                    if self.settings['discord_notifications']:
+                    if self.settings["discord_notifications"]:
                         img_path = self._save_image(frame, f"verification_{d_face}_face")
                         self.webhook_builder.thread("unknown", img_path)
                 self.f_reset = True
             elif not self.detected_person:
                 if not self.f_reset or self.intruder:
                     self.speak(f"Welcome, {d_face}")
-                    if self.settings['discord_notifications']:
+                    if self.settings["discord_notifications"]:
                         img_path = self._save_image(frame, f"verification_{d_face}_face")
                         self.webhook_builder.thread("login", d_face, img_path)
                 self.detected_person = True
@@ -334,8 +409,10 @@ class SecurityCamera:
                 self.f_reset = True
             self.face_c = 0
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     from run import app
+
     with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
         config_data = json.load(conf_file)
 

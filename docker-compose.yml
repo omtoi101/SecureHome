@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  securehome:
+    build: .
+    ports:
+      - "8040:8040"
+    volumes:
+      - /dev:/dev
+      - ./images:/app/images
+      - ./clips:/app/clips
+      - ./logs:/app/logs
+    privileged: true

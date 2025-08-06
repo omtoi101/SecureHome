@@ -5,10 +5,13 @@
         "webserver": true,
         "discord_notifications": false,
         "discord_bot": false,
+        "crash_notifications": false,
         "debug": false
     },
     "camera": {
+        "camera_type": "local",
         "main": 0,
+        "ip_camera_url": "",
         "v_cam": 3,
         "body_inc": 20,
         "face_inc": 5,
