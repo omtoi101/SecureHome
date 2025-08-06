@@ -28,7 +28,7 @@ The easiest way to get SecureHome up and running is with Docker and `docker-comp
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/omtoi101/SecureHome.git
+    git clone -b feature/complete-overhaul https://github.com/omtoi101/SecureHome.git
     cd SecureHome
     ```
 
@@ -38,7 +38,7 @@ The easiest way to get SecureHome up and running is with Docker and `docker-comp
 
 3.  **Build and run the application:**
     ```bash
-    docker-compose up --build
+    docker compose up --build
     ```
     This command will build the Docker image and start the application. The web interface will be available at `http://localhost:8040`.
 
