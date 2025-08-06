@@ -572,24 +572,30 @@ def getframe(frame_queue):
 
 def generate():
     global outputFrame, lock
-    while True:
-        with lock:
-            if outputFrame is None:
-                time.sleep(0.1) # Wait for a frame to be available
-                continue
-            try:
-                (flag, encodedImage) = cv2.imencode(".jpg", outputFrame)
-                if not flag:
+    try:
+        while True:
+            with lock:
+                if outputFrame is None:
+                    time.sleep(0.1) # Wait for a frame to be available
                     continue
-            except Exception as e:
-                print(f"Encoding error: {e}")
-                continue
-        yield (
-            b"--frame\r\n"
-            b"Content-Type: image/jpeg\r\n\r\n" + bytearray(encodedImage) + b"\r\n"
-        )
-        # Yield control to other greenlets
-        time.sleep(0.01)
+                try:
+                    (flag, encodedImage) = cv2.imencode(".jpg", outputFrame)
+                    if not flag:
+                        continue
+                except Exception as e:
+                    print(f"Encoding error: {e}")
+                    continue
+            yield (
+                b"--frame\r\n"
+                b"Content-Type: image/jpeg\r\n\r\n" + bytearray(encodedImage) + b"\r\n"
+            )
+            # Yield control to other greenlets
+            time.sleep(0.01)
+    except (GeneratorExit, BrokenPipeError):
+        # Handle client disconnection gracefully
+        print("Client disconnected from video feed.")
+    except Exception as e:
+        print(f"An unexpected error occurred in the video feed generator: {e}")
 
 
 @app.route("/video_feed")
