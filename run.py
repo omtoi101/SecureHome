@@ -562,6 +562,7 @@ def generate():
     while True:
         with lock:
             if outputFrame is None:
+                time.sleep(0.1) # Wait for a frame to be available
                 continue
             try:
                 (flag, encodedImage) = cv2.imencode(".jpg", outputFrame)
@@ -574,6 +575,8 @@ def generate():
             b"--frame\r\n"
             b"Content-Type: image/jpeg\r\n\r\n" + bytearray(encodedImage) + b"\r\n"
         )
+        # Yield control to other greenlets
+        time.sleep(0.01)
 
 
 @app.route("/video_feed")
