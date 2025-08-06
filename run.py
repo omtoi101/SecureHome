@@ -6,6 +6,7 @@ import sys
 import threading
 import time
 import traceback
+from queue import Empty
 
 import colorama
 import cv2
@@ -94,6 +95,8 @@ time.sleep(2.0)
 # Global process references
 security_process = None
 bot_process = None
+camera_p = None
+frame_queue = None
 
 
 def initialize_database():
@@ -226,39 +229,41 @@ def save_config():
         return jsonify({"success": False, "error": str(e)})
 
 
+def start_camera_process(queue):
+    """Starts the camera process."""
+    proc = Process(target=camera_process, args=(queue,))
+    proc.daemon = True
+    proc.start()
+    return proc
+
+
 @app.route("/api/reload_camera", methods=["POST"])
 @login_required
 def reload_camera():
-    global cap, outputFrame, lock
-    with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as conf_file:
-        config = json.load(conf_file)
+    """Terminates the existing camera process and starts a new one."""
+    global camera_p, frame_queue
     try:
-        with lock:
-            # Release current camera
-            if cap:
-                cap.release()
+        if camera_p and camera_p.is_alive():
+            camera_p.terminate()
+            camera_p.join(timeout=2) # Wait for the process to terminate
 
-            # Small delay to ensure camera is released
-            time.sleep(1)
+        # Clear the queue of any old frames
+        while not frame_queue.empty():
+            try:
+                frame_queue.get_nowait()
+            except Empty:
+                pass
 
-            # Reinitialize camera
-            cap = cv2.VideoCapture(config["camera"]["v_cam"])
-            cap.set(3, 1280)  # Width
-            cap.set(4, 720)  # Height
+        # Start a new camera process
+        camera_p = start_camera_process(frame_queue)
 
-            # Clear current frame
-            outputFrame = None
+        # Give the camera a moment to initialize
+        time.sleep(2)
 
-            # Test if camera is working
-            ret, test_frame = cap.read()
-            if ret:
-                return jsonify(
-                    {"success": True, "message": "Camera reloaded successfully"}
-                )
-            else:
-                return jsonify(
-                    {"success": False, "error": "Failed to initialize camera"}
-                )
+        if camera_p.is_alive():
+             return jsonify({"success": True, "message": "Camera reloaded successfully"})
+        else:
+             return jsonify({"success": False, "error": "Failed to restart camera process"})
 
     except Exception as e:
         return jsonify({"success": False, "error": f"Camera reload failed: {str(e)}"})
@@ -540,9 +545,13 @@ def getframe(frame_queue):
     global outputFrame, lock
     while True:
         try:
-            frame = frame_queue.get()
+            # Use a timeout to prevent blocking indefinitely
+            frame = frame_queue.get(timeout=1.0)
             with lock:
                 outputFrame = frame
+        except Empty:
+            # If the queue is empty, just continue. This is expected if the camera process is slow.
+            continue
         except Exception as e:
             print(f"Frame queue error: {e}")
         time.sleep(0.01) # Small sleep to prevent busy-waiting
@@ -718,10 +727,8 @@ if __name__ == "__main__":
     # Create a queue for communication between processes
     frame_queue = Queue(maxsize=2)
 
-    # Start the camera process
-    camera_p = Process(target=camera_process, args=(frame_queue,))
-    camera_p.daemon = True
-    camera_p.start()
+    # Start the camera process using the helper function
+    camera_p = start_camera_process(frame_queue)
 
     # Register a function to terminate the camera process upon exit
     atexit.register(lambda: camera_p.terminate())
