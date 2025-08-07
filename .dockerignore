@@ -1,0 +1,28 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+
+# Application artifacts
+logs/
+clipped/
+screenshots/
+*.log
+*.avi
+*.jpg
+config_backup.json
+
+# IDE / Editor specific
+.vscode/
+.idea/

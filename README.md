@@ -118,5 +118,66 @@ The config.json file allows you to customize the functionality of the security s
 * fallback_fps: The fps of the camera if it cant automatically detect the real fps
 ### -----------------------------------------
 
+## Docker
+This application can be run in a Docker container. This is the recommended way to run on Linux.
+
+### Prerequisites for Docker on Linux
+The application uses `pyvirtualcam` to create a virtual camera device for the web UI's video feed. This requires the `v4l2loopback` kernel module to be installed and loaded on your **host machine**.
+
+1.  **Install `v4l2loopback`:**
+    -   On Debian/Ubuntu: `sudo apt install v4l2loopback-dkms`
+    -   On Fedora: `sudo dnf install kmod-v4l2loopback`
+    -   Or, you can build it from [source](https://github.com/umlaeute/v4l2loopback).
+
+2.  **Load the kernel module:**
+    ```bash
+    sudo modprobe v4l2loopback devices=1 video_nr=10 card_label="SecureHomeCam" exclusive_caps=1
+    ```
+    -   `video_nr=10`: This creates a device at `/dev/video10`. You can choose another number if 10 is taken.
+    -   `card_label`: This gives the device a recognizable name.
+    -   `exclusive_caps=1`: This is important for compatibility with some applications.
+
+    You can make this permanent by adding `v4l2loopback` to `/etc/modules-load.d/` and creating a modprobe config file in `/etc/modprobe.d/`.
+
+### Building the Docker Image
+With the repository cloned, build the Docker image:
+```bash
+docker build -t secure-home .
+```
+
+### Running the Docker Container
+1.  **Find your camera devices:**
+    -   List your video devices: `ls /dev/video*`. You should see your physical webcam (e.g., `/dev/video0`) and the virtual camera you created (e.g., `/dev/video10`).
+
+2.  **Configure `config.json`:**
+    -   The camera `main` and `v_cam` options in `config.json` must be **the integer number of the video device**, not the full path.
+    -   For example, if your physical camera is `/dev/video0` and your virtual camera is `/dev/video10`, you would set:
+        ```json
+        "camera": {
+            "main": 0,
+            "v_cam": 10,
+            ...
+        }
+        ```
+
+3.  **Run the container:**
+    You need to pass the camera devices to the container and map the port for the web UI.
+    ```bash
+    docker run -it --rm \
+      --name secure-home-app \
+      -p 8040:8040 \
+      --device=/dev/video0:/dev/video0 \
+      --device=/dev/video10:/dev/video10 \
+      -v ./config.json:/app/config.json \
+      -v ./images:/app/images \
+      -v ./clipped:/app/clipped \
+      -v ./screenshots:/app/screenshots \
+      -v ./logs:/app/logs \
+      secure-home
+    ```
+    -   `--device`: This maps your host camera devices into the container. **Adjust the device numbers to match your system.**
+    -   `-v`: This mounts your local `config.json` and data directories into the container. This allows you to easily edit the config and persist recordings and user images.
+
+Now you can access the web UI at `http://localhost:8040`.
 
 
