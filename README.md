@@ -1,4 +1,6 @@
 # SecureHome
+<img width="1148" height="531" alt="image" src="https://github.com/user-attachments/assets/a09d2bb8-8bfa-467a-a038-99f3e89dc412" />
+
 ![terminal photo](https://github.com/omtoi101/SecureHome/blob/main/media_for_git/terminal.png)
 ### AI powered home security camera, with facial recognition, text to speech and push notifications through Discord!
 
